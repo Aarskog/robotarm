@@ -1,17 +1,32 @@
 <?xml version="1.0"?>
-<robot name="macroed" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="yes" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <material name="blue">
      <color rgba="0 0 0.8 1"/>
   </material>
-
+<!-- -->
+<!-- Base dimensions -->
 <xacro:property name="basex" value="0.2" />
 <xacro:property name="basey" value="0.2" />
 <xacro:property name="basez" value="0.05" />
 
+<!-- Turntable dimensions -->
 <xacro:property name="turntable_height" value="0.01" />
 <xacro:property name="turntable_radius" value="0.09" />
 
+<!-- Motor dimensions -->
+<xacro:property name="motorx" value="0.0356" />
+<xacro:property name="motory" value="0.0355" />
+<xacro:property name="motorz" value="0.0506" />
+
+<!-- Mounting plate dimensions -->
+<xacro:property name="mpx" value="0.0356" />
+<xacro:property name="mpy" value="0.0355" />
+<xacro:property name="mpz" value="0.0206" />
+
+<xacro:property name="girder_len" value="0.0635" />
+
+<!-- Base -->
 <link name="base_link">
   <visual>
     <geometry>
@@ -25,7 +40,7 @@
     <geometry>
       <cylinder radius = "${turntable_radius}" length = "${turntable_height}"/>
     </geometry>
-    <origin xyz ="0 0 ${(basez+turntable_height)/10}"/>
+    <origin xyz ="0 0 ${(basez+turntable_height)/2}"/>
     <material name="blue"/>
   </visual>
 </link>
@@ -33,11 +48,71 @@
 <joint name="base_to_turntable" type="continuous">
   <parent link="base_link"/>
   <child link="turntable"/>
-  <origin xyz="0 0 ${basez/2}"/>
+  <origin xyz="0 0 0"/>
   <axis xyz ="0 0 1"/>
 </joint>
 
 
+<xacro:macro name="motor" params="prefix z_coord parent">
+<link name="${prefix}_motor">
+  <visual>
+    <geometry>
+      <box size ="${motorx} ${motory} ${motorz}"/>
+    </geometry>
+    <origin xyz ="0 0 ${z_coord}"/>
+    <material name="blue"/>
+  </visual>
+</link>
+
+<joint name="${parent}_to_${prefix}_motor" type="fixed">
+  <parent link="${parent}"/>
+  <child link="${prefix}_motor"/>
+  <origin xyz="0 0 0"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+</xacro:macro>
+
+
+
+<xacro:macro name="mounting_plate" params="prefix z_coord parent">
+<link name="${prefix}_mounting_plate">
+  <visual>
+    <geometry>
+      <box size ="${mpx} ${mpy} ${mpz}"/>
+    </geometry>
+    <origin xyz ="0 0 ${z_coord}"/>
+  </visual>
+</link>
+
+<joint name="${parent}_to_${prefix}_mounting_plate" type="continuous">
+  <parent link="${parent}"/>
+  <child link="${prefix}_mounting_plate"/>
+  <origin xyz="0 0 ${motorz}"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+</xacro:macro>
+
+
+
+<xacro:motor prefix="second" z_coord="${basez+turntable_height}" parent="turntable"/>
+<xacro:mounting_plate prefix="first" z_coord="${turntable_height+motorz}" parent="second_motor"/>
+
+<link name="girder">
+  <visual>
+    <geometry>
+      <box size ="${mpx} ${mpy} ${girder_len}"/>
+    </geometry>
+    <origin xyz ="0 0 ${mpz/2}"/>
+      <material name="blue"/>
+  </visual>
+</link>
+
+<joint name="first_mounting_plate_to_girder" type="continuous">
+  <parent link="first_mounting_plate"/>
+  <child link="girder"/>
+
+  <axis xyz ="1 0 0"/>
+</joint>
 
 
 </robot>
