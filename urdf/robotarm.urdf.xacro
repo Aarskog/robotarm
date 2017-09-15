@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot name="macroed" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <material name="blue">
+     <color rgba="0 0 0.8 1"/>
+  </material>
+
+<xacro:property name="basex" value="0.2" />
+<xacro:property name="basey" value="0.2" />
+<xacro:property name="basez" value="0.05" />
+
+<xacro:property name="turntable_height" value="0.01" />
+<xacro:property name="turntable_radius" value="0.09" />
+
+<link name="base_link">
+  <visual>
+    <geometry>
+      <box size ="${basex} ${basey} ${basez}"/>
+    </geometry>
+  </visual>
+</link>
+
+<link name="turntable">
+  <visual>
+    <geometry>
+      <cylinder radius = "${turntable_radius}" length = "${turntable_height}"/>
+    </geometry>
+    <origin xyz ="0 0 ${(basez+turntable_height)/10}"/>
+    <material name="blue"/>
+  </visual>
+</link>
+
+<joint name="base_to_turntable" type="continuous">
+  <parent link="base_link"/>
+  <child link="turntable"/>
+  <origin xyz="0 0 ${basez/2}"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+
+
+
+</robot>
