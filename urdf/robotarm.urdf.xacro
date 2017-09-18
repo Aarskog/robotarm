@@ -4,6 +4,10 @@
   <material name="blue">
      <color rgba="0 0 0.8 1"/>
   </material>
+
+  <material name="cyan">
+     <color rgba="0 1 1 1"/>
+  </material>
 <!-- -->
 <!-- Base dimensions -->
 <xacro:property name="basex" value="0.2" />
@@ -40,7 +44,7 @@
     <geometry>
       <cylinder radius = "${turntable_radius}" length = "${turntable_height}"/>
     </geometry>
-    <origin xyz ="0 0 ${(basez+turntable_height)/2}"/>
+    <origin xyz ="0 0 0"/>
     <material name="blue"/>
   </visual>
 </link>
@@ -48,7 +52,7 @@
 <joint name="base_to_turntable" type="continuous">
   <parent link="base_link"/>
   <child link="turntable"/>
-  <origin xyz="0 0 0"/>
+  <origin xyz="0 0 ${(basez+turntable_height)/2}"/>
   <axis xyz ="0 0 1"/>
 </joint>
 
@@ -59,7 +63,7 @@
     <geometry>
       <box size ="${motorx} ${motory} ${motorz}"/>
     </geometry>
-    <origin xyz ="0 0 ${z_coord}"/>
+    <origin xyz ="0 0 ${motorz/2}"/>
     <material name="blue"/>
   </visual>
 </link>
@@ -67,7 +71,7 @@
 <joint name="${parent}_to_${prefix}_motor" type="fixed">
   <parent link="${parent}"/>
   <child link="${prefix}_motor"/>
-  <origin xyz="0 0 0"/>
+  <origin xyz="0 0 ${z_coord}"/>
   <axis xyz ="1 0 0"/>
 </joint>
 </xacro:macro>
@@ -80,39 +84,44 @@
     <geometry>
       <box size ="${mpx} ${mpy} ${mpz}"/>
     </geometry>
-    <origin xyz ="0 0 ${z_coord}"/>
+    <origin xyz ="0 0 ${mpz/2}"/>
   </visual>
 </link>
 
 <joint name="${parent}_to_${prefix}_mounting_plate" type="continuous">
   <parent link="${parent}"/>
   <child link="${prefix}_mounting_plate"/>
-  <origin xyz="0 0 ${motorz}"/>
+  <origin xyz="0 0 ${z_coord}"/>
   <axis xyz ="1 0 0"/>
 </joint>
 </xacro:macro>
 
 
 
-<xacro:motor prefix="second" z_coord="${basez+turntable_height}" parent="turntable"/>
-<xacro:mounting_plate prefix="first" z_coord="${turntable_height+motorz}" parent="second_motor"/>
+<xacro:motor prefix="second" z_coord="${turntable_height/2}" parent="turntable"/>
+<xacro:mounting_plate prefix="first" z_coord="${motorz}" parent="second_motor"/>
+
 
 <link name="girder">
   <visual>
     <geometry>
       <box size ="${mpx} ${mpy} ${girder_len}"/>
     </geometry>
-    <origin xyz ="0 0 ${mpz/2}"/>
-      <material name="blue"/>
+    <origin xyz ="0 0 ${girder_len/2}"/>
+      <material name="cyan"/>
   </visual>
 </link>
 
-<joint name="first_mounting_plate_to_girder" type="continuous">
+<joint name="first_mounting_plate_to_girder" type="fixed">
   <parent link="first_mounting_plate"/>
   <child link="girder"/>
-
+  <origin xyz="0 0 ${mpz}"/>
   <axis xyz ="1 0 0"/>
 </joint>
 
+<xacro:motor prefix="third" z_coord="${girder_len}" parent="girder"/>
+<xacro:mounting_plate prefix="second" z_coord="${motorz}" parent="third_motor"/>
+<xacro:motor prefix="fourth" z_coord="${mpz}" parent="second_mounting_plate"/>
+<xacro:mounting_plate prefix="third" z_coord="${motorz}" parent="fourth_motor"/>
 
 </robot>
