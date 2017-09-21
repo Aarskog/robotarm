@@ -37,6 +37,11 @@
       <box size ="${basex} ${basey} ${basez}"/>
     </geometry>
   </visual>
+  <collision>
+  <geometry>
+    <cylinder length="0.6" radius="0.2"/>
+  </geometry>
+</collision>
 </link>
 
 <link name="turntable">
@@ -105,6 +110,7 @@
 <link name="girder">
   <visual>
     <geometry>
+      <!--<mesh filename="package://five_dof_robotarm/stl_files/25Girder.igs"/>-->
       <box size ="${mpx} ${mpy} ${girder_len}"/>
     </geometry>
     <origin xyz ="0 0 ${girder_len/2}"/>
@@ -123,5 +129,70 @@
 <xacro:mounting_plate prefix="second" z_coord="${motorz}" parent="third_motor"/>
 <xacro:motor prefix="fourth" z_coord="${mpz}" parent="second_mounting_plate"/>
 <xacro:mounting_plate prefix="third" z_coord="${motorz}" parent="fourth_motor"/>
+
+<!-- Wrist rotate kit -->
+<link name="wrist_rk">
+  <visual>
+    <geometry>
+      <box size ="${mpx} ${mpy} ${motorz}"/>
+    </geometry>
+    <origin xyz ="0 0 ${motorz/2}"/>
+      <material name="cyan"/>
+  </visual>
+</link>
+
+
+<joint name="third_mounting_plate_to_wrist_rk" type="fixed">
+  <parent link="third_mounting_plate"/>
+  <child link="wrist_rk"/>
+  <origin xyz="0 0 ${mpz}"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+<!-- Wrist -->
+<link name="wrist">
+  <visual>
+    <geometry>
+      <box size ="${mpx} ${mpy*2} ${motorz/2}"/>
+    </geometry>
+    <origin xyz ="0 0 ${motorz/4}"/>
+      <material name="blue"/>
+  </visual>
+</link>
+
+<joint name="wrist_rk_to_wrist" type="continuous">
+  <parent link="wrist_rk"/>
+  <child link="wrist"/>
+  <origin xyz="0 0 ${motorz}"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+<!-- Gripper-->
+<xacro:property name="finger_length" value="0.1" />
+<xacro:property name="finger_width" value="0.0356" />
+
+
+<xacro:macro name="finger" params="prefix invert">
+<link name="${prefix}_finger">
+  <visual>
+    <geometry>
+      <box size ="${finger_width} ${finger_width/4} ${finger_length}"/>
+    </geometry>
+    <origin xyz ="0 0 ${finger_length/2}"/>
+  </visual>
+</link>
+
+<joint name="$wrist_to_${prefix}_finger" type="continuous">
+  <parent link="wrist"/>
+  <child link="${prefix}_finger"/>
+  <origin xyz="0 ${invert*mpy} 0"/>
+  <axis xyz ="${invert} 0 0"/>
+</joint>
+</xacro:macro>
+
+<xacro:finger prefix="right" invert="1"/>
+<xacro:finger prefix="left" invert="-1"/>
+
+
 
 </robot>
