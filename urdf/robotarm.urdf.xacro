@@ -4,10 +4,6 @@
 <xacro:include filename="$(find five_dof_robotarm)/urdf/materials.xacro" />
 
 
-<material name="cyan">
-   <color rgba="0 1 1 1"/>
-</material>
-
 
 <!-- -->
 <!-- Base dimensions -->
@@ -32,12 +28,14 @@
 <xacro:property name="girder_len" value="0.0635" />
 
 
-<!-- Mass -->
+<!-- Mass[kg] -->
 <xacro:property name="mass_motor" value="0.126"/>
 <xacro:property name="mass_mp" value="0.01"/> <!--Mass mounting plate-->
 
+<!-- Operating limits(ol) [rad]-->
+<xacro:property name="motor_ol" value="1.92"/><!--110deg-->
 
-<!-- Fixing robot to Gazebo base_link-->
+<!-- Fixing robot to world frame-->
 <link name="world"/>
   <joint name="fixed" type="fixed">
     <parent link="world"/>
@@ -63,12 +61,18 @@
   <mass value="2"/>
   <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
 </inertial>
+<collision>
+  <origin xyz ="0 0 0"/>
+  <geometry>
+    <box size ="${basex} ${basey} ${basez}"/>
+  </geometry>
+</collision>
 </link>
 
 <link name="turntable">
   <visual>
     <geometry>
-      <cylinder radius = "${turntable_radius}" length = "${turntable_height}"/>
+      <cylinder radius= "${turntable_radius}" length= "${turntable_height}"/>
     </geometry>
     <origin xyz ="0 0 0"/>
     <material name="orange"/>
@@ -139,12 +143,13 @@
    izz="${mass_mp / 12.0 * (mpx*mpx + mpy*mpy)}"/>
  </inertial>
 </link>
-<joint name="${parent}_to_${prefix}_mounting_plate" type="continuous">
+<joint name="${parent}_to_${prefix}_mounting_plate" type="revolute">
   <parent link="${parent}"/>
   <child link="${prefix}_mounting_plate"/>
   <origin xyz="0 0 ${z_coord}"/>
   <axis xyz ="1 0 0"/>
-  <dynamics damping="0.01"/>
+  <dynamics damping="0.1"/>
+  <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="5"/>
 </joint>
 </xacro:macro>
 
@@ -163,7 +168,7 @@
   <collision>
     <origin xyz ="0 0 ${girder_len/2}"/>
     <geometry>
-      <box size ="${mpx} ${mpy} ${girder_len}"/>
+      <box size ="${mpx} ${mpy} ${mpz}"/>
     </geometry>
   </collision>
   <inertial>
@@ -282,18 +287,23 @@
    </inertial>
 </link>
 
-<joint name="$wrist_to_${prefix}_finger" type="continuous">
+<joint name="$wrist_to_${prefix}_finger" type="revolute">
   <parent link="wrist"/>
   <child link="${prefix}_finger"/>
   <origin xyz="0 ${invert*mpy} ${mpz}"/>
    <limit effort="1000.0" lower="0.0" upper="${0.548*invert}" velocity="0.5"/>
   <axis xyz ="${invert} 0 0"/>
-  <dynamics damping="0.01"/>
 </joint>
 </xacro:macro>
 
 <xacro:finger prefix="right" invert="1"/>
 <xacro:finger prefix="left" invert="-1"/>
 
+<!-- Gazebo plugin for ROS Control -->
+<gazebo>
+   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+     <robotNamespace>/</robotNamespace>
+   </plugin>
+ </gazebo>
 
 </robot>

@@ -1,0 +1,5 @@
+# This controller is found in the joint_state_controller package and publishes
+# the state of the robot's joints into ROS directly from Gazebo.
+# The joint state controller handles publishing transforms for any moving joints
+type: "joint_state_controller/JointStateController"
+publish_rate: 50
