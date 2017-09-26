@@ -7,13 +7,13 @@
 
 <!-- -->
 <!-- Base dimensions -->
-<xacro:property name="basex" value="0.2" />
-<xacro:property name="basey" value="0.2" />
-<xacro:property name="basez" value="0.05" />
+<xacro:property name="basex" value="0.1143" />
+<xacro:property name="basey" value="0.1143" />
+<xacro:property name="basez" value="0.0381" />
 
 <!-- Turntable dimensions -->
 <xacro:property name="turntable_height" value="0.01" />
-<xacro:property name="turntable_radius" value="0.09" />
+<xacro:property name="turntable_radius" value="0.055" />
 
 <!-- Motor dimensions -->
 <xacro:property name="motorx" value="0.0356" />
@@ -31,6 +31,7 @@
 <!-- Mass[kg] -->
 <xacro:property name="mass_motor" value="0.126"/>
 <xacro:property name="mass_mp" value="0.01"/> <!--Mass mounting plate-->
+<xacro:property name="mass_tt" value="0.05"/> <!--Turntable-->
 
 <!-- Operating limits(ol) [rad]-->
 <xacro:property name="motor_ol" value="1.92"/><!--110deg-->
@@ -77,14 +78,38 @@
     <origin xyz ="0 0 0"/>
     <material name="orange"/>
   </visual>
-</link>
+  <collision>
+    <origin xyz ="0 0 0"/>
+    <geometry>
+      <cylinder radius= "${turntable_radius}" length= "${turntable_height}"/>
+    </geometry>
+  </collision>
+  <inertial>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <mass value="${mass_tt}"/>
+     <inertia
+       ixx="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" ixy="0.0" ixz="0.0"
+       iyy="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" iyz="0.0"
+       izz="${mass_tt / 12.0 * (turntable_radius*turntable_radius)}"/>
+   </inertial>
 
+</link>
 <joint name="base_to_turntable" type="continuous">
   <parent link="base_link"/>
   <child link="turntable"/>
   <origin xyz="0 0 ${(basez+turntable_height)/2}"/>
   <axis xyz ="0 0 1"/>
 </joint>
+
+<transmission name="turntable_trans">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="$turntable_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="base_to_turntable">
+    <hardwareInterface>PositionJointInterface</hardwareInterface>
+  </joint>
+</transmission>
 
 <!--Motor macro-->
 <xacro:macro name="motor" params="prefix z_coord parent">
@@ -168,7 +193,7 @@
   <collision>
     <origin xyz ="0 0 ${girder_len/2}"/>
     <geometry>
-      <box size ="${mpx} ${mpy} ${mpz}"/>
+      <box size ="${mpx} ${mpy} ${girder_len}"/>
     </geometry>
   </collision>
   <inertial>
