@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Source
+# https://github.com/JoshMarino/gazebo_and_ros_control/tree/master/rrrbot_files/src
+
 import rospy
 import mathn
 
