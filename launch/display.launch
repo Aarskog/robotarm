@@ -7,15 +7,26 @@
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
 
+<!-- Include Gazebo launch file-->
   <include file="$(find five_dof_robotarm)/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
   </include>
 
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  <!--node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
 
-   <!--<node name="joint_positions_node" pkg="five_dof_robotarm" type="src/position_controller.py" output="screen" respawn="true" />
- -->
+
+  <node name="joint_positions_node" pkg="five_dof_robotarm" type="position_controller.py" output="screen" respawn="true" />
+
+
+<!-- Include ros_control launch file to load joint position controllers-->
+ <!--<include file="$(find five_dof_robotarm)/launch/control.launch" />
+-->
+
+
+
 </launch>
