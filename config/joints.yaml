@@ -2,10 +2,11 @@
 # the state of the robot's joints into ROS directly from Gazebo.
 # The joint state controller handles publishing transforms for any moving joints
 five_dof_robotarm:
-    joint_state_controller:
-        type: "joint_state_controller/JointStateController"
-        publish_rate: 50
-base_to_turntable_controller:
+ joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+ base_to_turntable_controller:
   type: effort_controllers/JointPositionController
   joint: base_to_turntable
-  pid: {p: 100.0, i: 0.01, d: 10.0}
+  pid: {p: 1.0, i: 0.01, d: 10.0}

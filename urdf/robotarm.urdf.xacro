@@ -52,11 +52,6 @@
     </geometry>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </visual>
-  <collision>
-  <geometry>
-    <box size ="${basex} ${basey} ${basez}"/>
-  </geometry>
-</collision>
 <inertial>
   <origin xyz="0 0 0" rpy="0 0 0"/>
   <mass value="2"/>
@@ -107,7 +102,7 @@
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
   <joint name="base_to_turntable">
-    <hardwareInterface>PositionJointInterface</hardwareInterface>
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
 </transmission>
 
@@ -327,7 +322,7 @@
 <!-- Gazebo plugin for ROS Control -->
 <gazebo>
    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-     <robotNamespace>/</robotNamespace>
+     <robotNamespace>/five_dof_robotarm</robotNamespace>
    </plugin>
  </gazebo>
 

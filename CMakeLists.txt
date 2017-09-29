@@ -9,5 +9,13 @@ if(CATKIN_ENABLE_TESTING)
   roslaunch_add_file_check(launch)
 endif()
 
+catkin_package()
+
+install(DIRECTORY config
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
 install(DIRECTORY images meshes launch rviz urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

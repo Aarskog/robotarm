@@ -28,6 +28,7 @@
   </node>-->
 
 <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
-
-
+<!--
+ <include file="$(find five_dof_robotarm)/launch/control.launch" />
+-->
 </launch>
