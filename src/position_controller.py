@@ -7,7 +7,7 @@ import rospy
 import math
 
 from std_msgs.msg import Float64
-from math import sin,cos,atan2,sqrt,fabs
+from math import sin,cos,atan2,sqrt,fabs,pi
 
 #Define a RRBot joint positions publisher for joint controllers.
 def five_dof_robotarm_joint_positions_publisher():
@@ -26,8 +26,8 @@ def five_dof_robotarm_joint_positions_publisher():
     while not rospy.is_shutdown():
 
 		#Have each joint follow a sine movement of sin(i/100).
-        sine_movement = sin(i/100.)
-        #rospy.loginfo(sine_movement)
+        sine_movement = 2*pi*sin(i/100.)
+        rospy.loginfo(sine_movement)
 		#Publish the same sine movement to each joint.
         pub1.publish(sine_movement)
 		#pub2.publish(sine_movement)

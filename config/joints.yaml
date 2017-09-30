@@ -9,4 +9,4 @@ five_dof_robotarm:
  base_to_turntable_controller:
   type: effort_controllers/JointPositionController
   joint: base_to_turntable
-  pid: {p: 1.0, i: 0.01, d: 10.0}
+  pid: {p: 100.0, i: 0.01, d: 10.0}

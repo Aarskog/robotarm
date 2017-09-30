@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="model" default="$(find five_dof_robotarm)/urdf/robotarm.urdf.xacro"/>
+  <arg name="model" default="$(find five_dof_robotarm)/urdf/simp_inert.urdf.xacro"/>
   <arg name="gui" default="true" />
   <arg name="rvizconfig" default="$(find five_dof_robotarm)/rviz/urdf.rviz" />
 
@@ -10,19 +10,21 @@
 
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<!--
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
-
+<!--
   <node name="joint_positions_node" pkg="five_dof_robotarm" type="position_controller.py" output="screen" respawn="true" />
+-->
 
 
 
-<!-- Include ros_control launch file to load joint position controllers-->
- <include file="$(find five_dof_robotarm)/launch/control.launch" />
  <include file="$(find five_dof_robotarm)/launch/gazebo.launch">
    <arg name="model" value="$(arg model)" />
  </include>
 
-
+<!-- Include ros_control launch file to load joint position controllers-->
+ <include file="$(find five_dof_robotarm)/launch/control.launch" />
 
 </launch>

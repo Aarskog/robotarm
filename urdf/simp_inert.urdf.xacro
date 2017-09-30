@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
-<robot name="five_dof_robotarm" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="yes" xmlns:xacro="http://ros.org/wiki/xacro">
 
 <xacro:include filename="$(find five_dof_robotarm)/urdf/materials.xacro" />
 
 
 
-<!-- -->
+<!--
+Gazebo wont accept macroed values on the inertia section, so I have replaced all
+the equations with one in the start just so it will work.
+ -->
+
+
+
+
 <!-- Base dimensions -->
 <xacro:property name="basex" value="0.1143" />
 <xacro:property name="basey" value="0.1143" />
@@ -36,13 +43,13 @@
 <!-- Operating limits(ol) [rad]-->
 <xacro:property name="motor_ol" value="1.92"/><!--110deg-->
 
-<!-- Fixing robot to world frame
+<!-- Fixing robot to world frame-->
 <link name="world"/>
   <joint name="fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
   </joint>
--->
+
 
 <!-- Base -->
 <link name="base_link">
@@ -82,10 +89,7 @@
   <inertial>
      <origin xyz="0 0 0" rpy="0 0 0"/>
      <mass value="${mass_tt}"/>
-     <inertia
-       ixx="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" ixy="0.0" ixz="0.0"
-       iyy="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" iyz="0.0"
-       izz="${mass_tt / 12.0 * (turntable_radius*turntable_radius)}"/>
+     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 
 </link>
@@ -125,10 +129,7 @@
 <inertial>
    <origin xyz="0 0 ${motorz/2}" rpy="0 0 0"/>
    <mass value="${mass_motor}"/>
-   <inertia
-   ixx="${mass_motor / 12.0 * (motorx*motorx + motorz*motorz)}" ixy="0.0" ixz="0.0"
-   iyy="${mass_motor / 12.0 * (motorz*motorz + motory*motory)}" iyz="0.0"
-   izz="${mass_motor / 12.0 * (motorx*motorx + motory*motory)}"/>
+   <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_motor" type="fixed">
@@ -157,10 +158,7 @@
 <inertial>
    <origin xyz="0 0 ${mpz/2}" rpy="0 0 0"/>
    <mass value="${mass_mp}"/>
-   <inertia
-   ixx="${mass_mp / 12.0 * (mpx*mpx + mpz*mpz)}" ixy="0.0" ixz="0.0"
-   iyy="${mass_mp / 12.0 * (mpz*mpz + mpy*mpy)}" iyz="0.0"
-   izz="${mass_mp / 12.0 * (mpx*mpx + mpy*mpy)}"/>
+   <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_mounting_plate" type="revolute">
@@ -171,6 +169,17 @@
   <dynamics damping="0.1"/>
   <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="5"/>
 </joint>
+
+<transmission name="turntable_trans">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="${prefix}_arm_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="${parent}_to_${prefix}_mounting_plate">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
 </xacro:macro>
 
 <xacro:motor prefix="second" z_coord="${turntable_height/2}" parent="turntable"/>
@@ -194,10 +203,7 @@
   <inertial>
      <origin xyz="0 0 ${girder_len/2}" rpy="0 0 0"/>
      <mass value="${mass_mp*3}"/>
-     <inertia
-     ixx="${mass_mp*3 / 12.0 * (mpx*mpx + girder_len*girder_len)}" ixy="0.0" ixz="0.0"
-     iyy="${mass_mp*3 / 12.0 * (girder_len*girder_len + mpy*mpy)}" iyz="0.0"
-     izz="${mass_mp*3 / 12.0 * (mpx*mpx + mpy*mpy)}"/>
+     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 </link>
 <joint name="first_mounting_plate_to_girder" type="fixed">
@@ -230,10 +236,7 @@
   <inertial>
      <origin xyz="0 0 ${motorz/2}" rpy="0 0 0"/>
      <mass value="${mass_motor}"/>
-     <inertia
-     ixx="${mass_motor / 12.0 * (motorx*motorx + motorz*motorz)}" ixy="0.0" ixz="0.0"
-     iyy="${mass_motor / 12.0 * (motorz*motorz + motory*motory)}" iyz="0.0"
-     izz="${mass_motor / 12.0 * (motorx*motorx + motory*motory)}"/>
+     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 
 </link>
@@ -263,10 +266,7 @@
   <inertial>
      <origin xyz="0 0 ${motorz/4}" rpy="0 0 0"/>
      <mass value="${mass_motor}"/>
-     <inertia
-     ixx="${mass_motor / 12.0 * (motorx*motorx + motorz*motorz/4)}" ixy="0.0" ixz="0.0"
-     iyy="${mass_motor / 12.0 * (motorz*motorz/4 + motory*motory*4)}" iyz="0.0"
-     izz="${mass_motor / 12.0 * (motorx*motorx + motory*motory*4)}"/>
+     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 </link>
 
@@ -300,10 +300,7 @@
   <inertial>
      <origin xyz="0 0 ${finger_length/2}" rpy="0 0 0"/>
      <mass value="${mass_finger}"/>
-     <inertia
-     ixx="${mass_finger / 12.0 * (finger_width*finger_width + finger_length*finger_length)}" ixy="0.0" ixz="0.0"
-     iyy="${mass_finger / 12.0 * (finger_length*finger_length + finger_width*finger_width/16)}" iyz="0.0"
-     izz="${mass_finger / 12.0 * (finger_width*finger_width + finger_width*finger_width/16)}"/>
+     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 </link>
 
