@@ -5,7 +5,10 @@
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	output="screen" ns="/five_dof_robotarm" args="joint_state_controller base_to_turntable_controller --timeout 50"/>
+	output="screen" ns="/five_dof_robotarm" args="joint_state_controller
+                                                base_to_turntable_controller
+                                                second_joint_controller
+                                                third_joint_controller"/>
 
   <!-- convert joint states to TF transforms for rviz, etc-->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"

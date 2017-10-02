@@ -10,3 +10,13 @@ five_dof_robotarm:
   type: effort_controllers/JointPositionController
   joint: base_to_turntable
   pid: {p: 100.0, i: 0.01, d: 10.0}
+
+ second_joint_controller:
+   type: effort_controllers/JointPositionController
+   joint: second_motor_to_first_mounting_plate
+   pid: {p: 100.0, i: 0.01, d: 10.0}
+
+ third_joint_controller:
+   type: effort_controllers/JointPositionController
+   joint: third_motor_to_second_mounting_plate
+   pid: {p: 100.0, i: 0.01, d: 10.0}

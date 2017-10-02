@@ -100,15 +100,7 @@ the equations with one in the start just so it will work.
   <axis xyz ="0 0 1"/>
 </joint>
 
-<transmission name="turntable_trans">
-  <type>transmisson_interface/SimpleTransmission</type>
-  <actuator name="$turntable_motor">
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="base_to_turntable">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-</transmission>
+
 
 <!--Motor macro-->
 <xacro:macro name="motor" params="prefix z_coord parent">
@@ -170,20 +162,12 @@ the equations with one in the start just so it will work.
   <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="5"/>
 </joint>
 
-<transmission name="turntable_trans">
-  <type>transmisson_interface/SimpleTransmission</type>
-  <actuator name="${prefix}_arm_motor">
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-  <joint name="${parent}_to_${prefix}_mounting_plate">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-</transmission>
-
 </xacro:macro>
 
 <xacro:motor prefix="second" z_coord="${turntable_height/2}" parent="turntable"/>
 <xacro:mounting_plate prefix="first" z_coord="${motorz}" parent="second_motor"/>
+
+
 
 <link name="girder">
   <visual>
@@ -315,6 +299,50 @@ the equations with one in the start just so it will work.
 
 <xacro:finger prefix="right" invert="1"/>
 <xacro:finger prefix="left" invert="-1"/>
+
+
+<!-- Control -->
+<!-- First link control-->
+<transmission name="turntable_trans">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="$turntable_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="base_to_turntable">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+
+<!-- Second link control -->
+<transmission name="joint2">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="joint2_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="second_motor_to_first_mounting_plate">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+
+<!-- Third link control -->
+<transmission name="joint3">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="joint3_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="third_motor_to_second_mounting_plate">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
+
+
+
+
+
+
 
 <!-- Gazebo plugin for ROS Control -->
 <gazebo>
