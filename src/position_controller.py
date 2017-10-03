@@ -19,23 +19,33 @@ def five_dof_robotarm_joint_positions_publisher():
     pub1 = rospy.Publisher('/five_dof_robotarm/base_to_turntable_controller/command', Float64, queue_size=10)
     pub2 = rospy.Publisher('/five_dof_robotarm/second_joint_controller/command', Float64, queue_size=10)
     pub3 = rospy.Publisher('/five_dof_robotarm/third_joint_controller/command', Float64, queue_size=10)
+    pub4 = rospy.Publisher('/five_dof_robotarm/fourth_joint_controller/command', Float64, queue_size=10)
 
-    rate = rospy.Rate(80) #100 Hz
+    rate = rospy.Rate(1) #100 Hz
+
+
+    jointPos = [0,0,0,0,0]
 
 	#While loop to have joints follow a certain position, while rospy is not shutdown.
     i = float(0)
     while not rospy.is_shutdown():
 
 		#Have each joint follow a sine movement of sin(i/100).
-        sine_movement = 2*pi*sin(i/100.)
+        sine_movement = 2*sin(i/100.)
         if (i/100)>(2*pi):
             i = float(0)
+        jointPos[0] = 0.6
+        jointPos[1] = 0.9
+        jointPos[2] = 0.4
+        jointPos[3] = 0.44
 
-        rospy.loginfo(i/100)
+        #rospy.loginfo(i/100)
 		#Publish the same sine movement to each joint.
-        pub1.publish(i/100)
-        pub2.publish(2)
-        pub3.publish(sine_movement)
+        pub1.publish(jointPos[0])
+        pub2.publish(jointPos[1])
+        pub3.publish(jointPos[2])
+        pub4.publish(jointPos[3])
+
 
         i = i+1 #increment i
         rate.sleep() #sleep for rest of rospy.Rate(100)

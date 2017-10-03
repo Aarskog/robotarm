@@ -121,7 +121,9 @@ the equations with one in the start just so it will work.
 <inertial>
    <origin xyz="0 0 ${motorz/2}" rpy="0 0 0"/>
    <mass value="${mass_motor}"/>
-   <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+   <inertia ixx="0.1" ixy="0" ixz="0"
+            iyy="0.1" iyz="0"
+            izz="0.1" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_motor" type="fixed">
@@ -150,7 +152,9 @@ the equations with one in the start just so it will work.
 <inertial>
    <origin xyz="0 0 ${mpz/2}" rpy="0 0 0"/>
    <mass value="${mass_mp}"/>
-   <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+   <inertia ixx="0.1" ixy="0" ixz="0"
+            iyy="0.1" iyz="0"
+            izz="0.1" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_mounting_plate" type="revolute">
@@ -158,12 +162,13 @@ the equations with one in the start just so it will work.
   <child link="${prefix}_mounting_plate"/>
   <origin xyz="0 0 ${z_coord}"/>
   <axis xyz ="1 0 0"/>
-  <dynamics damping="0.1"/>
-  <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="5"/>
+  <dynamics damping="1"/>
+  <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="50"/>
 </joint>
 
 </xacro:macro>
 
+<!-- Second joint -->
 <xacro:motor prefix="second" z_coord="${turntable_height/2}" parent="turntable"/>
 <xacro:mounting_plate prefix="first" z_coord="${motorz}" parent="second_motor"/>
 
@@ -198,8 +203,12 @@ the equations with one in the start just so it will work.
 </joint>
 
 <xacro:motor prefix="third" z_coord="${girder_len}" parent="girder"/>
+
+<!-- Third joint  -->
 <xacro:mounting_plate prefix="second" z_coord="${motorz}" parent="third_motor"/>
 <xacro:motor prefix="fourth" z_coord="${mpz}" parent="second_mounting_plate"/>
+
+<!-- Fourth joint -->
 <xacro:mounting_plate prefix="third" z_coord="${motorz}" parent="fourth_motor"/>
 
 <!-- Wrist rotate kit -->
@@ -232,7 +241,7 @@ the equations with one in the start just so it will work.
   <axis xyz ="0 0 1"/>
 </joint>
 
-<!-- Wrist -->
+<!-- Fifth joint  (Wrist) -->
 <link name="wrist">
   <visual>
     <geometry>
@@ -253,7 +262,6 @@ the equations with one in the start just so it will work.
      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
    </inertial>
 </link>
-
 <joint name="wrist_rk_to_wrist" type="continuous">
   <parent link="wrist_rk"/>
   <child link="wrist"/>
@@ -288,7 +296,7 @@ the equations with one in the start just so it will work.
    </inertial>
 </link>
 
-<joint name="$wrist_to_${prefix}_finger" type="revolute">
+<joint name="$wrist_to_${prefix}_finger" type="fixed">
   <parent link="wrist"/>
   <child link="${prefix}_finger"/>
   <origin xyz="0 ${invert*mpy} ${mpz}"/>
@@ -301,41 +309,54 @@ the equations with one in the start just so it will work.
 <xacro:finger prefix="left" invert="-1"/>
 
 
-<!-- Control -->
+<!--Control -->
+
 <!-- First link control-->
 <transmission name="turntable_trans">
   <type>transmisson_interface/SimpleTransmission</type>
   <actuator name="$turntable_motor">
     <mechanicalReduction>1</mechanicalReduction>
+    <motorTorqueConstant>100</motorTorqueConstant>
   </actuator>
   <joint name="base_to_turntable">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
 </transmission>
 
-
 <!-- Second link control -->
 <transmission name="joint2">
   <type>transmisson_interface/SimpleTransmission</type>
   <actuator name="joint2_motor">
-    <mechanicalReduction>1</mechanicalReduction>
+  <!--mechanicalReduction>1</mechanicalReduction-->
   </actuator>
   <joint name="second_motor_to_first_mounting_plate">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
 </transmission>
 
-
 <!-- Third link control -->
 <transmission name="joint3">
   <type>transmisson_interface/SimpleTransmission</type>
   <actuator name="joint3_motor">
-    <mechanicalReduction>1</mechanicalReduction>
+    <!--mechanicalReduction>1</mechanicalReduction-->
   </actuator>
   <joint name="third_motor_to_second_mounting_plate">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
 </transmission>
+
+
+<!-- Fourth link control -->
+<transmission name="joint4">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="joint4_motor">
+    <!--mechanicalReduction>1</mechanicalReduction-->
+  </actuator>
+  <joint name="fourth_motor_to_third_mounting_plate">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+
 
 
 

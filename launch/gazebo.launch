@@ -28,9 +28,9 @@
   </node>-->
 
 <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
-<!--
+
  <include file="$(find five_dof_robotarm)/launch/control.launch" />
--->
+
 
 <!-- Create node to control joint positions using joint controller -->
  <node name="joint_positions_node" pkg="five_dof_robotarm" type="position_controller.py" output="screen" respawn="true" />
