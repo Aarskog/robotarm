@@ -34,6 +34,6 @@
 
 <!-- Create node to control joint positions using joint controller -->
  <node name="joint_positions_node" pkg="five_dof_robotarm" type="position_controller.py" output="screen" respawn="true" />
-
+ 
 
 </launch>
