@@ -7,7 +7,8 @@
 
 <!--
 Gazebo wont accept macroed values on the inertia section, so I have replaced all
-the equations with one in the start just so it will work.
+the equations with one in the start just so it will work. Multiplied each value of
+the inertias with 100. Gazebo would go wild if the inertias were too low.
  -->
 
 
@@ -192,10 +193,7 @@ the equations with one in the start just so it will work.
   <inertial>
      <origin xyz="0 0 ${girder_len/2}" rpy="0 0 0"/>
      <mass value="${mass_mp*3}"/>
-
-
      <inertia ixx="0.00176" ixy="0" ixz="0" iyy="0.00176" iyz="0" izz="0.000842" />
-
    </inertial>
 </link>
 <joint name="first_mounting_plate_to_girder" type="fixed">
