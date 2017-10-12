@@ -31,8 +31,13 @@ ll = {'l1':0.0506+0.01,'l2':0.0206+0.0635+0.0506,'l3':0.0206+0.0506,'l4':0.0206+
 #Gravity
 g = -9.81
 
+#Timestamp
+
+timestamp = float(0)
+
 #---Position and velocity from Gazebo
 def callback(data):
+    global timestamp
 
     q[0,0] = data.position[0]
     q[0,1] = data.position[2]
@@ -46,10 +51,12 @@ def callback(data):
     q_dot[0,3] = data.velocity[1]
     q_dot[0,4] = data.velocity[4]
 
+    timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
+
 #--
 
 def gravity():
-    global q,q_dot,g,lm,ll
+    global q,q_dot,g,lm,ll,timestamp
 
     c234 = sin(q[0,1]+q[0,2]+q[0,3])
     c23 = sin(q[0,1]+q[0,2])
@@ -74,7 +81,7 @@ def gravity():
 
 #Define a RRBot joint positions publisher for joint controllers.
 def five_dof_robotarm_joint_positions_publisher():
-    global q,q_dot,g,lm,ll
+    global q,q_dot,g,lm,ll,timestamp
 	#Initiate node for controlling joint1 and joint2 positions.
     rospy.init_node('joint_positions_node', anonymous=True)
 
@@ -93,11 +100,11 @@ def five_dof_robotarm_joint_positions_publisher():
 
 
     # Kp gain
-    kp1 = 2
+    kp1 = 1.5
     kp2 = 5
-    kp3 = kp2/2
-    kp4 = kp2/3
-    kp5 = 2
+    kp3 = kp2
+    kp4 = kp2
+    kp5 = 1.5
     Kp = np.matrix([
     [kp1,0,0,0,0],
     [0,kp2,0,0,0],
@@ -107,11 +114,11 @@ def five_dof_robotarm_joint_positions_publisher():
     dtype=float)
 
     #Kd gain
-    kd1 = 2
-    kd2 = 0.5
+    kd1 = 1
+    kd2 = 0.9
     kd3 = kd2
     kd4 = kd2
-    kd5 = 2
+    kd5 = 1
     Kd = np.matrix([
     [kd1,0,0,0,0],
     [0,kd2,0,0,0],
@@ -121,19 +128,19 @@ def five_dof_robotarm_joint_positions_publisher():
     dtype=float)
 
     # Desired joint positions
-    qd = np.matrix([3,0.6,-0.3,-0.3,3])
-    #qd = qd*0
+    qd = np.matrix([0,0.5,0.5,0.5,0])
+
 	#While loop to have joints follow a certain position, while rospy is not shutdown.
     i = float(0)
+    datafile = open('/home/magnaars/catkin_ws/src/five_dof_robotarm/src/datafile.txt','w')
     while not rospy.is_shutdown():
         q_tilde = qd-q
         gravity_gain = gravity()
 
-
+        #u = Kp*q_tilde - Kd*q_dot + g(q)
         u = np.matmul(Kp,np.transpose(q_tilde))-np.matmul(Kd,np.transpose(q_dot)) + gravity_gain
-        #print q_tilde
-        #rospy.loginfo(i/100)
-		#Publish the same sine movement to each joint.
+
+        #Send the wanted torques to Gazebo
         pub1.publish(u[0,0])
         pub2.publish(u[1,0])
         pub3.publish(u[2,0])
@@ -142,15 +149,30 @@ def five_dof_robotarm_joint_positions_publisher():
 
         #Print every second instead of every iteration
         if (i%update_rate==0 or i==0) and debug:
-            print "\n\n--------------------------Debug-----------------------------------"
+            print "\n\n----------------------------------------------------------------"
+            print "qd = \n",np.transpose(qd)
+            print "q = \n",np.transpose(q)
             print "q_tilde = \n",np.transpose(q_tilde)
             print "u = \n",u
             print "g = \n",gravity_gain
-            print "q = \n",np.transpose(q)
+            print "t = \n",timestamp
 
 
-        i = i+1 #increment i
-        rate.sleep() #sleep for rest of rospy.Rate(100)
+        tstamp = np.matrix([timestamp,0,0,0,0])
+
+        np.savetxt(datafile,qd)
+        np.savetxt(datafile,q)
+        np.savetxt(datafile,q_tilde)
+        np.savetxt(datafile,np.transpose(u))
+        np.savetxt(datafile,np.transpose(gravity_gain))
+        np.savetxt(datafile,tstamp)
+
+
+        i = i+1
+        rate.sleep()
+
+
+
 
 #Main section of code that will continuously run unless rospy receives interuption (ie CTRL+C)
 if __name__ == '__main__':
@@ -158,4 +180,3 @@ if __name__ == '__main__':
 
     try: five_dof_robotarm_joint_positions_publisher()
     except rospy.ROSInterruptException: pass
-    signal.signal(signal.SIGINT, shutdown)
