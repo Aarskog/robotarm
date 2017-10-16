@@ -2,6 +2,40 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+#-----
+
+from scipy.interpolate import CubicSpline
+
+
+def create_spline(qd):
+    step = 0.01
+
+    qd_set     = [[],[],[],[],[]]
+    data_space = [[],[],[],[],[]]
+
+
+    #Transform data
+    qd = qd.transpose()
+
+    i = 0
+    for qdi in qd:
+        x = np.arange(0,qdi.shape[1])
+        y = np.squeeze(np.asarray(qdi))
+
+        cs = CubicSpline(x,y)
+
+        data_space[i] = np.arange(0,qdi.shape[1]-1,step)
+
+        qd_set[i]=cs(data_space[i])
+
+        i = i + 1
+
+
+    #plt.plot(data_space[1],qd_set[1])
+    #plt.show()
+    return qd_set
+
+#-----
 
 def readDataFromfile(filename):
 

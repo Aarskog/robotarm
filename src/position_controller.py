@@ -7,6 +7,8 @@ import rospy
 import math
 import numpy as np
 
+from scipy.interpolate import CubicSpline
+
 from numpy.linalg import inv
 
 from std_msgs.msg import Float64
@@ -54,6 +56,41 @@ def callback(data):
     timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
 
 #--
+
+
+
+
+def create_spline(qd):
+    step = 0.01
+
+    qd_set     = [[],[],[],[],[]]
+    data_space = [[],[],[],[],[]]
+
+
+    #Transform data
+    qd = qd.transpose()
+
+    i = 0
+    for qdi in qd:
+        x = np.arange(0,qdi.shape[1])
+        y = np.squeeze(np.asarray(qdi))
+
+        cs = CubicSpline(x,y)
+
+        data_space[i] = np.arange(0,qdi.shape[1]-1,step)
+
+        qd_set[i]=cs(data_space[i])
+
+        i = i + 1
+
+
+    #plt.plot(data_space[1],qd_set[1])
+    #plt.show()
+    return qd_set
+
+
+
+
 
 def gravity():
     global q,q_dot,g,lm,ll,timestamp
@@ -160,6 +197,7 @@ def five_dof_robotarm_joint_positions_publisher():
 
         tstamp = np.matrix([timestamp,0,0,0,0])
 
+        #Save robot data to file. Used for plotting
         np.savetxt(datafile,qd)
         np.savetxt(datafile,q)
         np.savetxt(datafile,q_tilde)
