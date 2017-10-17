@@ -58,7 +58,7 @@ def readDataFromfile(filename):
     datafile.close()
     return data_from_robot
 
-def plotJointAngles(dtf):
+def plotJointAngles(dtf,radians,degrees,autos):
 
     t   = [item[0] for item in dtf['t']]
 
@@ -74,13 +74,8 @@ def plotJointAngles(dtf):
     qd4 = [item[3] for item in dtf['qd']]
     qd5 = [item[4] for item in dtf['qd']]
 
-    #Upper and lower limits of y-axis
-    ylimitHI = 70
-    ylimitLO = 0
 
-    #Choose to plot in rad or deg
-    radians = False
-    degrees = True
+
     if radians:
         plt.figure(1)
 
@@ -90,30 +85,35 @@ def plotJointAngles(dtf):
         plt.xlabel('time(seconds)')
         plt.ylabel('q_1 (rad)')
         plt.ylim(ylimitLO,ylimitUP)
+        plt.autoscale(autos)
 
         plt.subplot(512)
         plt.plot(t,q2,'r',t,qd2)
         plt.xlabel('time(seconds)')
         plt.ylabel('q_2 (rad)')
         plt.ylim(ylimitLO,ylimitUP)
+        plt.autoscale(autos)
 
         plt.subplot(513)
         plt.plot(t,q3,'r',t,qd3)
         plt.xlabel('time(seconds)')
         plt.ylabel('q_3 (rad)')
         plt.ylim(ylimitLO,ylimitUP)
+        plt.autoscale(autos)
 
         plt.subplot(514)
         plt.plot(t,q4,'r',t,qd4)
         plt.xlabel('time(seconds)')
         plt.ylabel('q_4 (rad)')
         plt.ylim(ylimitLO,ylimitUP)
+        plt.autoscale(autos)
 
         plt.subplot(515)
         plt.plot(t,q5,'r',t,qd5)
         plt.xlabel('time(seconds)')
         plt.ylabel('q_5 (rad)')
         plt.ylim(ylimitLO,ylimitUP)
+        plt.autoscale(autos)
 
         plt.show()
 
@@ -126,37 +126,54 @@ def plotJointAngles(dtf):
         plt.xlabel('time(seconds)')
         plt.ylabel('q_1 (deg)')
         plt.ylim(ylimitLO,ylimitHI)
-
+        plt.autoscale(autos)
 
         plt.subplot(512)
         plt.plot(t,np.degrees(q2),'r',t,np.degrees(qd2))
         plt.xlabel('time(seconds)')
         plt.ylabel('q_2 (deg)')
         plt.ylim(ylimitLO,ylimitHI)
+        plt.autoscale(autos)
 
         plt.subplot(513)
         plt.plot(t,np.degrees(q3),'r',t,np.degrees(qd3))
         plt.xlabel('time(seconds)')
         plt.ylabel('q_3 (deg)')
         plt.ylim(ylimitLO,ylimitHI)
+        plt.autoscale(autos)
 
         plt.subplot(514)
         plt.plot(t,np.degrees(q4),'r',t,np.degrees(qd4))
         plt.xlabel('time(seconds)')
         plt.ylabel('q_4 (deg)')
         plt.ylim(ylimitLO,ylimitHI)
+        plt.autoscale(autos)
 
         plt.subplot(515)
         plt.plot(t,np.degrees(q5),'r',t,np.degrees(qd5))
         plt.xlabel('time(seconds)')
         plt.ylabel('q_5 (deg)')
         plt.ylim(ylimitLO,ylimitHI)
+        plt.autoscale(autos)
 
         plt.show()
 
 
 if __name__ == '__main__':
     filename = '/home/magnaars/catkin_ws/src/five_dof_robotarm/src/datafile.txt'
+
+
     dtf = readDataFromfile(filename)
 
-    plotJointAngles(dtf)
+    #Upper and lower limits of y-axis
+    ylimitHI = float('nan')
+    ylimitLO = float('nan')
+
+    #Choose to plot in rad or deg
+    radians = False
+    degrees = True
+
+    #autoscale
+    autos = True
+
+    plotJointAngles(dtf,radians,degrees,autos)

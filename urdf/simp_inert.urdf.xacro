@@ -8,7 +8,7 @@
 <!--
 Gazebo wont accept macroed values on the inertia section, so I have replaced all
 the equations with one in the start just so it will work. Multiplied each value of
-the inertias with 100. Gazebo would go wild if the inertias were too low.
+the inertias with 1000. Gazebo would go wild if the inertias were too low.
  -->
 
 
@@ -90,7 +90,7 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
   <inertial>
      <origin xyz="0 0 0" rpy="0 0 0"/>
      <mass value="${mass_tt}"/>
-     <inertia ixx="0.0082" ixy="0" ixz="0" iyy="0.0082" iyz="0" izz="0.0076" />
+     <inertia ixx="0.082" ixy="0" ixz="0" iyy="0.082" iyz="0" izz="0.076" />
    </inertial>
 
 </link>
@@ -122,9 +122,9 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
 <inertial>
    <origin xyz="0 0 ${motorz/2}" rpy="0 0 0"/>
    <mass value="${mass_motor}"/>
-   <inertia ixx="0.004" ixy="0" ixz="0"
-            iyy="0.004" iyz="0"
-            izz="0.00456" />
+   <inertia ixx="0.04" ixy="0" ixz="0"
+            iyy="0.04" iyz="0"
+            izz="0.0456" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_motor" type="fixed">
@@ -153,9 +153,9 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
 <inertial>
    <origin xyz="0 0 ${mpz/2}" rpy="0 0 0"/>
    <mass value="${mass_mp}"/>
-   <inertia ixx="0.00014" ixy="0" ixz="0"
-            iyy="0.00014" iyz="0"
-            izz="0.00021" />
+   <inertia ixx="0.0014" ixy="0" ixz="0"
+            iyy="0.0014" iyz="0"
+            izz="0.0021" />
  </inertial>
 </link>
 <joint name="${parent}_to_${prefix}_mounting_plate" type="revolute">
@@ -193,7 +193,7 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
   <inertial>
      <origin xyz="0 0 ${girder_len/2}" rpy="0 0 0"/>
      <mass value="${mass_mp*3}"/>
-     <inertia ixx="0.00176" ixy="0" ixz="0" iyy="0.00176" iyz="0" izz="0.000842" />
+     <inertia ixx="0.0176" ixy="0" ixz="0" iyy="0.0176" iyz="0" izz="0.00842" />
    </inertial>
 </link>
 <joint name="first_mounting_plate_to_girder" type="fixed">
@@ -232,9 +232,9 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
      <mass value="${mass_motor}"/>
 
 
-     <inertia ixx="0.004" ixy="0" ixz="0"
-              iyy="0.004" iyz="0"
-              izz="0.00456" />
+     <inertia ixx="0.04" ixy="0" ixz="0"
+              iyy="0.04" iyz="0"
+              izz="0.0456" />
 
    </inertial>
 
@@ -265,9 +265,9 @@ the inertias with 100. Gazebo would go wild if the inertias were too low.
   <inertial>
      <origin xyz="0 0 ${motorz/4}" rpy="0 0 0"/>
      <mass value="${mass_motor}"/>
-     <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
-     <!--<inertia ixx="0.0000473" ixy="0" ixz="0" iyy="0.0000158" iyz="0" izz="0.0000131" />
-   -->
+     <!--inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" /-->
+     <inertia ixx="0.0473" ixy="0" ixz="0" iyy="0.0158" iyz="0" izz="0.0131" />
+
    </inertial>
 </link>
 <joint name="wrist_rk_to_wrist" type="continuous">

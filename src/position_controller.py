@@ -55,8 +55,8 @@ def callback(data):
 
     timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
 
-def create_spline(qd):
-    step = 0.01
+def create_spline(qd,spline_step):
+
 
     qd_set     = [[],[],[],[],[]]
     data_space = [[],[],[],[],[]]
@@ -72,7 +72,7 @@ def create_spline(qd):
 
         cs = CubicSpline(x,y)
 
-        data_space[i] = np.arange(0,qdi.shape[1]-1,step)
+        data_space[i] = np.arange(0,qdi.shape[1]-1,spline_step)
 
         qd_set[i]=cs(data_space[i])
 
@@ -108,9 +108,8 @@ def gravity():
     return np.matrix([[g_1],[g_2],[g_3],[g_4],[g_5]])
 
 #Get the next set point from a set of spline points
-def get_qd(qd_set,q,iterations,qd):
-    #Circle of acceptrance
-    coa = 0.01
+def get_qd(qd_set,q,iterations,qd,coa):
+
 
     for i in range(0,len(iterations)):
         if (abs(qd[i]-q[0,i]) < coa) and ((iterations[i]+1)<(len(qd_set[i]))):
@@ -119,7 +118,7 @@ def get_qd(qd_set,q,iterations,qd):
     return qd
 
 #Define a RRBot joint positions publisher for joint controllers.
-def five_dof_robotarm_joint_positions_publisher():
+def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
     global q,q_dot,g,lm,ll,timestamp
 	#Initiate node for controlling joint1 and joint2 positions.
     rospy.init_node('joint_positions_node', anonymous=True)
@@ -137,41 +136,7 @@ def five_dof_robotarm_joint_positions_publisher():
     update_rate = 1000
     rate = rospy.Rate(update_rate) #100 Hz
 
-
-    # Kp gain
-    kp1 = 1.5
-    kp2 = 5
-    kp3 = kp2
-    kp4 = kp2
-    kp5 = 1.5
-    Kp = np.matrix([
-    [kp1,0,0,0,0],
-    [0,kp2,0,0,0],
-    [0,0,kp3,0,0],
-    [0,0,0,kp4,0],
-    [0,0,0,0,kp5]],
-    dtype=float)
-
-    #Kd gain
-    kd1 = 1
-    kd2 = 0.9
-    kd3 = kd2
-    kd4 = kd2
-    kd5 = 1
-    Kd = np.matrix([
-    [kd1,0,0,0,0],
-    [0,kd2,0,0,0],
-    [0,0,kd3,0,0],
-    [0,0,0,kd4,0],
-    [0,0,0,0,kd5]],
-    dtype=float)
-
-    # Desired joint positions
-    qd = [1,1,1,1,1]
-
-    q0 = [0,0,0,0,0]
-
-    qd_set = create_spline(np.matrix([q0,qd]))
+    qd_set = create_spline(np.matrix(qd),spline_step)
     qd = np.matrix(qd)
     iterations = [0,0,0,0,0]
 
@@ -181,7 +146,7 @@ def five_dof_robotarm_joint_positions_publisher():
     i = float(0)
     datafile = open('/home/magnaars/catkin_ws/src/five_dof_robotarm/src/datafile.txt','w')
     while not rospy.is_shutdown():
-        qda = get_qd(qd_set,q,iterations,qda)
+        qda = get_qd(qd_set,q,iterations,qda,coa)
         qd = np.matrix(qda)
         q_tilde = qd-q
         gravity_gain = gravity()
@@ -222,12 +187,44 @@ def five_dof_robotarm_joint_positions_publisher():
         i = i+1
         rate.sleep()
 
-
-
-
 #Main section of code that will continuously run unless rospy receives interuption (ie CTRL+C)
 if __name__ == '__main__':
 
+    spline_step = 0.06
 
-    try: five_dof_robotarm_joint_positions_publisher()
+    #Circle of acceptrance
+    coa = 0.06
+
+    # Kp gain
+    kp1 = 3
+    kp2 = 8
+    kp3 = kp2
+    kp4 = kp2
+    kp5 = 5
+    Kp = np.matrix([
+    [kp1,0,0,0,0],
+    [0,kp2,0,0,0],
+    [0,0,kp3,0,0],
+    [0,0,0,kp4,0],
+    [0,0,0,0,kp5]],
+    dtype=float)
+
+    #Kd gain
+    kd1 = 1
+    kd2 = 0.9
+    kd3 = kd2
+    kd4 = kd2
+    kd5 = 1
+    Kd = np.matrix([
+    [kd1,0,0,0,0],
+    [0,kd2,0,0,0],
+    [0,0,kd3,0,0],
+    [0,0,0,kd4,0],
+    [0,0,0,0,kd5]],
+    dtype=float)
+
+    # Desired joint positions
+    q0 = [0,0,0,0,0]
+    qd = [q0,[1,1.2,1.2,1,3]]#,[1,1.2,-1.2,-1,3]]
+    try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
     except rospy.ROSInterruptException: pass
