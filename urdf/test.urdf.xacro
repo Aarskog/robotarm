@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot name="test" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:include filename="$(find five_dof_robotarm)/urdf/materials.xacro" />
+
+<!-- Base dimensions -->
+<xacro:property name="basex" value="0.1143" />
+<xacro:property name="basey" value="0.1143" />
+<xacro:property name="basez" value="0.0381" />
+
+<!-- Turntable dimensions -->
+<xacro:property name="turntable_height" value="0.01" />
+<xacro:property name="turntable_radius" value="0.055" />
+
+<xacro:property name="mass_tt" value="0.05"/> <!--Turntable-->
+
+<!-- Fixing robot to world frame-->
+<link name="world"/>
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+<link name="base_link">
+  <visual>
+    <geometry>
+      <box size ="${basex} ${basey} ${basez}"/>
+    </geometry>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </visual>
+  <collision>
+  <geometry>
+    <box size ="${basex} ${basey} ${basez}"/>
+  </geometry>
+</collision>
+<inertial>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  <mass value="2"/>
+  <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+</inertial>
+<collision>
+  <origin xyz ="0 0 0"/>
+  <geometry>
+    <box size ="${basex} ${basey} ${basez}"/>
+  </geometry>
+</collision>
+</link>
+
+<joint name="base_to_turntable" type="continuous">
+  <parent link="base_link"/>
+  <child link="turntable"/>
+  <origin xyz="0 0 ${(basez+turntable_height)/2}"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+<link name="turntable">
+  <visual>
+    <geometry>
+      <cylinder radius= "${turntable_radius}" length= "${turntable_height}"/>
+    </geometry>
+    <origin xyz ="0 0 0"/>
+    <material name="orange"/>
+  </visual>
+  <collision>
+    <origin xyz ="0 0 0"/>
+    <geometry>
+      <cylinder radius= "${turntable_radius}" length= "${turntable_height}"/>
+    </geometry>
+  </collision>
+  <inertial>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <mass value="${mass_tt}"/>
+     <inertia
+       ixx="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" ixy="0.0" ixz="0.0"
+       iyy="${mass_tt / 12.0 * (3*turntable_radius*turntable_radius + turntable_height*turntable_height)}" iyz="0.0"
+       izz="${mass_tt / 12.0 * (turntable_radius*turntable_radius)}"/>
+   </inertial>
+
+</link>
+
+<!--
+<transmission name="turntable_trans">
+  <type>transmisson_interface/SimpleTransmission</type>
+  <actuator name="$turntable_motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="base_to_turntable">
+    <hardwareInterface>PositionJointInterface</hardwareInterface>
+  </joint>
+</transmission>
+-->
+
+</robot>
