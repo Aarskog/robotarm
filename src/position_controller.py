@@ -6,6 +6,7 @@
 import rospy
 import math
 import numpy as np
+import inverse_kinematics as ik
 
 from scipy.interpolate import CubicSpline
 
@@ -136,7 +137,7 @@ def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
     update_rate = 1000
     rate = rospy.Rate(update_rate) #100 Hz
 
-    qd_set = create_spline(np.matrix(qd),spline_step)
+    #qd_set = create_spline(np.matrix(qd),spline_step)
     qd = np.matrix(qd)
     iterations = [0,0,0,0,0]
 
@@ -146,8 +147,8 @@ def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
     i = float(0)
     datafile = open('/home/magnaars/catkin_ws/src/five_dof_robotarm/src/datafile.txt','w')
     while not rospy.is_shutdown():
-        qda = get_qd(qd_set,q,iterations,qda,coa)
-        qd = np.matrix(qda)
+        #qda = get_qd(qd_set,q,iterations,qda,coa)
+        #qd = np.matrix(qda)
         q_tilde = qd-q
         gravity_gain = gravity()
 
@@ -190,10 +191,10 @@ def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
 #Main section of code that will continuously run unless rospy receives interuption (ie CTRL+C)
 if __name__ == '__main__':
 
-    spline_step = 0.9
+    spline_step = 0.1
 
     #Circle of acceptrance
-    coa = 0.3
+    coa = 0.03
 
     # Kp gain
     kp1 = 1.4
@@ -226,7 +227,27 @@ if __name__ == '__main__':
     #Start pos
     q0 = [0,0,0,0,0]
 
+
+    #qOri = [1.5708,-0.6624,0.5362,1.6970,-1.5708]
+    #qtest = [-3.1416,-0.8612,0.0,-0.7074,3.1416]
+
     # Desired joint positions
-    qd = [q0,[1,1.2,1.2,1,3]]#,[3.13,1.5,1.2,-1,6]]
+    #qd = [q0,qOri]#,[3.13,1.5,1.2,-1,6]]
+    #qd = qtest
+
+    d1 = 0.0796
+    a2 = 0.1347
+    a3 = 0.0712
+    d5 = 0.0918
+
+    pd = np.matrix([[0.2],[0],[d1+a2+a3-0.1]])
+    od = np.matrix([[0],[np.pi/2],[np.pi/2]])
+    xd = np.concatenate((pd,od),axis=0)
+
+    qopt = ik.inverse_kinematics_optimization(xd,'BFGS')
+    qd = qopt
+
+
+
     try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
     except rospy.ROSInterruptException: pass

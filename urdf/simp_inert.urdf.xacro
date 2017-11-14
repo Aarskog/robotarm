@@ -138,7 +138,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 </xacro:macro>
 
 <!--Mounting plate macro-->
-<xacro:macro name="mounting_plate" params="prefix z_coord parent">
+<xacro:macro name="mounting_plate" params="prefix z_coord parent angle">
 <link name="${prefix}_mounting_plate">
   <visual>
     <geometry>
@@ -163,7 +163,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 <joint name="${parent}_to_${prefix}_mounting_plate" type="revolute">
   <parent link="${parent}"/>
   <child link="${prefix}_mounting_plate"/>
-  <origin xyz="0 0 ${z_coord}"/>
+  <origin xyz="0 0 ${z_coord}" rpy="${angle} 0 0" />
   <axis xyz ="1 0 0"/>
   <dynamics damping="1"/>
   <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="50"/>
@@ -173,7 +173,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 
 <!-- Second joint -->
 <xacro:motor prefix="second" z_coord="${turntable_height/2}" parent="turntable"/>
-<xacro:mounting_plate prefix="first" z_coord="${motorz}" parent="second_motor"/>
+<xacro:mounting_plate prefix="first" z_coord="${motorz}" parent="second_motor" angle="0"/>
 
 
 <!-- Girder -->
@@ -208,11 +208,11 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 <xacro:motor prefix="third" z_coord="${girder_len}" parent="girder"/>
 
 <!-- Third joint  -->
-<xacro:mounting_plate prefix="second" z_coord="${motorz}" parent="third_motor"/>
+<xacro:mounting_plate prefix="second" z_coord="${motorz}" parent="third_motor" angle="0"/>
 <xacro:motor prefix="fourth" z_coord="${mpz}" parent="second_mounting_plate"/>
 
 <!-- Fourth joint -->
-<xacro:mounting_plate prefix="third" z_coord="${motorz}" parent="fourth_motor"/>
+<xacro:mounting_plate prefix="third" z_coord="${motorz}" parent="fourth_motor" angle="0"/>
 
 <!-- Wrist rotate kit -->
 <link name="wrist_rk">
@@ -308,7 +308,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
    </inertial>
 </link>
 
-<joint name="$wrist_to_${prefix}_finger" type="fixed">
+<joint name="wrist_to_${prefix}_finger" type="fixed">
   <parent link="wrist"/>
   <child link="${prefix}_finger"/>
   <origin xyz="0 ${invert*mpy} ${mpz}"/>

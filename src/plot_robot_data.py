@@ -35,36 +35,6 @@ def create_spline(qd):
     #plt.show()
     return qd_set
 
-def forward_kinematics(q):
-    d1 = 1
-    a2 = 1
-    a3 = 1
-    d5 = 1
-
-    c1   = np.cos(q[0])
-    c2   = np.cos(q[1])
-    c23  = np.cos(q[1] + q[2])
-    c234 = np.cos(q[1] + q[2] + q[3])
-    c5   = np.cos(q[4])
-
-    s1   = np.sin(q[0])
-    s2   = np.sin(q[1])
-    s5   = np.sin(q[4])
-    s23  = np.sin(q[1] + q[2])
-    s234 = np.sin(q[1] + q[2] + q[3])
-
-    lon = -d5*s234 + a3*c23 + a2*c2
-
-    T5 = np.matrix([
-    [c1*c234*c5 + s1*s5, -c1*c234*s5 + s1*c5, -c1*s234, c1*lon],
-    [c1*c234*c5 - s1*s5, -s1*c234*s5 - c1*c5, -s1*s234, s1*lon],
-    [-s234*c5, s234*s5, -c234, -d1 - a2*s2-a3*s23 - d5*c234],
-    [0,0,0,1]
-    ])
-    return T5
-
-#-----
-
 def readDataFromfile(filename):
 
     datafile = open(filename,'r')
@@ -190,7 +160,6 @@ def plotJointAngles(dtf,radians,degrees,autos):
 if __name__ == '__main__':
     filename = '/home/magnaars/catkin_ws/src/five_dof_robotarm/src/datafile.txt'
 
-
     dtf = readDataFromfile(filename)
 
     #Upper and lower limits of y-axis
@@ -204,7 +173,4 @@ if __name__ == '__main__':
     #autoscale
     autos = True
 
-    #plotJointAngles(dtf,radians,degrees,autos)
-
-    q = [1,1,1,1,1]
-    print forward_kinematics(q)
+    plotJointAngles(dtf,radians,degrees,autos)
