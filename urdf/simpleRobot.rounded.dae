@@ -1,0 +1,1873 @@
+<COLLADA xmlns="http://www.collada.org/2008/03/COLLADASchema" version="1.5.0">
+	<asset>
+		<contributor>
+			<authoring_tool>URDF Collada Writer</authoring_tool>
+		</contributor>
+		<created>2017-11-16T12:35:00.000000</created>
+		<modified>2017-11-16T12:35:00.000000</modified>
+		<unit/>
+		<up_axis>Z_UP</up_axis>
+	</asset>
+	<library_visual_scenes id="vscenes">
+		<visual_scene id="vscene" name="URDF Visual Scene">
+			<node id="visual0" name="crustcrawler" sid="visual0">
+				<node id="vkmodel0_node11" name="world" sid="node11">
+					<translate>0.0 0.0 0.0</translate>
+					<rotate>1.0 0.0 0.0 0.0</rotate>
+					<node id="vkmodel0_node0" name="base_link" sid="node0">
+						<translate>-0.0 -0.0 -0.0</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+						<translate>0.0 0.0 0.0</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+						<rotate sid="node_fixed_axis0">0.0 0.0 0.0 0.0</rotate>
+						<translate>0.0 0.0 0.0</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+						<instance_geometry url="#gkmodel0_base_link_geom0">
+							<bind_material>
+								<technique_common>
+									<instance_material symbol="mat0" target="#gkmodel0_base_link_geom0_mat"/>
+								</technique_common>
+							</bind_material>
+						</instance_geometry>
+						<node id="vkmodel0_node10" name="turntable" sid="node10">
+							<translate>-0.0 -0.0 -0.0</translate>
+							<rotate>1.0 0.0 0.0 0.0</rotate>
+							<translate>0.0 0.0 0.02405</translate>
+							<rotate>1.0 0.0 0.0 0.0</rotate>
+							<rotate sid="node_base_to_turntable_axis0">0.0 0.0 1.0 0.0</rotate>
+							<translate>0.0 0.0 0.0</translate>
+							<rotate>1.0 0.0 0.0 0.0</rotate>
+							<instance_geometry url="#gkmodel0_turntable_geom0">
+								<bind_material>
+									<technique_common>
+										<instance_material symbol="mat0" target="#gkmodel0_turntable_geom0_mat"/>
+									</technique_common>
+								</bind_material>
+							</instance_geometry>
+							<node id="vkmodel0_node6" name="second_motor" sid="node6">
+								<translate>-0.0 -0.0 -0.0</translate>
+								<rotate>1.0 0.0 0.0 0.0</rotate>
+								<translate>0.0 0.0 0.005</translate>
+								<rotate>1.0 0.0 0.0 0.0</rotate>
+								<rotate sid="node_turntable_to_second_motor_axis0">0.0 0.0 0.0 0.0</rotate>
+								<translate>0.0 0.0 0.0253</translate>
+								<rotate>1.0 0.0 0.0 0.0</rotate>
+								<instance_geometry url="#gkmodel0_second_motor_geom0">
+									<bind_material>
+										<technique_common>
+											<instance_material symbol="mat0" target="#gkmodel0_second_motor_geom0_mat"/>
+										</technique_common>
+									</bind_material>
+								</instance_geometry>
+								<node id="vkmodel0_node1" name="first_mounting_plate" sid="node1">
+									<translate>-0.0 -0.0 -0.0253</translate>
+									<rotate>1.0 0.0 0.0 0.0</rotate>
+									<translate>0.0 0.0 0.0506</translate>
+									<rotate>1.0 0.0 0.0 0.0</rotate>
+									<rotate sid="node_second_motor_to_first_mounting_plate_axis0">1.0 0.0 0.0 0.0</rotate>
+									<translate>0.0 0.0 0.0103</translate>
+									<rotate>1.0 0.0 0.0 0.0</rotate>
+									<instance_geometry url="#gkmodel0_first_mounting_plate_geom0">
+										<bind_material>
+											<technique_common>
+												<instance_material symbol="mat0" target="#gkmodel0_first_mounting_plate_geom0_mat"/>
+											</technique_common>
+										</bind_material>
+									</instance_geometry>
+									<node id="vkmodel0_node3" name="girder" sid="node3">
+										<translate>-0.0 -0.0 -0.0103</translate>
+										<rotate>1.0 0.0 0.0 0.0</rotate>
+										<translate>0.0 0.0 0.0206</translate>
+										<rotate>1.0 0.0 0.0 0.0</rotate>
+										<rotate sid="node_first_mounting_plate_to_girder_axis0">0.0 0.0 0.0 0.0</rotate>
+										<translate>0.0 0.0 0.03175</translate>
+										<rotate>1.0 0.0 0.0 0.0</rotate>
+										<instance_geometry url="#gkmodel0_girder_geom0">
+											<bind_material>
+												<technique_common>
+													<instance_material symbol="mat0" target="#gkmodel0_girder_geom0_mat"/>
+												</technique_common>
+											</bind_material>
+										</instance_geometry>
+										<node id="vkmodel0_node8" name="third_motor" sid="node8">
+											<translate>-0.0 -0.0 -0.03175</translate>
+											<rotate>1.0 0.0 0.0 0.0</rotate>
+											<translate>0.0 0.0 0.0635</translate>
+											<rotate>1.0 0.0 0.0 0.0</rotate>
+											<rotate sid="node_girder_to_third_motor_axis0">0.0 0.0 0.0 0.0</rotate>
+											<translate>0.0 0.0 0.0253</translate>
+											<rotate>1.0 0.0 0.0 0.0</rotate>
+											<instance_geometry url="#gkmodel0_third_motor_geom0">
+												<bind_material>
+													<technique_common>
+														<instance_material symbol="mat0" target="#gkmodel0_third_motor_geom0_mat"/>
+													</technique_common>
+												</bind_material>
+											</instance_geometry>
+											<node id="vkmodel0_node7" name="second_mounting_plate" sid="node7">
+												<translate>-0.0 -0.0 -0.0253</translate>
+												<rotate>1.0 0.0 0.0 0.0</rotate>
+												<translate>0.0 0.0 0.0506</translate>
+												<rotate>1.0 0.0 0.0 0.0</rotate>
+												<rotate sid="node_third_motor_to_second_mounting_plate_axis0">1.0 0.0 0.0 0.0</rotate>
+												<translate>0.0 0.0 0.0103</translate>
+												<rotate>1.0 0.0 0.0 0.0</rotate>
+												<instance_geometry url="#gkmodel0_second_mounting_plate_geom0">
+													<bind_material>
+														<technique_common>
+															<instance_material symbol="mat0" target="#gkmodel0_second_mounting_plate_geom0_mat"/>
+														</technique_common>
+													</bind_material>
+												</instance_geometry>
+												<node id="vkmodel0_node2" name="fourth_motor" sid="node2">
+													<translate>-0.0 -0.0 -0.0103</translate>
+													<rotate>1.0 0.0 0.0 0.0</rotate>
+													<translate>0.0 0.0 0.0206</translate>
+													<rotate>1.0 0.0 0.0 0.0</rotate>
+													<rotate sid="node_second_mounting_plate_to_fourth_motor_axis0">0.0 0.0 0.0 0.0</rotate>
+													<translate>0.0 0.0 0.0253</translate>
+													<rotate>1.0 0.0 0.0 0.0</rotate>
+													<instance_geometry url="#gkmodel0_fourth_motor_geom0">
+														<bind_material>
+															<technique_common>
+																<instance_material symbol="mat0" target="#gkmodel0_fourth_motor_geom0_mat"/>
+															</technique_common>
+														</bind_material>
+													</instance_geometry>
+													<node id="vkmodel0_node9" name="third_mounting_plate" sid="node9">
+														<translate>-0.0 -0.0 -0.0253</translate>
+														<rotate>1.0 0.0 0.0 0.0</rotate>
+														<translate>0.0 0.0 0.0506</translate>
+														<rotate>1.0 0.0 0.0 0.0</rotate>
+														<rotate sid="node_fourth_motor_to_third_mounting_plate_axis0">1.0 0.0 0.0 0.0</rotate>
+														<translate>0.0 0.0 0.0103</translate>
+														<rotate>1.0 0.0 0.0 0.0</rotate>
+														<instance_geometry url="#gkmodel0_third_mounting_plate_geom0">
+															<bind_material>
+																<technique_common>
+																	<instance_material symbol="mat0" target="#gkmodel0_third_mounting_plate_geom0_mat"/>
+																</technique_common>
+															</bind_material>
+														</instance_geometry>
+														<node id="vkmodel0_node13" name="wrist_rk" sid="node13">
+															<translate>-0.0 -0.0 -0.0103</translate>
+															<rotate>1.0 0.0 0.0 0.0</rotate>
+															<translate>0.0 0.0 0.0206</translate>
+															<rotate>1.0 0.0 0.0 0.0</rotate>
+															<rotate sid="node_third_mounting_plate_to_wrist_rk_axis0">0.0 0.0 0.0 0.0</rotate>
+															<translate>0.0 0.0 0.0253</translate>
+															<rotate>1.0 0.0 0.0 0.0</rotate>
+															<instance_geometry url="#gkmodel0_wrist_rk_geom0">
+																<bind_material>
+																	<technique_common>
+																		<instance_material symbol="mat0" target="#gkmodel0_wrist_rk_geom0_mat"/>
+																	</technique_common>
+																</bind_material>
+															</instance_geometry>
+															<node id="vkmodel0_node12" name="wrist" sid="node12">
+																<translate>-0.0 -0.0 -0.0253</translate>
+																<rotate>1.0 0.0 0.0 0.0</rotate>
+																<translate>0.0 0.0 0.0506</translate>
+																<rotate>1.0 0.0 0.0 0.0</rotate>
+																<rotate sid="node_wrist_rk_to_wrist_axis0">0.0 0.0 1.0 0.0</rotate>
+																<translate>0.0 0.0 0.01265</translate>
+																<rotate>1.0 0.0 0.0 0.0</rotate>
+																<instance_geometry url="#gkmodel0_wrist_geom0">
+																	<bind_material>
+																		<technique_common>
+																			<instance_material symbol="mat0" target="#gkmodel0_wrist_geom0_mat"/>
+																		</technique_common>
+																	</bind_material>
+																</instance_geometry>
+																<node id="vkmodel0_node4" name="left_finger" sid="node4">
+																	<translate>-0.0 -0.0 -0.01265</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<translate>0.0 -0.0355 0.0206</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<rotate sid="node_wrist_to_left_finger_axis0">0.0 0.0 0.0 0.0</rotate>
+																	<translate>0.0 0.0 0.04</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<instance_geometry url="#gkmodel0_left_finger_geom0">
+																		<bind_material>
+																			<technique_common>
+																				<instance_material symbol="mat0" target="#gkmodel0_left_finger_geom0_mat"/>
+																			</technique_common>
+																		</bind_material>
+																	</instance_geometry>
+																</node>
+																<node id="vkmodel0_node5" name="right_finger" sid="node5">
+																	<translate>-0.0 -0.0 -0.01265</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<translate>0.0 0.0 0.0206</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<rotate sid="node_wrist_to_right_finger_axis0">0.0 0.0 0.0 0.0</rotate>
+																	<translate>0.0 0.0 0.04</translate>
+																	<rotate>1.0 0.0 0.0 0.0</rotate>
+																	<instance_geometry url="#gkmodel0_right_finger_geom0">
+																		<bind_material>
+																			<technique_common>
+																				<instance_material symbol="mat0" target="#gkmodel0_right_finger_geom0_mat"/>
+																			</technique_common>
+																		</bind_material>
+																	</instance_geometry>
+																</node>
+															</node>
+														</node>
+													</node>
+												</node>
+											</node>
+										</node>
+									</node>
+								</node>
+							</node>
+						</node>
+					</node>
+				</node>
+			</node>
+		</visual_scene>
+	</library_visual_scenes>
+	<library_geometries id="geometries">
+		<geometry id="gkmodel0_base_link_geom0">
+			<mesh>
+				<source id="gkmodel0_base_link_geom0_positions">
+					<float_array id="gkmodel0_base_link_geom0_positions-array" count="24" digits="2490374">-0.05714999884366989 -0.05714999884366989 -0.01905000023543835 0.05714999884366989 -0.05714999884366989 -0.01905000023543835 0.05714999884366989 -0.05714999884366989 0.01905000023543835 -0.05714999884366989 -0.05714999884366989 0.01905000023543835 -0.05714999884366989 0.05714999884366989 0.01905000023543835 -0.05714999884366989 -0.05714999884366989 0.01905000023543835 0.05714999884366989 -0.05714999884366989 0.01905000023543835 0.05714999884366989 0.05714999884366989 0.01905000023543835 0.05714999884366989 0.05714999884366989 -0.01905000023543835 0.05714999884366989 0.05714999884366989 0.01905000023543835 0.05714999884366989 -0.05714999884366989 0.01905000023543835 0.05714999884366989 -0.05714999884366989 -0.01905000023543835 -0.05714999884366989 -0.05714999884366989 0.01905000023543835 -0.05714999884366989 0.05714999884366989 0.01905000023543835 -0.05714999884366989 0.05714999884366989 -0.01905000023543835 -0.05714999884366989 -0.05714999884366989 -0.01905000023543835 -0.05714999884366989 -0.05714999884366989 -0.01905000023543835 -0.05714999884366989 0.05714999884366989 -0.01905000023543835 0.05714999884366989 0.05714999884366989 -0.01905000023543835 0.05714999884366989 -0.05714999884366989 -0.01905000023543835 0.05714999884366989 0.05714999884366989 -0.01905000023543835 -0.05714999884366989 0.05714999884366989 -0.01905000023543835 -0.05714999884366989 0.05714999884366989 0.01905000023543835 0.05714999884366989 0.05714999884366989 0.01905000023543835</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_base_link_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_base_link_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_base_link_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_turntable_geom0">
+			<mesh>
+				<source id="gkmodel0_turntable_geom0_positions">
+					<float_array id="gkmodel0_turntable_geom0_positions-array" count="38" digits="2490374">0 0 0.004999999888241291 0.05499999970197678 0 0.004999999888241291 0.02749999985098839 0.0476313978433609 0.004999999888241291 -0.02749999985098839 0.0476313978433609 0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 0.004999999888241291 -0.02749999985098839 -0.0476313978433609 0.004999999888241291 0.02749999985098839 -0.0476313978433609 0.004999999888241291 0 0 -0.004999999888241291 0.02749999985098839 0.0476313978433609 -0.004999999888241291 0.05499999970197678 0 -0.004999999888241291 -0.02749999985098839 0.0476313978433609 -0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 -0.004999999888241291 -0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.02749999985098839 0.0476313978433609 0.004999999888241291 0.05499999970197678 0 0.004999999888241291 0.05499999970197678 0 -0.004999999888241291 0.02749999985098839 0.0476313978433609 -0.004999999888241291 -0.02749999985098839 0.0476313978433609 0.004999999888241291 0.02749999985098839 0.0476313978433609 0.004999999888241291 0.02749999985098839 0.0476313978433609 -0.004999999888241291 -0.02749999985098839 0.0476313978433609 -0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 0.004999999888241291 -0.02749999985098839 0.0476313978433609 0.004999999888241291 -0.02749999985098839 0.0476313978433609 -0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 -0.004999999888241291 -0.02749999985098839 -0.0476313978433609 0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 0.004999999888241291 -0.05499999970197678 6.735557192910056e-18 -0.004999999888241291 -0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.02749999985098839 -0.0476313978433609 0.004999999888241291 -0.02749999985098839 -0.0476313978433609 0.004999999888241291 -0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.05499999970197678 0 0.004999999888241291 0.02749999985098839 -0.0476313978433609 0.004999999888241291 0.02749999985098839 -0.0476313978433609 -0.004999999888241291 0.05499999970197678 0 -0.004999999888241291</float_array>
+					<technique_common>
+						<accessor count="38" source="#gkmodel0_turntable_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_turntable_geom0_positions"/>
+				</vertices>
+				<triangles count="24" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_turntable_geom0/vertices" set="0"/>
+					<p>0 1 2 0 2 3 0 3 4 0 4 5 0 5 6 0 6 1 7 8 9 7 10 8 7 11 10 7 12 11 7 13 12 7 9 13 14 15 16 14 16 17 18 19 20 18 20 21 22 23 24 22 24 25 26 27 28 26 28 29 30 31 32 30 32 33 34 35 36 34 36 37</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_second_motor_geom0">
+			<mesh>
+				<source id="gkmodel0_second_motor_geom0_positions">
+					<float_array id="gkmodel0_second_motor_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_second_motor_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_second_motor_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_second_motor_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_first_mounting_plate_geom0">
+			<mesh>
+				<source id="gkmodel0_first_mounting_plate_geom0_positions">
+					<float_array id="gkmodel0_first_mounting_plate_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_first_mounting_plate_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_first_mounting_plate_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_first_mounting_plate_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_girder_geom0">
+			<mesh>
+				<source id="gkmodel0_girder_geom0_positions">
+					<float_array id="gkmodel0_girder_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.03175000101327896 0.01779999956488609 -0.01775000058114529 -0.03175000101327896 0.01779999956488609 -0.01775000058114529 0.03175000101327896 -0.01779999956488609 -0.01775000058114529 0.03175000101327896 -0.01779999956488609 0.01775000058114529 0.03175000101327896 -0.01779999956488609 -0.01775000058114529 0.03175000101327896 0.01779999956488609 -0.01775000058114529 0.03175000101327896 0.01779999956488609 0.01775000058114529 0.03175000101327896 0.01779999956488609 0.01775000058114529 -0.03175000101327896 0.01779999956488609 0.01775000058114529 0.03175000101327896 0.01779999956488609 -0.01775000058114529 0.03175000101327896 0.01779999956488609 -0.01775000058114529 -0.03175000101327896 -0.01779999956488609 -0.01775000058114529 0.03175000101327896 -0.01779999956488609 0.01775000058114529 0.03175000101327896 -0.01779999956488609 0.01775000058114529 -0.03175000101327896 -0.01779999956488609 -0.01775000058114529 -0.03175000101327896 -0.01779999956488609 -0.01775000058114529 -0.03175000101327896 -0.01779999956488609 0.01775000058114529 -0.03175000101327896 0.01779999956488609 0.01775000058114529 -0.03175000101327896 0.01779999956488609 -0.01775000058114529 -0.03175000101327896 0.01779999956488609 0.01775000058114529 -0.03175000101327896 -0.01779999956488609 0.01775000058114529 -0.03175000101327896 -0.01779999956488609 0.01775000058114529 0.03175000101327896 0.01779999956488609 0.01775000058114529 0.03175000101327896</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_girder_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_girder_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_girder_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_third_motor_geom0">
+			<mesh>
+				<source id="gkmodel0_third_motor_geom0_positions">
+					<float_array id="gkmodel0_third_motor_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_third_motor_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_third_motor_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_third_motor_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_second_mounting_plate_geom0">
+			<mesh>
+				<source id="gkmodel0_second_mounting_plate_geom0_positions">
+					<float_array id="gkmodel0_second_mounting_plate_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_second_mounting_plate_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_second_mounting_plate_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_second_mounting_plate_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_fourth_motor_geom0">
+			<mesh>
+				<source id="gkmodel0_fourth_motor_geom0_positions">
+					<float_array id="gkmodel0_fourth_motor_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_fourth_motor_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_fourth_motor_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_fourth_motor_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_third_mounting_plate_geom0">
+			<mesh>
+				<source id="gkmodel0_third_mounting_plate_geom0_positions">
+					<float_array id="gkmodel0_third_mounting_plate_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 -0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 0.01779999956488609 -0.01775000058114529 -0.01030000019818544 0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 -0.01030000019818544 -0.01779999956488609 0.01775000058114529 0.01030000019818544 0.01779999956488609 0.01775000058114529 0.01030000019818544</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_third_mounting_plate_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_third_mounting_plate_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_third_mounting_plate_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_wrist_rk_geom0">
+			<mesh>
+				<source id="gkmodel0_wrist_rk_geom0_positions">
+					<float_array id="gkmodel0_wrist_rk_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 -0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 0.01779999956488609 -0.01775000058114529 -0.02529999986290932 0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 -0.02529999986290932 -0.01779999956488609 0.01775000058114529 0.02529999986290932 0.01779999956488609 0.01775000058114529 0.02529999986290932</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_wrist_rk_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_wrist_rk_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_wrist_rk_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_wrist_geom0">
+			<mesh>
+				<source id="gkmodel0_wrist_geom0_positions">
+					<float_array id="gkmodel0_wrist_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.03550000116229057 -0.01264999993145466 0.01779999956488609 -0.03550000116229057 -0.01264999993145466 0.01779999956488609 -0.03550000116229057 0.01264999993145466 -0.01779999956488609 -0.03550000116229057 0.01264999993145466 -0.01779999956488609 0.03550000116229057 0.01264999993145466 -0.01779999956488609 -0.03550000116229057 0.01264999993145466 0.01779999956488609 -0.03550000116229057 0.01264999993145466 0.01779999956488609 0.03550000116229057 0.01264999993145466 0.01779999956488609 0.03550000116229057 -0.01264999993145466 0.01779999956488609 0.03550000116229057 0.01264999993145466 0.01779999956488609 -0.03550000116229057 0.01264999993145466 0.01779999956488609 -0.03550000116229057 -0.01264999993145466 -0.01779999956488609 -0.03550000116229057 0.01264999993145466 -0.01779999956488609 0.03550000116229057 0.01264999993145466 -0.01779999956488609 0.03550000116229057 -0.01264999993145466 -0.01779999956488609 -0.03550000116229057 -0.01264999993145466 -0.01779999956488609 -0.03550000116229057 -0.01264999993145466 -0.01779999956488609 0.03550000116229057 -0.01264999993145466 0.01779999956488609 0.03550000116229057 -0.01264999993145466 0.01779999956488609 -0.03550000116229057 -0.01264999993145466 0.01779999956488609 0.03550000116229057 -0.01264999993145466 -0.01779999956488609 0.03550000116229057 -0.01264999993145466 -0.01779999956488609 0.03550000116229057 0.01264999993145466 0.01779999956488609 0.03550000116229057 0.01264999993145466</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_wrist_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_wrist_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_wrist_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_left_finger_geom0">
+			<mesh>
+				<source id="gkmodel0_left_finger_geom0_positions">
+					<float_array id="gkmodel0_left_finger_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_left_finger_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_left_finger_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_left_finger_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+		<geometry id="gkmodel0_right_finger_geom0">
+			<mesh>
+				<source id="gkmodel0_right_finger_geom0_positions">
+					<float_array id="gkmodel0_right_finger_geom0_positions-array" count="24" digits="2490374">-0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 -0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 0.01779999956488609 -0.004449999891221523 -0.03999999910593033 0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 -0.03999999910593033 -0.01779999956488609 0.004449999891221523 0.03999999910593033 0.01779999956488609 0.004449999891221523 0.03999999910593033</float_array>
+					<technique_common>
+						<accessor count="24" source="#gkmodel0_right_finger_geom0_positions-array" stride="3">
+							<param name="X" type="float"/>
+							<param name="Y" type="float"/>
+							<param name="Z" type="float"/>
+						</accessor>
+					</technique_common>
+				</source>
+				<vertices id="vertices">
+					<input semantic="POSITION" source="#gkmodel0_right_finger_geom0_positions"/>
+				</vertices>
+				<triangles count="12" material="mat0">
+					<input offset="0" semantic="VERTEX" source="#gkmodel0_right_finger_geom0/vertices" set="0"/>
+					<p>0 1 2 2 3 0 4 5 6 6 7 4 8 9 10 10 11 8 12 13 14 14 15 12 16 17 18 18 19 16 20 21 22 22 23 20</p>
+				</triangles>
+			</mesh>
+		</geometry>
+	</library_geometries>
+	<library_effects id="effects">
+		<effect id="gkmodel0_base_link_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_base_link_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_turntable_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_turntable_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_second_motor_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_second_motor_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_first_mounting_plate_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_first_mounting_plate_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_girder_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_girder_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_third_motor_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_third_motor_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_second_mounting_plate_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_second_mounting_plate_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_fourth_motor_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_fourth_motor_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_third_mounting_plate_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_third_mounting_plate_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_wrist_rk_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_wrist_rk_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_wrist_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_wrist_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_left_finger_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_left_finger_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_right_finger_geom0">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+		<effect id="gkmodel0_right_finger_geom0_eff">
+			<profile_COMMON>
+				<technique sid="">
+					<phong>
+						<ambient>
+							<color>0.1000000014901161 0.1000000014901161 0.1000000014901161 0</color>
+						</ambient>
+						<diffuse>
+							<color>1 1 1 0</color>
+						</diffuse>
+					</phong>
+				</technique>
+			</profile_COMMON>
+		</effect>
+	</library_effects>
+	<library_materials id="materials">
+		<material id="gkmodel0_base_link_geom0_mat">
+			<instance_effect url="#gkmodel0_base_link_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_base_link_geom0_mat">
+			<instance_effect url="#gkmodel0_base_link_geom0"/>
+		</material>
+		<material id="gkmodel0_turntable_geom0_mat">
+			<instance_effect url="#gkmodel0_turntable_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_turntable_geom0_mat">
+			<instance_effect url="#gkmodel0_turntable_geom0"/>
+		</material>
+		<material id="gkmodel0_second_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_second_motor_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_second_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_second_motor_geom0"/>
+		</material>
+		<material id="gkmodel0_first_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_first_mounting_plate_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_first_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_first_mounting_plate_geom0"/>
+		</material>
+		<material id="gkmodel0_girder_geom0_mat">
+			<instance_effect url="#gkmodel0_girder_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_girder_geom0_mat">
+			<instance_effect url="#gkmodel0_girder_geom0"/>
+		</material>
+		<material id="gkmodel0_third_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_third_motor_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_third_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_third_motor_geom0"/>
+		</material>
+		<material id="gkmodel0_second_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_second_mounting_plate_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_second_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_second_mounting_plate_geom0"/>
+		</material>
+		<material id="gkmodel0_fourth_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_fourth_motor_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_fourth_motor_geom0_mat">
+			<instance_effect url="#gkmodel0_fourth_motor_geom0"/>
+		</material>
+		<material id="gkmodel0_third_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_third_mounting_plate_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_third_mounting_plate_geom0_mat">
+			<instance_effect url="#gkmodel0_third_mounting_plate_geom0"/>
+		</material>
+		<material id="gkmodel0_wrist_rk_geom0_mat">
+			<instance_effect url="#gkmodel0_wrist_rk_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_wrist_rk_geom0_mat">
+			<instance_effect url="#gkmodel0_wrist_rk_geom0"/>
+		</material>
+		<material id="gkmodel0_wrist_geom0_mat">
+			<instance_effect url="#gkmodel0_wrist_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_wrist_geom0_mat">
+			<instance_effect url="#gkmodel0_wrist_geom0"/>
+		</material>
+		<material id="gkmodel0_left_finger_geom0_mat">
+			<instance_effect url="#gkmodel0_left_finger_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_left_finger_geom0_mat">
+			<instance_effect url="#gkmodel0_left_finger_geom0"/>
+		</material>
+		<material id="gkmodel0_right_finger_geom0_mat">
+			<instance_effect url="#gkmodel0_right_finger_geom0_eff"/>
+		</material>
+		<material id="gkmodel0_right_finger_geom0_mat">
+			<instance_effect url="#gkmodel0_right_finger_geom0"/>
+		</material>
+	</library_materials>
+	<library_kinematics_models id="kmodels">
+		<kinematics_model id="kmodel0" name="crustcrawler">
+			<technique_common>
+				<joint name="base_to_turntable" sid="base_to_turntable">
+					<revolute sid="axis0">
+						<axis>0 0 1</axis>
+					</revolute>
+				</joint>
+				<joint name="first_mounting_plate_to_girder" sid="first_mounting_plate_to_girder">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="fixed" sid="fixed">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="fourth_motor_to_third_mounting_plate" sid="fourth_motor_to_third_mounting_plate">
+					<revolute sid="axis0">
+						<axis>1 0 0</axis>
+					</revolute>
+				</joint>
+				<joint name="girder_to_third_motor" sid="girder_to_third_motor">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="second_motor_to_first_mounting_plate" sid="second_motor_to_first_mounting_plate">
+					<revolute sid="axis0">
+						<axis>1 0 0</axis>
+					</revolute>
+				</joint>
+				<joint name="second_mounting_plate_to_fourth_motor" sid="second_mounting_plate_to_fourth_motor">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="third_motor_to_second_mounting_plate" sid="third_motor_to_second_mounting_plate">
+					<revolute sid="axis0">
+						<axis>1 0 0</axis>
+					</revolute>
+				</joint>
+				<joint name="third_mounting_plate_to_wrist_rk" sid="third_mounting_plate_to_wrist_rk">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="turntable_to_second_motor" sid="turntable_to_second_motor">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="wrist_rk_to_wrist" sid="wrist_rk_to_wrist">
+					<revolute sid="axis0">
+						<axis>0 0 1</axis>
+					</revolute>
+				</joint>
+				<joint name="wrist_to_left_finger" sid="wrist_to_left_finger">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<joint name="wrist_to_right_finger" sid="wrist_to_right_finger">
+					<revolute sid="axis0">
+						<axis>0 0 0</axis>
+						<limits>
+							<min>0.0</min>
+							<max>0.0</max>
+						</limits>
+					</revolute>
+				</joint>
+				<link sid="world" name="world">
+					<attachment_full joint="kmodel0/fixed">
+						<translate>0.0 0.0 0.0</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+						<link sid="base_link" name="base_link">
+							<attachment_full joint="kmodel0/base_to_turntable">
+								<translate>0.0 0.0 0.02405</translate>
+								<rotate>1.0 0.0 0.0 0.0</rotate>
+								<link sid="turntable" name="turntable">
+									<attachment_full joint="kmodel0/turntable_to_second_motor">
+										<translate>0.0 0.0 0.005</translate>
+										<rotate>1.0 0.0 0.0 0.0</rotate>
+										<link sid="second_motor" name="second_motor">
+											<attachment_full joint="kmodel0/second_motor_to_first_mounting_plate">
+												<translate>0.0 0.0 0.0506</translate>
+												<rotate>1.0 0.0 0.0 0.0</rotate>
+												<link sid="first_mounting_plate" name="first_mounting_plate">
+													<attachment_full joint="kmodel0/first_mounting_plate_to_girder">
+														<translate>0.0 0.0 0.0206</translate>
+														<rotate>1.0 0.0 0.0 0.0</rotate>
+														<link sid="girder" name="girder">
+															<attachment_full joint="kmodel0/girder_to_third_motor">
+																<translate>0.0 0.0 0.0635</translate>
+																<rotate>1.0 0.0 0.0 0.0</rotate>
+																<link sid="third_motor" name="third_motor">
+																	<attachment_full joint="kmodel0/third_motor_to_second_mounting_plate">
+																		<translate>0.0 0.0 0.0506</translate>
+																		<rotate>1.0 0.0 0.0 0.0</rotate>
+																		<link sid="second_mounting_plate" name="second_mounting_plate">
+																			<attachment_full joint="kmodel0/second_mounting_plate_to_fourth_motor">
+																				<translate>0.0 0.0 0.0206</translate>
+																				<rotate>1.0 0.0 0.0 0.0</rotate>
+																				<link sid="fourth_motor" name="fourth_motor">
+																					<attachment_full joint="kmodel0/fourth_motor_to_third_mounting_plate">
+																						<translate>0.0 0.0 0.0506</translate>
+																						<rotate>1.0 0.0 0.0 0.0</rotate>
+																						<link sid="third_mounting_plate" name="third_mounting_plate">
+																							<attachment_full joint="kmodel0/third_mounting_plate_to_wrist_rk">
+																								<translate>0.0 0.0 0.0206</translate>
+																								<rotate>1.0 0.0 0.0 0.0</rotate>
+																								<link sid="wrist_rk" name="wrist_rk">
+																									<attachment_full joint="kmodel0/wrist_rk_to_wrist">
+																										<translate>0.0 0.0 0.0506</translate>
+																										<rotate>1.0 0.0 0.0 0.0</rotate>
+																										<link sid="wrist" name="wrist">
+																											<attachment_full joint="kmodel0/wrist_to_left_finger">
+																												<translate>0.0 -0.0355 0.0206</translate>
+																												<rotate>1.0 0.0 0.0 0.0</rotate>
+																												<link sid="left_finger" name="left_finger"/>
+																											</attachment_full>
+																											<attachment_full joint="kmodel0/wrist_to_right_finger">
+																												<translate>0.0 0.0 0.0206</translate>
+																												<rotate>1.0 0.0 0.0 0.0</rotate>
+																												<link sid="right_finger" name="right_finger"/>
+																											</attachment_full>
+																										</link>
+																									</attachment_full>
+																								</link>
+																							</attachment_full>
+																						</link>
+																					</attachment_full>
+																				</link>
+																			</attachment_full>
+																		</link>
+																	</attachment_full>
+																</link>
+															</attachment_full>
+														</link>
+													</attachment_full>
+												</link>
+											</attachment_full>
+										</link>
+									</attachment_full>
+								</link>
+							</attachment_full>
+						</link>
+					</attachment_full>
+				</link>
+			</technique_common>
+		</kinematics_model>
+	</library_kinematics_models>
+	<library_articulated_systems id="asystems">
+		<articulated_system id="robot0_motion">
+			<motion>
+				<instance_articulated_system url="#robot0_kinematics">
+					<newparam sid="robot0_motion_kmodel0_inst">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_base_to_turntable_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_fixed_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_fixed_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_fixed_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_fixed_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value">
+						<SIDREF>robot0_kinematics/robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value</SIDREF>
+					</newparam>
+				</instance_articulated_system>
+				<technique_common>
+					<axis_info axis="robot0_kinematics/axis_info_inst0"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst1"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst2"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst3"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst4"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst5">
+						<speed>
+							<float>50.0</float>
+						</speed>
+						<acceleration>
+							<float>0.1</float>
+						</acceleration>
+					</axis_info>
+					<axis_info axis="robot0_kinematics/axis_info_inst6"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst7"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst8"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst9"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst10"/>
+					<axis_info axis="robot0_kinematics/axis_info_inst11">
+						<speed>
+							<float>0.5</float>
+						</speed>
+						<acceleration>
+							<float>1000.0</float>
+						</acceleration>
+					</axis_info>
+					<axis_info axis="robot0_kinematics/axis_info_inst12">
+						<speed>
+							<float>0.5</float>
+						</speed>
+						<acceleration>
+							<float>1000.0</float>
+						</acceleration>
+					</axis_info>
+				</technique_common>
+			</motion>
+		</articulated_system>
+		<articulated_system id="robot0_kinematics">
+			<kinematics>
+				<instance_kinematics_model url="#kmodel0" sid="kmodel0_inst">
+					<newparam sid="robot0_kinematics_kmodel0_inst">
+						<SIDREF>robot0_kinematics/kmodel0_inst</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_base_to_turntable_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/base_to_turntable/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/first_mounting_plate_to_girder/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_fixed_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/fixed/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_fixed_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/fourth_motor_to_third_mounting_plate/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/girder_to_third_motor/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/second_motor_to_first_mounting_plate/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/second_mounting_plate_to_fourth_motor/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/third_motor_to_second_mounting_plate/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/third_mounting_plate_to_wrist_rk/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/turntable_to_second_motor/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/wrist_rk_to_wrist/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/wrist_to_left_finger/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value">
+						<float>0.0</float>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0">
+						<SIDREF>robot0_kinematics/kmodel0_inst/wrist_to_right_finger/axis0</SIDREF>
+					</newparam>
+					<newparam sid="robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value">
+						<float>0.0</float>
+					</newparam>
+				</instance_kinematics_model>
+				<technique_common>
+					<axis_info sid="axis_info_inst0" axis="kmodel0/base_to_turntable/axis0">
+						<active>
+							<bool>true</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+					</axis_info>
+					<axis_info sid="axis_info_inst1" axis="kmodel0/first_mounting_plate_to_girder/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst2" axis="kmodel0/fixed/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst3" axis="kmodel0/fourth_motor_to_third_mounting_plate/axis0">
+						<active>
+							<bool>true</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+					</axis_info>
+					<axis_info sid="axis_info_inst4" axis="kmodel0/girder_to_third_motor/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst5" axis="kmodel0/second_motor_to_first_mounting_plate/axis0">
+						<active>
+							<bool>true</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+					</axis_info>
+					<axis_info sid="axis_info_inst6" axis="kmodel0/second_mounting_plate_to_fourth_motor/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst7" axis="kmodel0/third_motor_to_second_mounting_plate/axis0">
+						<active>
+							<bool>true</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+					</axis_info>
+					<axis_info sid="axis_info_inst8" axis="kmodel0/third_mounting_plate_to_wrist_rk/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst9" axis="kmodel0/turntable_to_second_motor/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst10" axis="kmodel0/wrist_rk_to_wrist/axis0">
+						<active>
+							<bool>true</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+					</axis_info>
+					<axis_info sid="axis_info_inst11" axis="kmodel0/wrist_to_left_finger/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+					<axis_info sid="axis_info_inst12" axis="kmodel0/wrist_to_right_finger/axis0">
+						<active>
+							<bool>false</bool>
+						</active>
+						<locked>
+							<bool>false</bool>
+						</locked>
+						<limits>
+							<min><float>0.0</float>
+							</min>
+							<max><float>0.0</float>
+							</max>
+						</limits>
+					</axis_info>
+				</technique_common>
+			</kinematics>
+		</articulated_system>
+	</library_articulated_systems>
+	<library_kinematics_scenes id="kscenes">
+		<kinematics_scene id="kscene" name="URDF Kinematics Scene">
+			<instance_articulated_system sid="robot0_motion_inst" url="#robot0_motion" name="crustcrawler">
+				<bind symbol="kscene_kmodel0_inst">
+					<param ref="robot0_motion/robot0_motion_kmodel0_inst"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fixed_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_fixed_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fixed_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_fixed_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0"/>
+				</bind>
+				<bind symbol="kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value">
+					<param ref="robot0_motion/robot0_motion_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value"/>
+				</bind>
+			</instance_articulated_system>
+		</kinematics_scene>
+	</library_kinematics_scenes>
+	<library_physics_scenes id="pscenes">
+		<physics_scene id="pscene" name="URDF Physics Scene">
+			<instance_physics_model url="#pmodel0" sid="pmodel0_inst" parent="#visual0">
+				<instance_rigid_body body="rigid0" target="#vkmodel0_node0"/>
+				<instance_rigid_body body="rigid1" target="#vkmodel0_node1"/>
+				<instance_rigid_body body="rigid2" target="#vkmodel0_node2"/>
+				<instance_rigid_body body="rigid3" target="#vkmodel0_node3"/>
+				<instance_rigid_body body="rigid4" target="#vkmodel0_node4"/>
+				<instance_rigid_body body="rigid5" target="#vkmodel0_node5"/>
+				<instance_rigid_body body="rigid6" target="#vkmodel0_node6"/>
+				<instance_rigid_body body="rigid7" target="#vkmodel0_node7"/>
+				<instance_rigid_body body="rigid8" target="#vkmodel0_node8"/>
+				<instance_rigid_body body="rigid9" target="#vkmodel0_node9"/>
+				<instance_rigid_body body="rigid10" target="#vkmodel0_node10"/>
+				<instance_rigid_body body="rigid11" target="#vkmodel0_node11"/>
+				<instance_rigid_body body="rigid12" target="#vkmodel0_node12"/>
+				<instance_rigid_body body="rigid13" target="#vkmodel0_node13"/>
+			</instance_physics_model>
+			<technique_common>
+				<gravity>0 0 0</gravity>
+			</technique_common>
+		</physics_scene>
+	</library_physics_scenes>
+	<library_physics_models id="pmodels">
+		<physics_model id="pmodel0" name="crustcrawler">
+			<rigid_body sid="rigid0" name="base_link">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>2</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.0</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>1 1 1</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid1" name="first_mounting_plate">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.01</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.08995</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.0014 0.0014 0.0021</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid2" name="fourth_motor">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.126</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.26025</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.04 0.04 0.0456</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid3" name="girder">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.03</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.132</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.0176 0.0176 0.00842</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid4" name="left_finger">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.01</mass>
+					<mass_frame>
+						<translate>0.0 -0.0355 0.41735</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>1e-07 1e-07 1e-07</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid5" name="right_finger">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.01</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.41735</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>1e-07 1e-07 1e-07</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid6" name="second_motor">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.126</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.05435</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.04 0.04 0.0456</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid7" name="second_mounting_plate">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.01</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.22465</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.0014 0.0014 0.0021</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid8" name="third_motor">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.126</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.18905</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.04 0.04 0.0456</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid9" name="third_mounting_plate">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.01</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.29585</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.0014 0.0014 0.0021</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid10" name="turntable">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.05</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.02405</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.082 0.082 0.076</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid11" name="world">
+				<technique_common/>
+			</rigid_body>
+			<rigid_body sid="rigid12" name="wrist">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.126</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.3694</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.0473 0.0158 0.0131</inertia>
+				</technique_common>
+			</rigid_body>
+			<rigid_body sid="rigid13" name="wrist_rk">
+				<technique_common>
+					<dynamic>true</dynamic>
+					<mass>0.126</mass>
+					<mass_frame>
+						<translate>0.0 0.0 0.33145</translate>
+						<rotate>1.0 0.0 0.0 0.0</rotate>
+					</mass_frame>
+					<inertia>0.04 0.04 0.0456</inertia>
+				</technique_common>
+			</rigid_body>
+		</physics_model>
+	</library_physics_models>
+	<scene>
+		<instance_physics_scene url="#pscene"/>
+		<instance_visual_scene url="#vscene"/>
+		<instance_kinematics_scene url="#kscene">
+			<bind_kinematics_model node="visual0/node11">
+				<param>kscene_kmodel0_inst</param>
+			</bind_kinematics_model>
+			<bind_joint_axis target="node11/node10/node_base_to_turntable_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_base_to_turntable_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node3/node_first_mounting_plate_to_girder_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_first_mounting_plate_to_girder_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node0/node_fixed_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fixed_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fixed_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node7/node9/node_fourth_motor_to_third_mounting_plate_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_fourth_motor_to_third_mounting_plate_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node8/node_girder_to_third_motor_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_girder_to_third_motor_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node1/node_second_motor_to_first_mounting_plate_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_motor_to_first_mounting_plate_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node2/node_second_mounting_plate_to_fourth_motor_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_second_mounting_plate_to_fourth_motor_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node7/node_third_motor_to_second_mounting_plate_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_motor_to_second_mounting_plate_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node7/node2/node13/node_third_mounting_plate_to_wrist_rk_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_third_mounting_plate_to_wrist_rk_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node6/node_turntable_to_second_motor_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_turntable_to_second_motor_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node7/node2/node9/node12/node_wrist_rk_to_wrist_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_rk_to_wrist_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node7/node2/node9/node13/node4/node_wrist_to_left_finger_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_left_finger_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+			<bind_joint_axis target="node11/node0/node10/node6/node1/node3/node8/node7/node2/node9/node13/node5/node_wrist_to_right_finger_axis0">
+				<axis>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0</param>
+				</axis>
+				<value>
+					<param>kscene_kmodel0_inst_robot0_kinematics_kmodel0_inst_wrist_to_right_finger_axis0_value</param>
+				</value>
+			</bind_joint_axis>
+		</instance_kinematics_scene>
+	</scene>
+	<extra id="sensors" type="library_sensors">
+		<technique profile="OpenRAVE"/>
+	</extra>
+</COLLADA>

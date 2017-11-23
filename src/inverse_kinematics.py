@@ -71,13 +71,13 @@ def inverse_kinematics_optimization(xd,method):
 
     restarts = 0
     error_tolerance = 0.01
-    maxiter = 200
+    maxiter = 4
     best_solution = optimized
 
     while optimized.fun > error_tolerance and maxiter>0:
         q0 = (np.random.random(5)*2-1)*np.pi
 
-        optimized = minimize(norm_of_error,q0,args=(xd,),method=method)
+        optimized = minimize(norm_of_error,q0,args=(xd,))#,method=method)
         restarts += 1
         maxiter
 
@@ -90,4 +90,10 @@ def inverse_kinematics_optimization(xd,method):
     print optimized
     print direct_kinematics(optimized.x)
     print restarts
-    return optimized.x
+    qopt = optimized.x
+    i=0
+    for item in qopt:
+        qopt[i] = ( item + np.pi) % (2 * np.pi ) - np.pi
+        i = i + 1
+
+    return qopt

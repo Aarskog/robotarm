@@ -240,12 +240,13 @@ if __name__ == '__main__':
     a3 = 0.0712
     d5 = 0.0918
 
-    pd = np.matrix([[0.2],[0],[d1+a2+a3-0.1]])
-    od = np.matrix([[0],[np.pi/2],[np.pi/2]])
+    pd = np.matrix([[0],[0],[d1+a2+a3]])
+    od = np.matrix([[0],[np.pi/2],[0]])
     xd = np.concatenate((pd,od),axis=0)
 
     qopt = ik.inverse_kinematics_optimization(xd,'BFGS')
     qd = qopt
+    print qopt
 
 
 
