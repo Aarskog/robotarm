@@ -2,28 +2,30 @@ cmake_minimum_required(VERSION 2.8.3)
 project(five_dof_robotarm)
 
 
-add_compile_options(-std=c++11)
+#add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS message_generation rospy roscpp std_msgs genmsg)
-add_message_files(
-   FILES
-   Num.msg
-)
-find_package(catkin REQUIRED COMPONENTS moveit_ros_planning_interface)
 
-find_package(Eigen3 REQUIRED) 
+#add_message_files(
+#   FILES
+#   Num.msg
+#)
+#find_package(catkin REQUIRED COMPONENTS moveit_ros_planning_interface)
+
+#find_package(Eigen3 REQUIRED) 
 
 
-add_service_files(
-  FILES
-  AddTwoInts.srv
-)
+#add_service_files(
+#  FILES
+#  AddTwoInts.srv
+#)
 
 generate_messages(
   DEPENDENCIES
   std_msgs
 )
-catkin_package(CATKIN_DEPENDS message_runtime)
+catkin_package()
+#catkin_package(CATKIN_DEPENDS message_runtime)
 
 if(CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
@@ -31,13 +33,13 @@ if(CATKIN_ENABLE_TESTING)
 endif()
 
 include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} )
-include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN_INCLUDE_DIRS})
-link_directories(~/my_libs)
+#include_directories(SYSTEM ${Boost_INCLUDE_DIR} ${EIGEN_INCLUDE_DIRS})
+#link_directories(~/my_libs)
 
 
-add_executable(talker src/main.cpp)
-target_link_libraries(talker ${catkin_LIBRARIES})
-add_dependencies(talker five_dof_robotarm_messages_cpp)
+#add_executable(talker src/main.cpp)
+#target_link_libraries(talker ${catkin_LIBRARIES})
+#add_dependencies(talker five_dof_robotarm_messages_cpp)
 
 install(DIRECTORY config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

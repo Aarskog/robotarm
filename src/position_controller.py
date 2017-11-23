@@ -244,11 +244,14 @@ if __name__ == '__main__':
     od = np.matrix([[0],[np.pi/2],[0]])
     xd = np.concatenate((pd,od),axis=0)
 
-    qopt = ik.inverse_kinematics_optimization(xd,'BFGS')
-    qd = qopt
-    print qopt
+    #qopt = ik.inverse_kinematics_optimization(xd,'BFGS')
+    #qd = qopt
+    #print qopt
+    rospy.init_node('joint_positions_node', anonymous=True)
+    update_rate = 100
+    rate = rospy.Rate(update_rate)
 
-
-
-    try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
-    except rospy.ROSInterruptException: pass
+    while not rospy.is_shutdown():
+        rate.sleep()
+    #try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
+    #except rospy.ROSInterruptException: pass
