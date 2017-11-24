@@ -4,8 +4,10 @@ clear
 robot = importrobot('/home/magnaars/catkin_ws/src/five_dof_robotarm/urdf/matlabURDF.urdf');
 
 
-ik = robotics.InverseKinematics('RigidBodyTree',robot);
+% ik = robotics.InverseKinematics('RigidBodyTree',robot);
 
+ik = robotics.GeneralizedInverseKinematics('RigidBodyTree',robot);
+ik.ConstraintInputs={'joint','position','orientation'};
 
 rosshutdown
 pause(2)
@@ -15,7 +17,7 @@ pause(1)
 
 gazebo = ExampleHelperGazeboCommunicator();
 
-%Make a subscriber which will recive the joints states
+%% Make a subscriber which will recive the joints states
 jointstateSubscriber = rossubscriber('/five_dof_robotarm/joint_states');
 
 % Create publishers which will publish desired joint torques to the

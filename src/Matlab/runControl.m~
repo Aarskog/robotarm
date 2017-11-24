@@ -68,20 +68,20 @@ tempest = qarr;
 %%
 clc
 % qarr(1,:) = 0;
-a = 2;
+a = 3;
 
 figure(345)
 plot(medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),1))
 hold on
-plot(0.24*sin(0:0.2:4*pi)-1.21)
+plot(0.25*sin(0:0.2:4*pi)+1.15)
 hold off
 
 estq = zeros(5,length(qarr));
 
 estq(1,:) = qarr(1,:);
-estq(2,:) = 0.24*sin(0:0.2:4*pi)-1.21;
+estq(2,:) = 0.35*sin(0:0.2:4*pi)-1.2;
 estq(3,:) = sign(qarr(3,1)).*abs(mod((qarr(3,:) + pi),2*pi)-pi);
-estq(4,:) = 0.2*sin(0:0.2:4*pi)+1.1;
+estq(4,:) = 0.25*sin(0:0.2:4*pi)+1.15;
 estq(5,:) = 0*qarr(5,:);
 
 % for i = 1:5
@@ -90,7 +90,7 @@ estq(5,:) = 0*qarr(5,:);
 % end
 % estq = medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),9);
 %% 
-b = 2;
+b = 3;
 figure(2344)
 plot(qarr(b,:))
 hold on
