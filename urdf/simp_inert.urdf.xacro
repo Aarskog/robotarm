@@ -328,7 +328,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
   <type>transmisson_interface/SimpleTransmission</type>
   <actuator name="$turntable_motor">
     <mechanicalReduction>1</mechanicalReduction>
-    <motorTorqueConstant>100</motorTorqueConstant>
+    <motorTorqueConstant>1000</motorTorqueConstant>
   </actuator>
   <joint name="base_to_turntable">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
