@@ -4,10 +4,10 @@ function q_array = calculateJointPaths(path,od,robot,ik)
  q_array = zeros(5,n);
  
 
- xy = [0.2;0];
+ y = 0;
  
  initialguess = robot.homeConfiguration;
- [initialq,initialguess]= getIKJointAngles([xy;path(1)],od,ik,initialguess,robot);
+ [initialq,initialguess]= getIKJointAngles(path(:,1),od,ik,initialguess,robot);
 
  
  %Change to a faster solver
@@ -17,7 +17,7 @@ function q_array = calculateJointPaths(path,od,robot,ik)
 %  
  q_array(:,1) = initialq;
  for i=2:n
-    pd = [xy;path(i)];
+    pd = path(:,i);
     [q_array(:,i),initialguess] = getIKJointAngles(pd,od,ik,initialguess,robot);
     %q_array(:,i) = mod((q_array(:,i) + pi),2*pi)-pi;
     fprintf('Inverse Kinematics running. %2.2f%% done \n',i/n*100)

@@ -1,9 +1,9 @@
-%%
+%% Run everytime Gazebo is (re)started
 rosInit
 %%
 robotInit
 generateForwardkinematics
-%% Run things
+%% Get kp kd
 clc
 
 %resetSim(gazebo);
@@ -27,7 +27,7 @@ Kp = [kp1,0,0,0,0;
     0,0,0,kp4,0;
     0,0,0,0,kp5];
     
-kd1 = 1;
+kd1 = 0.9;
 kd2 = 0.9;
 kd3 = kd2;
 kd4 = kd2;
@@ -40,69 +40,33 @@ Kd =[kd1,0,0,0,0;
 
 Kp = 1*Kp;
 Kd = 1*Kd;
+%% Gen path
+t = 0:0.1:2*pi;
 
-ztest = 0.035*sin(0:0.2:4*pi)+0.21;
-%plot(ztest);
+ztest = 0.035*cos(t)+0.19;
+xtest = sin(t)*0;
+ytest = -0.04*sin(t)-0.19;
+path = [xtest;ytest;ztest];
+
+
 od = [0; pi/2; pi/2];
-% tic
-qarr = calculateJointPaths(ztest,od,robot,ik);
+%% tic
+qarr = calculateJointPaths(path,od,robot,ik);
+qarr(5,:) = qarr(5,:)*0+pi/2;
 % toc
-%
-% %Create desired position and orientation
-% pd = [0.2;0;d1+a2+a3-0.1];
-% od = [0; pi/2; pi/2];
-% 
-% %Create tranformation matrix from desired position and orientation
-% qd = getIKJointAngles(pd,od,ik,robot.homeConfiguration);
-%qarr = load('271117zUPnDown.mat')
-
-%% show configuration
-config = robot.homeConfiguration;
-config(1).JointPosition = qarr(1,end);
-config(2).JointPosition = qarr(2,end);
-config(3).JointPosition = qarr(3,end);
-config(4).JointPosition = qarr(4,end);
-config(5).JointPosition = qarr(5,end);
-show(robot,config)
 
 %% 
-tempest = qarr;
+figure(5783)
+for i=1:5
+    subplot(5,1,i)
+    plot(qarr(i,:))
+end
 
-%%
-clc
-% qarr(1,:) = 0;
-a = 4;
 
-figure(345)
-plot(medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),1))
-hold on
-plot(0.255*sin((0:0.2:4*pi)+pi)-1.25)
-hold off
-%%
-estq = zeros(5,length(qarr));
 
-estq(1,:) = qarr(1,:);
-estq(2,:) = 0.255*sin(0:0.2:4*pi)-1.055;
-estq(3,:) = -sign(qarr(3,1)).*abs(mod((qarr(3,:) + pi),2*pi)-pi)-0.1;
-estq(4,:) = -(0.255*sin((0:0.2:4*pi)+pi)-1.25);
-estq(5,:) = 1*qarr(5,:);
-
-% for i = 1:5
-%     a=i;
-%     estq(i,:) = medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),9);
-% end
-% estq = medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),9);
-%% 
-b = 2;
-figure(2344)
-plot(qarr(b,:))
-hold on
-plot(estq(b,:))
-hold off
-
-%% asdf
+%% Run
 qdarr = estq;
-
+qdarr = qarr;
 
 qd = qdarr(:,1);
 i = 1;
@@ -111,26 +75,29 @@ iterations = 1;
 tt = 5;
 
 erroracc = 0.05;
-updateRate = 0.01;
+updateRate = 0.01; 
 
 disp('ᗡ== Controller is running ==D')
+tic
 while 1
+   hertz = iterations/toc;
+   
    q = jointstateSubscriber.LatestMessage.Position;  
    qdot = jointstateSubscriber.LatestMessage.Velocity;
    
 %    dk = directKinematics(T5,q);
 %    dkd = directKinematics(T5,qd);
-   
+%    
 %    error = norm(dk-dkd);
-   
+%    
 %    if error<erroracc
 %       i=i+1;
 %       if i>=length(qarr)
 %          i=1; 
 %       end
-%       qd = qarr(:,i);
+%       %qd = qarr(:,i);
 %    end
-%    
+   
    q([2 3 4]) = q([3 4 2]);
    qdot([2 3 4]) = qdot([3 4 2]);
    qtilde = qd-q;
@@ -149,7 +116,8 @@ while 1
    send(pub4,u4)
    send(pub5,u5)
    
-   
+   %Because of time to calculate one need to adjust the pause
+
    pause(updateRate)
 
    if mod(iterations,tt)==0

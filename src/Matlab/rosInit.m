@@ -1,10 +1,10 @@
 %% Make a subscriber which will recive the joints states
 
 rosshutdown
-pause(2)
+%pause(2)
 
 rosinit
-pause(1)
+%pause(1)
 
 gazebo = ExampleHelperGazeboCommunicator();
 
@@ -24,4 +24,4 @@ u2 = rosmessage(pub2);
 u3 = rosmessage(pub3);
 u4 = rosmessage(pub4);
 u5 = rosmessage(pub5);
-pause(1)
+%pause(1)

@@ -27,7 +27,7 @@ Kp = [kp1,0,0,0,0;
     0,0,0,kp4,0;
     0,0,0,0,kp5];
     
-kd1 = 1;
+kd1 = 0.9;
 kd2 = 0.9;
 kd3 = kd2;
 kd4 = kd2;
@@ -41,20 +41,17 @@ Kd =[kd1,0,0,0,0;
 Kp = 1*Kp;
 Kd = 1*Kd;
 
-ztest = 0.035*sin(0:0.2:4*pi)+0.21;
-%plot(ztest);
+t = 0:0.2:4*pi;
+ztest = 0.035*sin(t)+0.21;
+xtest = zeros(1,length(t));
+ytest = -0.05*sin(t)-0.1;
+path = [xtest;ytest;ztest];
+
 od = [0; pi/2; pi/2];
-% tic
-qarr = calculateJointPaths(ztest,od,robot,ik);
+%% tic
+qarr = calculateJointPaths(path,od,robot,ik);
 % toc
-%
-% %Create desired position and orientation
-% pd = [0.2;0;d1+a2+a3-0.1];
-% od = [0; pi/2; pi/2];
-% 
-% %Create tranformation matrix from desired position and orientation
-% qd = getIKJointAngles(pd,od,ik,robot.homeConfiguration);
-%qarr = load('271117zUPnDown.mat')
+
 
 %% show configuration
 config = robot.homeConfiguration;
@@ -71,27 +68,46 @@ tempest = qarr;
 %%
 clc
 % qarr(1,:) = 0;
-a = 3;
+a = 4;
 
 figure(345)
 plot(medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),1))
 hold on
-plot(0.2*sin(0:0.2:4*pi)+1.15)
+plot(0.2*sin((0:0.2:4*pi)+pi)-1.2)
 hold off
-
+%% Manual curvefit
 estq = zeros(5,length(qarr));
 
 estq(1,:) = qarr(1,:);
-estq(2,:) = 0.24*sin(0:0.2:4*pi)-1.14;
-estq(3,:) = sign(qarr(3,1)).*abs(mod((qarr(3,:) + pi),2*pi)-pi)-0.1;
-estq(4,:) = 0.2*sin(0:0.2:4*pi)+1.1;
+estq(2,:) = 0.255*sin(0:0.2:4*pi)-1.055;
+estq(3,:) = -sign(qarr(3,1)).*abs(mod((qarr(3,:) + pi),2*pi)-pi)-0.1;
+estq(4,:) = -(0.2*sin((0:0.2:4*pi)+pi)-1.2);
 estq(5,:) = 1*qarr(5,:);
 
-% for i = 1:5
-%     a=i;
-%     estq(i,:) = medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),9);
-% end
-% estq = medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),9);
+%% filter
+
+b = (1/windowSize)*ones(1,windowSize);
+a = 1;
+or = 5;
+
+qarr(:,1) = qarr(:,end);
+
+estq(1,:) = filter(b,a,qarr(1,:))*0;
+estq(2,:) = qarr(2,:);
+estq(3,:) = qarr(3,:);
+estq(4,:) = qarr(4,:);
+estq(5,:) = -filter(b,a,qarr(5,:))*0-pi/2;
+
+estq(:,1) = estq(:,end);
+
+
+g =5;
+figure(2341)
+plot(estq(g,:))
+hold on
+plot(qarr(g,:))
+hold off
+
 %% 
 b = 2;
 figure(2344)
@@ -102,6 +118,7 @@ hold off
 
 %% asdf
 qdarr = estq;
+qdarr = qarr;
 
 qd = qdarr(:,1);
 i = 1;
@@ -110,24 +127,30 @@ iterations = 1;
 tt = 10;
 
 erroracc = 0.05;
-updateRate = 0.01;
+updateRate = 0.01; %100 Hertz
+dynUR = 0.01;
+
+disp('ᗡ== Controller is running ==D')
+tic
 while 1
+   hertz = iterations/toc;
+   
    q = jointstateSubscriber.LatestMessage.Position;  
    qdot = jointstateSubscriber.LatestMessage.Velocity;
    
 %    dk = directKinematics(T5,q);
 %    dkd = directKinematics(T5,qd);
-   
+%    
 %    error = norm(dk-dkd);
-   
+%    
 %    if error<erroracc
 %       i=i+1;
 %       if i>=length(qarr)
 %          i=1; 
 %       end
-%       qd = qarr(:,i);
+%       %qd = qarr(:,i);
 %    end
-%    
+   
    q([2 3 4]) = q([3 4 2]);
    qdot([2 3 4]) = qdot([3 4 2]);
    qtilde = qd-q;
@@ -146,15 +169,18 @@ while 1
    send(pub4,u4)
    send(pub5,u5)
    
-   
-   pause(updateRate)
+   %Because of time to calculate one need to adjust the pause
+   urErr = updateRate-1/hertz;
+   dynUR = dynUR+urErr;
+   pause(dynUR)
 
    if mod(iterations,tt)==0
-       i = i + 1
+       i = i + 1;
        if i>=length(qarr)
          i=1; 
        end
       qd = qdarr(:,i);
+      
    end
-   iterations = iterations +1
+   iterations = iterations +1;
 end

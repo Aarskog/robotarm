@@ -42,7 +42,10 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 <xacro:property name="mass_tt" value="0.05"/> <!--Turntable-->
 
 <!-- Operating limits(ol) [rad]-->
-<xacro:property name="motor_ol" value="1.92"/><!--110deg-->
+<xacro:property name="motor_ol" value="3.92"/><!--110deg 1.92 rad-->
+
+
+
 
 <!-- Fixing robot to world frame-->
 <link name="world">
