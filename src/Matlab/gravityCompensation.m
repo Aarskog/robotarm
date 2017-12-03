@@ -5,8 +5,9 @@ function gravitycomp = gravityCompensation(q)
     m1 = 0.126+0.05;
     m2 = 0.01+0.03+0.126;
     m3 = 0.126+0.01;
-    m4 = 0.126+0.01;
-    m5 = 0.126+0.01*2;
+    m4 = 0.126+0.01*2; %Multiplied for better results
+    m5 = 0.126+0.01*3; %Multiplied for better results
+    %m5 = 0.126+0.01*2;
     
     % Link lengths
     l1 = 0.0506+0.01;

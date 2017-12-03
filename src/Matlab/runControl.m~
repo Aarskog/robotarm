@@ -1,9 +1,9 @@
-%%
+%% Run everytime Gazebo is (re)started
 rosInit
 %%
 robotInit
 generateForwardkinematics
-%% Run things
+%% Get kp kd
 clc
 
 %resetSim(gazebo);
@@ -38,149 +38,114 @@ Kd =[kd1,0,0,0,0;
     0,0,0,kd4,0;
     0,0,0,0,kd5];
 
-Kp = 1*Kp;
-Kd = 1*Kd;
+Kp = .1*Kp;
+Kd = .1*Kd;
+%% Gen path
+t = 0:0.1:2*pi;
 
-t = 0:0.2:4*pi;
-ztest = 0.035*sin(t)+0.21;
-xtest = zeros(1,length(t));
-ytest = -0.05*sin(t)-0.1;
+ztest = 0.035*cos(t)+0.20;
+xtest = sin(t)*0;
+ytest = -0.04*sin(t)-0.20;
 path = [xtest;ytest;ztest];
+
 
 od = [0; pi/2; pi/2];
 %% tic
 qarr = calculateJointPaths(path,od,robot,ik);
+qarr(5,:) = qarr(5,:)*0+pi/2;
 % toc
 
-
-%% show configuration
-config = robot.homeConfiguration;
-config(1).JointPosition = qarr(1,end);
-config(2).JointPosition = qarr(2,end);
-config(3).JointPosition = qarr(3,end);
-config(4).JointPosition = qarr(4,end);
-config(5).JointPosition = qarr(5,end);
-show(robot,config)
-
 %% 
-tempest = qarr;
-
-%%
-clc
-% qarr(1,:) = 0;
-a = 4;
-
-figure(345)
-plot(medfilt1(sign(qarr(a,1)).*abs(mod((qarr(a,:) + pi),2*pi)-pi),1))
-hold on
-plot(0.2*sin((0:0.2:4*pi)+pi)-1.2)
-hold off
-%% Manual curvefit
-estq = zeros(5,length(qarr));
-
-estq(1,:) = qarr(1,:);
-estq(2,:) = 0.255*sin(0:0.2:4*pi)-1.055;
-estq(3,:) = -sign(qarr(3,1)).*abs(mod((qarr(3,:) + pi),2*pi)-pi)-0.1;
-estq(4,:) = -(0.2*sin((0:0.2:4*pi)+pi)-1.2);
-estq(5,:) = 1*qarr(5,:);
-
-%% filter
-
-b = (1/windowSize)*ones(1,windowSize);
-a = 1;
-or = 5;
-
-qarr(:,1) = qarr(:,end);
-
-estq(1,:) = filter(b,a,qarr(1,:))*0;
-estq(2,:) = qarr(2,:);
-estq(3,:) = qarr(3,:);
-estq(4,:) = qarr(4,:);
-estq(5,:) = -filter(b,a,qarr(5,:))*0-pi/2;
-
-estq(:,1) = estq(:,end);
+figure(5783)
+for i=1:5
+    subplot(5,1,i)
+    plot(qarr(i,:))
+end
 
 
-g =5;
-figure(2341)
-plot(estq(g,:))
-hold on
-plot(qarr(g,:))
-hold off
 
-%% 
-b = 2;
-figure(2344)
-plot(qarr(b,:))
-hold on
-plot(estq(b,:))
-hold off
+%% Run
 
-%% asdf
 qdarr = estq;
 qdarr = qarr;
+pd = [0;0;0.2250];
+qdarr = calculateJointPaths(pd,od,robot,ik);
 
 qd = qdarr(:,1);
 i = 1;
 iterations = 1;
 
-tt = 10;
+tt = 5;
 
-erroracc = 0.05;
-updateRate = 0.01; %100 Hertz
-dynUR = 0.01;
+
+updateRate = 0.01; 
+RupdateRate = updateRate/2;
 
 disp('ᗡ== Controller is running ==D')
 tic
-while 1
-   hertz = iterations/toc;
-   
-   q = jointstateSubscriber.LatestMessage.Position;  
-   qdot = jointstateSubscriber.LatestMessage.Velocity;
-   
-%    dk = directKinematics(T5,q);
-%    dkd = directKinematics(T5,qd);
-%    
-%    error = norm(dk-dkd);
-%    
-%    if error<erroracc
-%       i=i+1;
-%       if i>=length(qarr)
-%          i=1; 
-%       end
-%       %qd = qarr(:,i);
-%    end
-   
-   q([2 3 4]) = q([3 4 2]);
-   qdot([2 3 4]) = qdot([3 4 2]);
-   qtilde = qd-q;
-   
-   u = Kp*qtilde - Kd*qdot + gravityCompensation(q);
+timeiterators = ones(2,200);
+timeiterator = 0;
 
-   u1.Data = u(1);
-   u2.Data = u(2);
-   u3.Data = u(3);
-   u4.Data = u(4);
-   u5.Data = u(5);
-   
-   send(pub1,u1)
-   send(pub2,u2)
-   send(pub3,u3)
-   send(pub4,u4)
-   send(pub5,u5)
-   
-   %Because of time to calculate one need to adjust the pause
-   urErr = updateRate-1/hertz;
-   dynUR = dynUR+urErr;
-   pause(dynUR)
+%matrix containing datas q qdot qd u grav
+datas = zeros(25,1);
 
-   if mod(iterations,tt)==0
-       i = i + 1;
-       if i>=length(qarr)
-         i=1; 
-       end
-      qd = qdarr(:,i);
-      
-   end
-   iterations = iterations +1;
+
+while toc < 5
+    %Frequency 
+    timeiterator = timeiterator + 1;
+    if timeiterator>length(timeiterators)
+       timeiterator = 1;
+    end
+    timeiterators(:,timeiterator) = [iterations;toc];
+    hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)));
+
+    %RupdateRate = double(1/(1/RupdateRate + 0.1*(1/updateRate-hertz)))
+
+    q = jointstateSubscriber.LatestMessage.Position;  
+    qdot = jointstateSubscriber.LatestMessage.Velocity;
+
+
+    q([2 3 4]) = q([3 4 2]);
+    qdot([2 3 4]) = qdot([3 4 2]);
+    qtilde = qd-q;
+
+    grav = gravityCompensation(q);
+    u = Kp*qtilde - Kd*qdot + grav;
+    u = torque_saturation(u,maxtorque);
+
+
+    u1.Data = u(1);
+    u2.Data = u(2);
+    u3.Data = u(3);
+    u4.Data = u(4);
+    u5.Data = u(5);
+
+    send(pub1,u1)
+    send(pub2,u2)
+    send(pub3,u3)
+    send(pub4,u4)
+    send(pub5,u5)
+
+    pause(RupdateRate)
+
+    % Set next desired point at every tt iteration and when the end is
+    % reached, start over. 
+    if (mod(iterations,tt)==0)
+        sizum = size(qdarr);
+        if (i+1)>sizum(2)
+            i=1;
+        end
+        qd = qdarr(:,i);
+        i = i + 1;
+        err = u-grav;
+        debusdats =[err,grav,u];
+    end
+    iterations = iterations +1;
+    
+    datas = [datas,[q;qdot;qd;u;grav]];
 end
+plot(datas)
+
+
+
+   
