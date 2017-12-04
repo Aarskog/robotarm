@@ -15,11 +15,11 @@ a3 = 0.0712;
 d5 = 0.0918;
 
 
-kp1 = 2.4;
+kp1 = 6;
 kp2 = 6;
 kp3 = kp2*1.1;
 kp4 = kp2*1.5;
-kp5 = 3;
+kp5 = 2;
 
 Kp = [kp1,0,0,0,0;
     0,kp2,0,0,0;
@@ -27,7 +27,7 @@ Kp = [kp1,0,0,0,0;
     0,0,0,kp4,0;
     0,0,0,0,kp5];
     
-kd1 = 0.9;
+kd1 = 1.9;
 kd2 = 0.9;
 kd3 = kd2;
 kd4 = kd2;
@@ -38,8 +38,8 @@ Kd =[kd1,0,0,0,0;
     0,0,0,kd4,0;
     0,0,0,0,kd5];
 
-Kp = .1*Kp;
-Kd = .1*Kd;
+Kp = 1*Kp;
+Kd = 1*Kd;
 %% Gen path
 t = 0:0.1:2*pi;
 
@@ -62,15 +62,17 @@ for i=1:5
     plot(qarr(i,:))
 end
 
-
-
 %% Run
 
 qdarr = estq;
 qdarr = qarr;
-pd = [0;0;0.2250];
-qdarr = calculateJointPaths(pd,od,robot,ik);
+% pd = [-0.2250;0;0.2250];
+% tod = [-pi/2; 0; pi/2];
+% pd = [0;0.2250;0.2250];
+% tod = [0; pi/2; -pi/2];
+% qdarr = calculateJointPaths(pd,tod,robot,ik);
 
+qdarr = qdarr + 0.05;
 qd = qdarr(:,1);
 i = 1;
 iterations = 1;
@@ -87,17 +89,17 @@ timeiterators = ones(2,200);
 timeiterator = 0;
 
 %matrix containing datas q qdot qd u grav
+datas = zeros(26,1);
 
 
-
-while toc < 5
+while toc < 2000
     %Frequency 
     timeiterator = timeiterator + 1;
     if timeiterator>length(timeiterators)
        timeiterator = 1;
     end
     timeiterators(:,timeiterator) = [iterations;toc];
-    hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)));
+    hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)))
 
     %RupdateRate = double(1/(1/RupdateRate + 0.1*(1/updateRate-hertz)))
 
@@ -144,9 +146,62 @@ while toc < 5
     
     datas = [datas,[q;qdot;qd;u;grav;toc]];
 end
-%%
-plot(datas(26,:))
+%% Super plot
+superdatas =datas(:,2:end);
+fontsize = 17;
+figure(1)
+plot(superdatas(26,:),superdatas(1:5,:))%-datas(11:15,:))
+hold on
+plot(superdatas(26,:),superdatas(11:15,:))
+legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize)
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('Joint angles - large step','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
 
+figure(2)
+plot(superdatas(26,:),superdatas(1:5,:)-superdatas(11:15,:))
+legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize);
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('$$q-q_d$$ - large step','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
 
-
+figure(3)
+plot(superdatas(26,:),superdatas(16:20,:))
+legs = legend({'$u_1$','$u_2$','$u_3$','$u_4$','$u_5$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('u','Interpreter','latex','FontSize',fontsize)
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('u - large step','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
    
+figure(4)
+plot(superdatas(26,:),superdatas(21:25,:))
+legs = legend({'$g_1$','$g_2$','$g_3$','$g_4$','$g_5$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('g','Interpreter','latex','FontSize',fontsize)
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('Gravity components - large step','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
+
+figure(5)
+plot(superdatas(26,:),superdatas(6:11,:))
+legs = legend({'$\dot{q_1}$','$\dot{q_2}$','$\dot{q_3}$','$\dot{q_4}$','$\dot{q_5}$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('velocity(rad/s)','Interpreter','latex','FontSize',fontsize)
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('$$\dot{q}$$ - large step','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
+
+
+%%
+hust = superdatas(26,2:end)-superdatas(26,1:end-1);
+std((hust))
