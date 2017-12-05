@@ -31,7 +31,7 @@ kd1 = 1.9;
 kd2 = 0.9;
 kd3 = kd2;
 kd4 = kd2;
-kd5 = 0.9;
+kd5 = 0.5;
 Kd =[kd1,0,0,0,0;
     0,kd2,0,0,0;
     0,0,kd3,0,0;
@@ -64,7 +64,7 @@ end
 
 %% Run
 
-qdarr = estq;
+%qdarr = estq;
 qdarr = qarr;
 % pd = [-0.2250;0;0.2250];
 % tod = [-pi/2; 0; pi/2];
@@ -72,8 +72,8 @@ qdarr = qarr;
 % tod = [0; pi/2; -pi/2];
 % qdarr = calculateJointPaths(pd,tod,robot,ik);
 
-qdarr = qdarr + 0.05;
-qd = qdarr(:,1);
+% qdarr = qdarr + 0.05;
+% qd = qdarr(:,1);
 i = 1;
 iterations = 1;
 

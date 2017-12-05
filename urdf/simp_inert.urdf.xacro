@@ -51,10 +51,6 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
 <link name="world">
   <origin xyz="0 0 -100" rpy="0 0 0"/>
 </link>
-  <joint name="fixed" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-  </joint>
 
 
 <!-- Base -->
@@ -77,6 +73,11 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
   </geometry>
 </collision>
 </link>
+
+<joint name="fixed" type="fixed">
+  <parent link="world"/>
+  <child link="base_link"/>
+</joint>
 
 <link name="turntable">
   <visual>
@@ -280,6 +281,7 @@ the inertias with 1000. Gazebo would go wild if the inertias were too low.
   <child link="wrist"/>
   <origin xyz="0 0 ${motorz}"/>
   <axis xyz ="0 0 1"/>
+  <limit effort="10" lower="${-motor_ol}" upper="${motor_ol}" velocity="50"/>
 </joint>
 
 
