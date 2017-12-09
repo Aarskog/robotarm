@@ -22,10 +22,10 @@ kp4 = kp2*1.5;
 kp5 = 2;
 
 Kp = [kp1,0,0,0,0;
-    0,kp2,0,0,0;
-    0,0,kp3,0,0;
-    0,0,0,kp4,0;
-    0,0,0,0,kp5];
+      0,kp2,0,0,0;
+      0,0,kp3,0,0;
+      0,0,0,kp4,0;
+      0,0,0,0,kp5];
     
 kd1 = 1.9;
 kd2 = 0.9;
@@ -33,35 +33,34 @@ kd3 = kd2;
 kd4 = kd2;
 kd5 = 0.5;
 Kd =[kd1,0,0,0,0;
-    0,kd2,0,0,0;
-    0,0,kd3,0,0;
-    0,0,0,kd4,0;
-    0,0,0,0,kd5];
+     0,kd2,0,0,0;
+     0,0,kd3,0,0;
+     0,0,0,kd4,0;
+     0,0,0,0,kd5];
 
 Kp = 1*Kp;
 Kd = 1*Kd;
 %% Gen path
-t = 0:0.1:2*pi;
+steplength = 0.1;
+t = 0:steplength:2*pi+2*steplength;
 
-ztest = 0.035*cos(t)+0.20;
-xtest = sin(t)*0;
-ytest = -0.04*sin(t)-0.20;
-path = [xtest;ytest;ztest];
+% Circle path zy plane
+% ztest = 0.035*cos(t)+0.20;
+% xtest = sin(t)*0;
+% ytest = -0.04*sin(t)-0.20;
 
+zpath = 0.05*sin(t)+0.2;
+xpath = 0.035*cos(t)+0.09;
+ypath = 0.035*sin(t)+0.09;
 
-od = [0; pi/2; pi/2];
-%% tic
+path = [xpath;ypath;zpath];
+od = [pi/2; 0; 0];
+%% Inverse Kin
+tic
 qarr = calculateJointPaths(path,od,robot,ik);
-qarr(5,:) = qarr(5,:)*0+pi/2;
-% toc
-
-%% 
-figure(5783)
-for i=1:5
-    subplot(5,1,i)
-    plot(qarr(i,:))
-end
-
+toc
+ms_per_point = toc/length(qarr)*1000;
+fprintf('Elapsed time per point: %2.2f ms \n',ms_per_point)
 %% Run
 
 %qdarr = estq;
@@ -73,25 +72,25 @@ qdarr = qarr;
 % qdarr = calculateJointPaths(pd,tod,robot,ik);
 
 % qdarr = qdarr + 0.05;
-% qd = qdarr(:,1);
+ qd = qdarr(:,1);
 i = 1;
 iterations = 1;
 
 tt = 5;
 
 
-updateRate = 0.01; 
-RupdateRate = updateRate/2;
+updateRate = robotics.Rate(100); 
+
 
 disp('ᗡ== Controller is running ==D')
 tic
-timeiterators = ones(2,200);
+timeiterators = ones(2,40);
 timeiterator = 0;
 
 %matrix containing datas q qdot qd u grav
 datas = zeros(26,1);
 
-
+reset(updateRate)
 while toc < 2000
     %Frequency 
     timeiterator = timeiterator + 1;
@@ -99,7 +98,8 @@ while toc < 2000
        timeiterator = 1;
     end
     timeiterators(:,timeiterator) = [iterations;toc];
-    hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)))
+    hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)));
+    fprintf('Controller is running. Update rate: \t %3.0f\tHz \n',hertz)
 
     %RupdateRate = double(1/(1/RupdateRate + 0.1*(1/updateRate-hertz)))
 
@@ -128,7 +128,7 @@ while toc < 2000
     send(pub4,u4)
     send(pub5,u5)
 
-    pause(RupdateRate)
+
 
     % Set next desired point at every tt iteration and when the end is
     % reached, start over. 
@@ -145,6 +145,7 @@ while toc < 2000
     iterations = iterations +1;
     
     datas = [datas,[q;qdot;qd;u;grav;toc]];
+    waitfor(updateRate);
 end
 %% Super plot
 superdatas =datas(:,2:end);
@@ -200,8 +201,47 @@ xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
 tits = title('$$\dot{q}$$ - large step','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
+%% Plot ik paths
+fontsize = 17;
+
+figure(111)
+plot3(path(1,:),path(2,:),path(3,:))
+%legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
+%set(legs,'FontSize',fontsize);
+ylabel('y(m)','Interpreter','latex','FontSize',fontsize);
+xlabel('x(m)','Interpreter','latex','FontSize',fontsize);
+zlabel('z(m)','Interpreter','latex','FontSize',fontsize);
+tits = title('Desired path for end effector','interpreter','latex');
+set(tits,'FontSize',fontsize);
+zlim([0 max(max(path(3,:)))])
+grid on
 
 
-%%
-hust = superdatas(26,2:end)-superdatas(26,1:end-1);
-std((hust))
+figure(112)
+for i = 1:5
+ figure(111+i)
+%  subplot(3,2,i)
+ plot(qarr(i,2:end))
+ xlim([0 65])
+ grid on
+ hold on
+ plot(t*0 +qarr(i,2))
+ hold off
+ titletext = sprintf('$$q_{%1.0f}$$',i);
+ title(titletext,'interpreter','latex','FontSize',fontsize)
+end
+% plot(qarr(1,:))
+% title('$$q_1$$','interpreter','latex','FontSize',fontsize);
+
+
+
+
+
+
+
+
+
+
+
+
+

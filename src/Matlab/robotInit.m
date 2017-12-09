@@ -10,5 +10,14 @@ ik.ConstraintInputs={'joint','position','orientation'};
 %ik.SolverAlgorithm = 'LevenbergMarquardt';
 ik.SolverParameters.SolutionTolerance = 0.00001;
 ik.SolverParameters.GradientTolerance = 0.000001;
-ik.SolverParameters.MaxTime = 1;
+ik.SolverParameters.MaxTime = 0.1;
 ik.SolverParameters.AllowRandomRestart = 0;
+
+
+% gik = robotics.GeneralizedInverseKinematics('RigidBodyTree',robot);
+% gik.ConstraintInputs={'joint','position','orientation'};
+% gik.SolverAlgorithm = 'LevenbergMarquardt';
+% gik.SolverParameters.SolutionTolerance = 0.00001;
+% gik.SolverParameters.GradientTolerance = 0.000001;
+% gik.SolverParameters.MaxTime = 0.1;
+% gik.SolverParameters.AllowRandomRestart = 0;
