@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<robot name="crustcrawler">
+
+<!-- Fixing robot to world frame-->
+<link name="world">
+  <origin xyz="0 0 -100" rpy="0 0 0"/>
+</link>
+<joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+</joint>
+
+<!-- Base -->
+<link name="base_link">
+  <visual>
+    <geometry>
+      <box size ="0.1143 0.1143 0.0381"/>
+    </geometry>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </visual>
+<inertial>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  <mass value="2"/>
+  <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+</inertial>
+</link>
+
+<!-- First Joint -->
+<link name="turntable">
+  <visual>
+    <geometry>
+      <cylinder radius= "0.055" length= "0.01"/>
+    </geometry>
+    <origin xyz ="0 0 0" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <mass value="0.05"/>
+     <inertia ixx="0.082" ixy="0" ixz="0" iyy="0.082" iyz="0" izz="0.076" />
+   </inertial>
+
+</link>
+<joint name="base_to_turntable" type="continuous">
+  <parent link="base_link"/>
+  <child link="turntable"/>
+  <origin xyz="0 0 0.02405" rpy="0 0 0"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+
+<!-- Second Joint -->
+<link name="second_motor">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0506"/>
+    </geometry>
+    <origin xyz ="0 0 0.0253" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0253" rpy="0 0 0"/>
+   <mass value="0.126"/>
+   <inertia ixx="0.04" ixy="0" ixz="0"
+            iyy="0.04" iyz="0"
+            izz="0.0456" />
+ </inertial>
+</link>
+<joint name="turntable_to_second_motor" type="fixed">
+  <parent link="turntable"/>
+  <child link="second_motor"/>
+  <origin xyz="0 0 0.005" rpy="0 0 0"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+
+<link name="first_mounting_plate">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0206"/>
+    </geometry>
+    <origin xyz ="0 0 0.0103" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0103" rpy="0 0 0"/>
+   <mass value="0.01"/>
+   <inertia ixx="0.0014" ixy="0" ixz="0"
+            iyy="0.0014" iyz="0"
+            izz="0.0021" />
+ </inertial>
+</link>
+<joint name="second_motor_to_first_mounting_plate" type="continuous">
+  <parent link="second_motor"/>
+  <child link="first_mounting_plate"/>
+  <origin xyz="0 0 0.0506" rpy="0 0 0" />
+  <axis xyz ="1 0 0"/>
+  <limit effort="0.1" velocity="50"/>
+</joint>
+<!-- over var det rpy = 1.57 0 0-->
+
+<!-- Girder -->
+<link name="girder">
+  <visual>
+    <geometry>
+    <box size ="0.0356 0.0355 0.0635"/>
+    </geometry>
+    <origin xyz ="0 0 0.03175" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0.03175" rpy="0 0 0"/>
+     <mass value="0.03"/>
+     <inertia ixx="0.0176" ixy="0" ixz="0" iyy="0.0176" iyz="0" izz="0.00842" />
+   </inertial>
+</link>
+<joint name="first_mounting_plate_to_girder" type="fixed">
+  <parent link="first_mounting_plate"/>
+  <child link="girder"/>
+  <origin xyz="0 0 0.0206" rpy="0 0 0"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+
+<!-- Third Joint -->
+<link name="third_motor">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0506"/>
+    </geometry>
+    <origin xyz ="0 0 0.0253" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0253" rpy="0 0 0"/>
+   <mass value="0.126"/>
+   <inertia ixx="0.04" ixy="0" ixz="0"
+            iyy="0.04" iyz="0"
+            izz="0.0456" />
+ </inertial>
+</link>
+<joint name="girder_to_third_motor" type="fixed">
+  <parent link="girder"/>
+  <child link="third_motor"/>
+  <origin xyz="0 0 0.0635" rpy="0 0 0"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+<link name="second_mounting_plate">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0206"/>
+    </geometry>
+    <origin xyz ="0 0 0.0103" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0103" rpy="0 0 0"/>
+   <mass value="0.01"/>
+   <inertia ixx="0.0014" ixy="0" ixz="0"
+            iyy="0.0014" iyz="0"
+            izz="0.0021" />
+ </inertial>
+</link>
+<joint name="third_motor_to_second_mounting_plate" type="continuous">
+  <parent link="third_motor"/>
+  <child link="second_mounting_plate"/>
+  <origin xyz="0 0 0.0506" rpy="0 0 0" />
+  <axis xyz ="1 0 0"/>
+  <!--limit effort="10" velocity="50"/-->
+</joint>
+
+<!-- Fourth Joint -->
+<link name="fourth_motor">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0506"/>
+    </geometry>
+    <origin xyz ="0 0 0.0253" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0253" rpy="0 0 0"/>
+   <mass value="0.126"/>
+   <inertia ixx="0.04" ixy="0" ixz="0"
+            iyy="0.04" iyz="0"
+            izz="0.0456" />
+ </inertial>
+</link>
+<joint name="second_mounting_plate_to_fourth_motor" type="fixed">
+  <parent link="second_mounting_plate"/>
+  <child link="fourth_motor"/>
+  <origin xyz="0 0 0.0206" rpy="0 0 0"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+
+<link name="third_mounting_plate">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0206"/>
+    </geometry>
+    <origin xyz ="0 0 0.0103" rpy="0 0 0"/>
+  </visual>
+<inertial>
+   <origin xyz="0 0 0.0103" rpy="0 0 0"/>
+   <mass value="0.01"/>
+   <inertia ixx="0.0014" ixy="0" ixz="0"
+            iyy="0.0014" iyz="0"
+            izz="0.0021" />
+ </inertial>
+</link>
+<joint name="fourth_motor_to_third_mounting_plate" type="continuous">
+  <parent link="fourth_motor"/>
+  <child link="third_mounting_plate"/>
+  <origin xyz="0 0 0.0506" rpy="0 0 0" />
+  <axis xyz ="1 0 0"/>
+  <!--OVer var det rpy = -1.57 0 0 -->
+</joint>
+
+<!-- Fifth Joint -->
+<link name="wrist_rk">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0355 0.0506"/>
+    </geometry>
+    <origin xyz ="0 0 0.0253" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0.0253" rpy="0 0 0"/>
+     <mass value="0.126"/>
+
+
+     <inertia ixx="0.04" ixy="0" ixz="0"
+              iyy="0.04" iyz="0"
+              izz="0.0456" />
+
+   </inertial>
+
+</link>
+<joint name="third_mounting_plate_to_wrist_rk" type="fixed">
+  <parent link="third_mounting_plate"/>
+  <child link="wrist_rk"/>
+  <origin xyz="0 0 0.0206" rpy="0 0 0"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+<link name="wrist">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.071 0.0253"/>
+    </geometry>
+    <origin xyz ="0 0 0.01265" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0.01265" rpy="0 0 0"/>
+     <mass value="0.126"/>
+     <!--inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" /-->
+     <inertia ixx="0.0473" ixy="0" ixz="0" iyy="0.0158" iyz="0" izz="0.0131" />
+
+   </inertial>
+</link>
+<joint name="wrist_rk_to_wrist" type="continuous">
+  <parent link="wrist_rk"/>
+  <child link="wrist"/>
+  <origin xyz="0 0 0.0506" rpy="0 0 0"/>
+  <axis xyz ="0 0 1"/>
+</joint>
+
+<!--Fingers -->
+<link name="right_finger">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0089 0.08"/>
+    </geometry>
+    <origin xyz ="0 0 0.04" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0.04" rpy="0 0 0"/>
+     <mass value="0.01"/>
+     <inertia ixx="0.0000001" ixy="0" ixz="0" iyy="0.0000001" iyz="0" izz="0.0000001" />
+   </inertial>
+</link>
+<joint name="wrist_to_right_finger" type="fixed">
+  <parent link="wrist"/>
+  <child link="right_finger"/>
+  <origin xyz="0 0.0355 0.0206" rpy="0 0 0"/>
+   <limit effort="1000.0" velocity="0.5"/>
+  <axis xyz ="1 0 0"/>
+</joint>
+
+<link name="left_finger">
+  <visual>
+    <geometry>
+      <box size ="0.0356 0.0089 0.08"/>
+    </geometry>
+    <origin xyz ="0 0 0.04" rpy="0 0 0"/>
+  </visual>
+  <inertial>
+     <origin xyz="0 0 0.04" rpy="0 0 0"/>
+     <mass value="0.01"/>
+     <inertia ixx="0.0000001" ixy="0" ixz="0" iyy="0.0000001" iyz="0" izz="0.0000001" />
+   </inertial>
+</link>
+<joint name="wrist_to_left_finger" type="fixed">
+  <parent link="wrist"/>
+  <child link="left_finger"/>
+  <origin xyz="0 -0.0355 0.0206" rpy="0 0 0"/>
+   <limit effort="1000.0" velocity="0.5"/>
+  <axis xyz ="-1 0 0"/>
+</joint>
+
+</robot>

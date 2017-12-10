@@ -48,8 +48,8 @@ t = 0:steplength:2*pi+steplength;%+2*steplength;
 % ztest = 0.035*cos(t)+0.20;
 % xtest = sin(t)*0;
 % ytest = -0.04*sin(t)-0.20;
-xpath = 0.035*cos(t)+0.09;%0.09;
-ypath = 0.035*sin(t)+0.09;%0.09;
+xpath = 0.035*cos(t)+0.15;%0.09;
+ypath = 0.035*sin(t)+0.15;%0.09;
 zpath = 0.050*sin(t)+0.25;
 path = [xpath;ypath;zpath];
 od = [pi*0/2; 0; 0];
@@ -161,7 +161,6 @@ xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
 tits = title('Joint angles - large step','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
-hold off
 
 figure(2)
 plot(superdatas(26,:),superdatas(1:5,:)-superdatas(11:15,:))
@@ -276,10 +275,10 @@ ylim([-.2 .2]);
 grid on;
 %% See robot follow path
 config =robot.homeConfiguration;
+configNum = 34;
 
-framerate = 15;
+framerate = 5;
 r = robotics.Rate(framerate);
-
 figure(234)
 show(robotShow)
 hold on
