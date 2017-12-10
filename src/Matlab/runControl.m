@@ -39,7 +39,7 @@ Kd =[kd1,0,0,0,0;
      0,0,0,0,kd5];
 
 Kp = 1*Kp;
-Kd = 1*Kd;
+Kd = .5*Kd;
 %% Gen path
 steplength = 0.1;
 t = 0:steplength:2*pi+steplength;%+2*steplength;
@@ -106,15 +106,17 @@ while toc < 2000
     q = jointstateSubscriber.LatestMessage.Position;  
     qdot = jointstateSubscriber.LatestMessage.Velocity;
 
-
+    %The joint state publisher is sending back scrambled joints states
     q([2 3 4]) = q([3 4 2]);
     qdot([2 3 4]) = qdot([3 4 2]);
+    
     qtilde = qd-q;
 
     grav = gravityCompensation(q);
     u = Kp*qtilde - Kd*qdot + grav;
     u = torque_saturation(u,maxtorque);
     
+    %Create and send joint torques
     u1.Data = u(1);
     u2.Data = u(2);
     u3.Data = u(3);
@@ -137,6 +139,7 @@ while toc < 2000
             i=2;
         end
         qd = qdarr(:,i);
+        qd = someKindOfFeedForward(qdarr,i);
         i = i + 1;
         err = u-grav;
         debusdats =[err,grav,u];
@@ -146,6 +149,10 @@ while toc < 2000
     datas = [datas,[q;qdot;qd;u;grav;toc]];
     waitfor(updateRate);
 end
+
+
+%% Plotting
+
 %% Super plot
 
 superdatas =datas(:,2:end);
@@ -158,7 +165,7 @@ legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
 ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize)
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
-tits = title('Joint angles - large step','interpreter','latex');
+tits = title('Joint angles','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
 hold off
@@ -169,7 +176,7 @@ legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
 ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize);
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
-tits = title('$$q-q_d$$ - large step','interpreter','latex');
+tits = title('$$q-q_d$$','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
 
@@ -179,7 +186,7 @@ legs = legend({'$u_1$','$u_2$','$u_3$','$u_4$','$u_5$'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
 ylabel('u','Interpreter','latex','FontSize',fontsize)
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
-tits = title('u - large step','interpreter','latex');
+tits = title('u ','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
    
@@ -189,7 +196,7 @@ legs = legend({'$g_1$','$g_2$','$g_3$','$g_4$','$g_5$'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
 ylabel('g','Interpreter','latex','FontSize',fontsize)
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
-tits = title('Gravity components - large step','interpreter','latex');
+tits = title('Gravity components ','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
 
@@ -199,7 +206,7 @@ legs = legend({'$\dot{q_1}$','$\dot{q_2}$','$\dot{q_3}$','$\dot{q_4}$','$\dot{q_
 set(legs,'FontSize',fontsize);
 ylabel('velocity(rad/s)','Interpreter','latex','FontSize',fontsize)
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
-tits = title('$$\dot{q}$$ - large step','interpreter','latex');
+tits = title('$$\dot{q}$$','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
 %% Plot ik paths
@@ -291,12 +298,28 @@ for i=1:63
     waitfor(r);
 end
 hold off
-%%
-figure(311)
-show(robotShow,config)
+%% Plot desired joint paths and actual joint pahts - 5 individual plots
+%datas = [datas,[q;qdot;qd;u;grav;toc]];
+superdatas =datas(:,2:end);
+fontsize = 17;
 
-pr11 = plot3(path(1,:),path(2,:),path(3,:),'LineWidth',linewdth);
-pr12 = plot3( ikPath(1,1:end), ikPath(2,1:end), ikPath(3,1:end),'LineWidth',linewdth);
+for i=1:nJoints
+    figure(44+i)
+    plot(superdatas(26,:),superdatas(i,:))
+    hold on
+    plot(superdatas(26,:),superdatas(10+i,:))
+    hold off
+    grid on
+    legendarytext1 = sprintf('$q_{%1.0f}$',i);
+    legendarytext2 = sprintf('$q_{d%1.0f}$',i);
+    legend({legendarytext1,legendarytext2},'Interpreter','latex','FontSize',fontsize)
+    ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize)
+    xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+end
+
+
+
+
 
 
 
