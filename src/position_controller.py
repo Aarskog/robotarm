@@ -248,7 +248,7 @@ if __name__ == '__main__':
     #qd = qopt
     #print qopt
     rospy.init_node('joint_positions_node', anonymous=True)
-    update_rate = 100
+    update_rate = 300
     rate = rospy.Rate(update_rate)
 
     while not rospy.is_shutdown():

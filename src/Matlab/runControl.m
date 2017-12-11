@@ -19,7 +19,7 @@ kp1 = 6;
 kp2 = 6;
 kp3 = kp2*1.1;
 kp4 = kp2*1.5;
-kp5 = .2;
+kp5 = .3;
 
 Kp = [kp1,0,0,0,0;
       0,kp2,0,0,0;
@@ -39,20 +39,23 @@ Kd =[kd1,0,0,0,0;
      0,0,0,0,kd5];
 
 Kp = 1*Kp;
-Kd = .5*Kd;
+Kd = 0.9*Kd;
 %% Gen path
-steplength = 0.1;
+steplength = 0.03;
 t = 0:steplength:2*pi+steplength;%+2*steplength;
 
 % Circle path zy plane
-% ztest = 0.035*cos(t)+0.20;
-% xtest = sin(t)*0;
-% ytest = -0.04*sin(t)-0.20;
+% zpath = 0.035*cos(t)+0.20;
+% xpath = sin(t)*0;
+% ypath = -0.04*sin(t)-0.20;
+% od = [0; 0; pi/2];
+
 xpath = 0.035*cos(t)+0.09;%0.09;
 ypath = 0.035*sin(t)+0.09;%0.09;
 zpath = 0.050*sin(t)+0.25;
-path = [xpath;ypath;zpath];
 od = [pi*0/2; 0; 0];
+
+path = [xpath;ypath;zpath];
 %% Inverse Kin
 tic
 qarr = calculateJointPaths(path,od,robot,ik);
@@ -67,7 +70,7 @@ qdarr = qarr;
 % tod = [-pi/2; 0; pi/2];
 % pd = [0;0.2250;0.2250];
 % tod = [0; pi/2; -pi/2];
-% qdarr = calculateJointPaths(pd,tod,robot,ik);
+% qdarr = calculateJointPaths([pd pd],tod,robot,ik);
 
 % qdarr = qdarr + 0.05;
 
@@ -76,11 +79,13 @@ qd = qdarr(:,i);
 
 iterations = 1;
 
-tt = 7;
+tt = 2;
+coa = 0.2;
 
+rossrate = 100;
+updateRate = robotics.Rate(rossrate); 
 
-updateRate = robotics.Rate(100); 
-
+dt = tt/(rossrate);
 
 disp('ᗡ== Controller is running ==D')
 tic
@@ -88,10 +93,11 @@ timeiterators = ones(2,40);
 timeiterator = 0;
 
 %matrix containing datas q qdot qd u grav
-datas = zeros(26,1);
+datas = zeros(31,1);
 
 reset(updateRate)
 while toc < 2000
+    
     %Frequency 
     timeiterator = timeiterator + 1;
     if timeiterator>length(timeiterators)
@@ -101,8 +107,7 @@ while toc < 2000
     hertz = (max(timeiterators(1,:))-min(timeiterators(1,:)))/(max(timeiterators(2,:))-min(timeiterators(2,:)));
     fprintf('Controller is running. Update rate: \t %3.0f\tHz \n',hertz)
 
-    %RupdateRate = double(1/(1/RupdateRate + 0.1*(1/updateRate-hertz)))
-
+    %Get the latest robot state
     q = jointstateSubscriber.LatestMessage.Position;  
     qdot = jointstateSubscriber.LatestMessage.Velocity;
 
@@ -110,10 +115,20 @@ while toc < 2000
     q([2 3 4]) = q([3 4 2]);
     qdot([2 3 4]) = qdot([3 4 2]);
     
-    qtilde = qd-q;
+    %Get the next and last desired set point
+    qdnext = getqdNext(qdarr,i-1,2);
+    qdlast = getqdLast(qdarr,i-1,1);
+    
+    %Calculate the desired joint velocities based on the slope of the set
+    %points
+    vk = (qd-qdlast)/dt;
+    vkp1 = (qdnext(:,1)-qd)/dt;
+    qdotd = 1/2*(vk+vkp1).*(sign(vk)==sign(vkp1));
+    
+    qtilde = (qd-q) + (qdnext(:,1)-q)/1+(qdnext(:,2)-q)/1;
 
     grav = gravityCompensation(q);
-    u = Kp*qtilde - Kd*qdot + grav;
+    u = Kp*qtilde - Kd*(qdot-qdotd) + grav;
     u = torque_saturation(u,maxtorque);
     
     %Create and send joint torques
@@ -146,21 +161,33 @@ while toc < 2000
     end
     iterations = iterations +1;
     
-    datas = [datas,[q;qdot;qd;u;grav;toc]];
+%     if norm(qd-q)<coa
+%         sizum = size(qdarr);
+%         if (i+1)>sizum(2)
+%             i=2;
+%         end
+%         qd = qdarr(:,i);
+%         qd = someKindOfFeedForward(qdarr,i);
+%         i = i + 1;
+%         err = u-grav;
+%         debusdats =[err,grav,u];
+%     end
+    
+    datas = [datas,[q;qdot;qd;u;grav;toc;qdotd]];
     waitfor(updateRate);
 end
 
 
-%% Plotting
 
+%% Plotting
 %% Super plot
 
 superdatas =datas(:,2:end);
 fontsize = 17;
 figure(1)
 plot(superdatas(26,:),superdatas(1:5,:))%-datas(11:15,:))
-hold on
-plot(superdatas(26,:),superdatas(11:15,:))
+%hold on
+%plot(superdatas(26,:),superdatas(11:15,:))
 legs = legend({'$q_1$','$q_2$','$q_3$','$q_4$','$q_5$'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
 ylabel('angle(rad)','Interpreter','latex','FontSize',fontsize)
@@ -168,7 +195,7 @@ xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
 tits = title('Joint angles','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
-hold off
+%hold off
 
 figure(2)
 plot(superdatas(26,:),superdatas(1:5,:)-superdatas(11:15,:))
@@ -207,6 +234,16 @@ set(legs,'FontSize',fontsize);
 ylabel('velocity(rad/s)','Interpreter','latex','FontSize',fontsize)
 xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
 tits = title('$$\dot{q}$$','interpreter','latex');
+set(tits,'FontSize',fontsize);
+grid on
+
+figure(6)
+plot(superdatas(26,:),superdatas(27:31,:))
+legs = legend({'$\dot{q_{d_1}}$','$\dot{q_{d_2}}$','$\dot{q_{d_3}}$','$\dot{q_{d_4}}$','$\dot{q_{d_5}}$'},'Interpreter','latex');
+set(legs,'FontSize',fontsize);
+ylabel('velocity(rad/s)','Interpreter','latex','FontSize',fontsize)
+xlabel('time(sec)','Interpreter','latex','FontSize',fontsize)
+tits = title('$$\dot{q_{d_i}}$$','interpreter','latex');
 set(tits,'FontSize',fontsize);
 grid on
 %% Plot ik paths
