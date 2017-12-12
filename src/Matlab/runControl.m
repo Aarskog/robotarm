@@ -6,9 +6,6 @@ generateForwardkinematics
 %% Get kp kd
 clc
 
-%resetSim(gazebo);
-%resumeSim(gazebo);
-%jointStates = receive(jointstateSubscriber,10);
 d1 = 0.0796;
 a2 = 0.1347;
 a3 = 0.0712;
@@ -79,22 +76,22 @@ qd = qdarr(:,i);
 
 iterations = 1;
 
-tt = 2;
+tt = 4;
 coa = 0.2;
 
-rossrate = 100;
+rossrate = 180;
 updateRate = robotics.Rate(rossrate); 
 
 dt = tt/(rossrate);
 
 disp('ᗡ== Controller is running ==D')
-tic
+
 timeiterators = ones(2,40);
 timeiterator = 0;
 
 %matrix containing datas q qdot qd u grav
 datas = zeros(31,1);
-
+tic
 reset(updateRate)
 while toc < 2000
     
@@ -125,7 +122,7 @@ while toc < 2000
     vkp1 = (qdnext(:,1)-qd)/dt;
     qdotd = 1/2*(vk+vkp1).*(sign(vk)==sign(vkp1));
     
-    qtilde = (qd-q) + (qdnext(:,1)-q)/1+(qdnext(:,2)-q)/1;
+    qtilde = (qd-q)/1 + (qdnext(:,1)-q)/0.8+(qdnext(:,2)-q)/1;
 
     grav = gravityCompensation(q);
     u = Kp*qtilde - Kd*(qdot-qdotd) + grav;
@@ -144,7 +141,7 @@ while toc < 2000
     send(pub4,u4)
     send(pub5,u5)
 
-
+    datas = [datas,[q;qdot;qd;u;grav;toc;qdotd]];
 
     % Set next desired point at every tt iteration and when the end is
     % reached, start over. 
@@ -173,10 +170,9 @@ while toc < 2000
 %         debusdats =[err,grav,u];
 %     end
     
-    datas = [datas,[q;qdot;qd;u;grav;toc;qdotd]];
+    
     waitfor(updateRate);
 end
-
 
 
 %% Plotting

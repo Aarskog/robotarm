@@ -18,7 +18,7 @@ function [qd,configSoln] = getIKJointAngles(pd,od,ik,initialguess,robot)
                     -pi,pi;
                     -pi+ios,pi-ios];
     %Use lower weights for the orientation angles than the postion component
-    weights = [0.25 0.25 0.25 1 1 1];
+%     weights = [0.25 0.25 0.25 1 1 1];
     %initialguess = robot.homeConfiguration;
     %[configSoln,solInfo] = ik('right_finger',tform,weights,initialguess,jointConst);
     [configSoln,solInfo] = ik(initialguess,jointConst,posTgt,orTgt);

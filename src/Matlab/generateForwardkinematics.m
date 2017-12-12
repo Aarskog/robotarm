@@ -4,7 +4,7 @@ d1 = 0.0796;
 a2 = 0.1347;
 a3 = 0.0712;
 d5 = 0.0918;
-
+robotlength = d1+a2+a3+d5;
 
 
 %syms s1 s2 s3 s4 s5 c1 c2 c3 c4 c5 d1 a2 a3 d5
