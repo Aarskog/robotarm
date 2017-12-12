@@ -110,8 +110,7 @@ for j = 1:1:length(nodes)
     D = [D tmpdist];
 end
 %%
-show(robotShow)
-hold on
+
 % Search backwards from goal to start to find the optimal least cost path
 [val, idx] = min(D);
 q_final = nodes(idx);
@@ -126,8 +125,7 @@ while q_end.parent ~= 0
     q_end = nodes(start);
     datatas = [datatas,q_end.coord'];
 end
-fontsizse = 17;
-plt = fnplt(cscvn(datatas));
+fnplt(cscvn(datatas));
 %%
 figure(414)
 fnplt(cscvn(datatas))
