@@ -1,20 +1,38 @@
-pd = [-0.2250;0.2250;0.2250];
+pd = [0.1654;0.146;0.2918];
 tod = [-pi/2; 0; pi/2];
-p0 = [0,0,robotlength];
+p0 = [0,0,robotlength+0.08];
+
+close all
+figure(1)
+show(robotShow)
+hold on
+
+originBox = [0.1 0.1 0.3];
+boxsize =[ .04,  .04,  .04];
+
+vmax      = boxsize+originBox;        % vertex max
+vmin      = originBox-boxsize;        % vertex min
+ %box (voxel)
+    vertices = [vmax(1) vmin(2) vmin(3); vmax(1) vmax(2) vmin(3); vmin(1) vmax(2) vmin(3); vmin(1) vmax(2) vmax(3); vmin(1) vmin(2) vmax(3); vmax(1) vmin(2) vmax(3); vmin; vmax ];
+    faces = [1 2 3 7; 1 2 8 6; 1 6 5 7; 7 5 4 3; 2 8 4 3; 8 6 5 4];
+    h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
+    set(h,'FaceAlpha',1);
+
+
 
 clear nodes
-close all
+
 rs = norm(pd);
 
 
-x_max = rs*1.01;
-y_max = rs*1.01;
-z_max = rs*1.01;
+x_max = robotlength;
+y_max = robotlength;
+z_max = robotlength;
 
 obstacle = [0,0,0,0];
 
-EPS = 0.05;
-r = EPS*2;
+EPS = 0.07;
+r = 0.2;
 
 erroracceptance = 0.5;
 
@@ -27,12 +45,10 @@ q_goal.coord = pd;
 q_goal.cost = 0;
 
 nodes(1) = q_start;
-figure(1)
-show(robotShow)
-hold on
+
 xlim([-x_max x_max])
 ylim([-y_max y_max])
-zlim([0 z_max+0.1])
+zlim([0 robotlength+0.1])
 
 for i = 1:1:numNodes
     fprintf('RRT running. %2.2f%% done \n',i/numNodes*100)
@@ -57,51 +73,51 @@ for i = 1:1:numNodes
     q_near = nodes(idx);
     
     q_new.coord = steer3d(q_rand, q_near.coord, val, EPS);
+    if ~rayBoxIntersection(q_rand, q_rand-q_near.coord, vmin, vmax)
+        line([q_near.coord(1), q_new.coord(1)], [q_near.coord(2), q_new.coord(2)], [q_near.coord(3), q_new.coord(3)], 'Color', 'k', 'LineWidth', 2);
+        drawnow
+        hold on
+        q_new.cost = dist_3d(q_new.coord, q_near.coord) + q_near.cost;
 
-    line([q_near.coord(1), q_new.coord(1)], [q_near.coord(2), q_new.coord(2)], [q_near.coord(3), q_new.coord(3)], 'Color', 'k', 'LineWidth', 2);
-    drawnow
-    hold on
-    q_new.cost = dist_3d(q_new.coord, q_near.coord) + q_near.cost;
-
-    % Within a radius of r, find all existing nodes
-    q_nearest = [];
-    %r = 50;
-    %r = .01;
-    neighbor_count = 1;
-    for j = 1:1:length(nodes)
-        if (dist_3d(nodes(j).coord, q_new.coord)) <= r
-            q_nearest(neighbor_count).coord = nodes(j).coord;
-            q_nearest(neighbor_count).cost = nodes(j).cost;
-            neighbor_count = neighbor_count+1;
+        % Within a radius of r, find all existing nodes
+        q_nearest = [];
+        %r = 50;
+        %r = .01;
+        neighbor_count = 1;
+        for j = 1:1:length(nodes)
+            if (~rayBoxIntersection(nodes(j).coord, nodes(j).coord-q_new.coord, vmin, vmax))&&((dist_3d(nodes(j).coord, q_new.coord)) <= r)
+                q_nearest(neighbor_count).coord = nodes(j).coord;
+                q_nearest(neighbor_count).cost = nodes(j).cost;
+                neighbor_count = neighbor_count+1;
+            end
         end
-    end
 
-    % Initialize cost to currently known value
-    q_min = q_near;
-    C_min = q_new.cost;
+        % Initialize cost to currently known value
+        q_min = q_near;
+        C_min = q_new.cost;
 
-    % Iterate through all nearest neighbors to find alternate lower
-    % cost paths
+        % Iterate through all nearest neighbors to find alternate lower
+        % cost paths
 
-    for k = 1:1:length(q_nearest)
-        if q_nearest(k).cost + dist_3d(q_nearest(k).coord, q_new.coord) < C_min
-            q_min = q_nearest(k);
-            C_min = q_nearest(k).cost + dist_3d(q_nearest(k).coord, q_new.coord);
-            line([q_min.coord(1), q_new.coord(1)], [q_min.coord(2), q_new.coord(2)], [q_min.coord(3), q_new.coord(3)], 'Color', 'g');            
-            hold on
+        for k = 1:1:length(q_nearest)
+            if q_nearest(k).cost + dist_3d(q_nearest(k).coord, q_new.coord) < C_min
+                q_min = q_nearest(k);
+                C_min = q_nearest(k).cost + dist_3d(q_nearest(k).coord, q_new.coord);
+                line([q_min.coord(1), q_new.coord(1)], [q_min.coord(2), q_new.coord(2)], [q_min.coord(3), q_new.coord(3)], 'Color', 'g');            
+                hold on
+            end
         end
-    end
 
-    % Update parent to least cost-from node
-    for j = 1:1:length(nodes)
-        if nodes(j).coord == q_min.coord
-            q_new.parent = j;
+        % Update parent to least cost-from node
+        for j = 1:1:length(nodes)
+            if nodes(j).coord == q_min.coord
+                q_new.parent = j;
+            end
         end
+
+        % Append to nodes
+        nodes = [nodes q_new];
     end
-
-    % Append to nodes
-    nodes = [nodes q_new];
-
 end
 
 D = [];
@@ -110,7 +126,10 @@ for j = 1:1:length(nodes)
     D = [D tmpdist];
 end
 %%
-
+show(robotShow)
+h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
+    set(h,'FaceAlpha',1);
+    zlim([0 robotlength+0.1])
 % Search backwards from goal to start to find the optimal least cost path
 [val, idx] = min(D);
 q_final = nodes(idx);

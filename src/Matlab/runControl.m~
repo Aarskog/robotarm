@@ -357,15 +357,15 @@ end
 %% TEST
 show(robotShow);
 
-originBox = [0.3 0.3 0.5]/3;
-boxsize =[ .04,  .04,  .04];
+originBox = [0.3 0.3 0.3]/2;
+boxsize =[ .04,  .05,  .05];
 
 vmax      = boxsize+originBox;        % vertex max
 vmin      = originBox-boxsize;  % vertex min
  %box (voxel)
     vertices = [vmax(1) vmin(2) vmin(3); vmax(1) vmax(2) vmin(3); vmin(1) vmax(2) vmin(3); vmin(1) vmax(2) vmax(3); vmin(1) vmin(2) vmax(3); vmax(1) vmin(2) vmax(3); vmin; vmax ];
     faces = [1 2 3 7; 1 2 8 6; 1 6 5 7; 7 5 4 3; 2 8 4 3; 8 6 5 4];
-    h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
+    h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green')
     set(h,'FaceAlpha',1);
 
 
