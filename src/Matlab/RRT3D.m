@@ -10,7 +10,7 @@ hold on
 originBox = [0.1 0.1 0.3];
 boxsize =[ .04,  .04,  .04];
 
-vmax      = boxsize+originBox;        % vertex max
+vmax      = originBox +boxsize;        % vertex max
 vmin      = originBox-boxsize;        % vertex min
  %box (voxel)
     vertices = [vmax(1) vmin(2) vmin(3); vmax(1) vmax(2) vmin(3); vmin(1) vmax(2) vmin(3); vmin(1) vmax(2) vmax(3); vmin(1) vmin(2) vmax(3); vmax(1) vmin(2) vmax(3); vmin; vmax ];
@@ -125,11 +125,11 @@ for j = 1:1:length(nodes)
     tmpdist = dist_3d(nodes(j).coord, q_goal.coord);
     D = [D tmpdist];
 end
-%%
-show(robotShow)
-h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
-    set(h,'FaceAlpha',1);
-    zlim([0 robotlength+0.1])
+%
+% show(robotShow)
+% h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
+%     set(h,'FaceAlpha',1);
+%     zlim([0 robotlength+0.1])
 % Search backwards from goal to start to find the optimal least cost path
 [val, idx] = min(D);
 q_final = nodes(idx);
