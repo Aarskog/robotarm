@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Testing the automatic population of objects -->
+    <population name="can_population1">
+        <model name='unit_box'>
+             <pose>0 0 0.06 0 -0 0</pose>
+             <link name='link'>
+               <visual name='visual'>
+                 <geometry>
+                   <box>
+                     <size>0.1 0.1 0.1</size>
+                   </box>
+                 </geometry>
+               </visual>
+             </link>
+           </model>
+      <pose>0 0 0.06 0 0 0</pose>
+      <box>
+        <size>2 2 0.01</size>
+      </box>
+      <model_count>2</model_count>
+      <distribution>
+        <type>random</type>
+      </distribution>
+    </population>
+
+    <model name='camera'>
+         <static>true</static>
+         <pose>-0 0 1 0 1.57079 0</pose>
+         <link name='link'>
+           <visual name='visual'>
+             <geometry>
+               <box>
+                 <size>0.1 0.1 0.1</size>
+               </box>
+             </geometry>
+           </visual>
+           <sensor name='my_camera' type='camera'>
+             <camera>
+               <save enabled="false">
+                 <path>/tmp/camera_save_tutorial</path>
+               </save>
+               <horizontal_fov>1.047</horizontal_fov>
+               <image>
+                 <width>1920</width>
+                 <height>1080</height>
+               </image>
+               <clip>
+                 <near>0.1</near>
+                 <far>100</far>
+               </clip>
+             </camera>
+             <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                     <alwaysOn>true</alwaysOn>
+                     <updateRate>0.0</updateRate>
+                     <cameraName>rrbot/camera1</cameraName>
+                     <imageTopicName>image_raw</imageTopicName>
+                     <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                     <frameName>camera_link</frameName>
+                     <hackBaseline>0.07</hackBaseline>
+                     <distortionK1>0.0</distortionK1>
+                     <distortionK2>0.0</distortionK2>
+                     <distortionK3>0.0</distortionK3>
+                     <distortionT1>0.0</distortionT1>
+                     <distortionT2>0.0</distortionT2>
+                   </plugin>
+           </sensor>
+         </link>
+       </model>
+  </world>
+</sdf>

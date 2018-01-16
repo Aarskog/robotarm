@@ -14,8 +14,14 @@ from numpy.linalg import inv
 
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
+from sensor_msgs.msg import Image
 
 from math import sin,cos,atan2,sqrt,fabs,pi
+
+
+
+from matplotlib import pyplot as plt
+
 
 debug = False
 
@@ -34,12 +40,15 @@ ll = {'l1':0.0506+0.01,'l2':0.0206+0.0635+0.0506,'l3':0.0206+0.0506,'l4':0.0206+
 #Gravity
 g = -9.81
 
+#Imagefeed
+cur_img = [];
+
 #Timestamp
 
 timestamp = float(0)
 
 #Position and velocity from Gazebo
-def callback(data):
+def callback2(data):
     global timestamp
 
     q[0,0] = data.position[0]
@@ -55,6 +64,12 @@ def callback(data):
     q_dot[0,4] = data.velocity[4]
 
     timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
+
+def callback(data):
+    global cur_img
+    image=data
+    image = np.fromstring(image.data,dtype=np.uint8).reshape(image.height,image.width,3)[:,:,::-1]
+    cur_img = image
 
 def create_spline(qd,spline_step):
 
@@ -196,62 +211,73 @@ if __name__ == '__main__':
     #Circle of acceptrance
     coa = 0.03
 
-    # Kp gain
-    kp1 = 1.4
-    kp2 = 6
-    kp3 = kp2*1.1
-    kp4 = kp2*1.5
-    kp5 = 10
-    Kp = np.matrix([
-    [kp1,0,0,0,0],
-    [0,kp2,0,0,0],
-    [0,0,kp3,0,0],
-    [0,0,0,kp4,0],
-    [0,0,0,0,kp5]],
-    dtype=float)
+    if 1:    # Kp gain
+        kp1 = 1.4
+        kp2 = 6
+        kp3 = kp2*1.1
+        kp4 = kp2*1.5
+        kp5 = 10
+        Kp = np.matrix([
+        [kp1,0,0,0,0],
+        [0,kp2,0,0,0],
+        [0,0,kp3,0,0],
+        [0,0,0,kp4,0],
+        [0,0,0,0,kp5]],
+        dtype=float)
 
-    #Kd gain
-    kd1 = 1
-    kd2 = 0.9
-    kd3 = kd2
-    kd4 = kd2
-    kd5 = 1
-    Kd = np.matrix([
-    [kd1,0,0,0,0],
-    [0,kd2,0,0,0],
-    [0,0,kd3,0,0],
-    [0,0,0,kd4,0],
-    [0,0,0,0,kd5]],
-    dtype=float)
+        #Kd gain
+        kd1 = 1
+        kd2 = 0.9
+        kd3 = kd2
+        kd4 = kd2
+        kd5 = 1
+        Kd = np.matrix([
+        [kd1,0,0,0,0],
+        [0,kd2,0,0,0],
+        [0,0,kd3,0,0],
+        [0,0,0,kd4,0],
+        [0,0,0,0,kd5]],
+        dtype=float)
 
-    #Start pos
-    q0 = [0,0,0,0,0]
+        #Start pos
+        q0 = [0,0,0,0,0]
 
 
-    #qOri = [1.5708,-0.6624,0.5362,1.6970,-1.5708]
-    #qtest = [-3.1416,-0.8612,0.0,-0.7074,3.1416]
+        #qOri = [1.5708,-0.6624,0.5362,1.6970,-1.5708]
+        #qtest = [-3.1416,-0.8612,0.0,-0.7074,3.1416]
 
-    # Desired joint positions
-    #qd = [q0,qOri]#,[3.13,1.5,1.2,-1,6]]
-    #qd = qtest
+        # Desired joint positions
+        #qd = [q0,qOri]#,[3.13,1.5,1.2,-1,6]]
+        #qd = qtest
 
-    d1 = 0.0796
-    a2 = 0.1347
-    a3 = 0.0712
-    d5 = 0.0918
+        d1 = 0.0796
+        a2 = 0.1347
+        a3 = 0.0712
+        d5 = 0.0918
 
-    pd = np.matrix([[0],[0],[d1+a2+a3]])
-    od = np.matrix([[0],[np.pi/2],[0]])
-    xd = np.concatenate((pd,od),axis=0)
+        pd = np.matrix([[0],[0],[d1+a2+a3]])
+        od = np.matrix([[0],[np.pi/2],[0]])
+        xd = np.concatenate((pd,od),axis=0)
 
     #qopt = ik.inverse_kinematics_optimization(xd,'BFGS')
     #qd = qopt
     #print qopt
     rospy.init_node('joint_positions_node', anonymous=True)
-    update_rate = 300
+    update_rate = 100
     rate = rospy.Rate(update_rate)
 
+    #image init
+    #create axes
+    ax1 = plt.subplot(111)
+    #create image plot
+    plt.ion()
     while not rospy.is_shutdown():
+        cam_sub = rospy.Subscriber('/rrbot/camera1/image_raw', Image,callback)
+        if len(cur_img)!=0:
+            im1 = ax1.imshow(cur_img)
+            im1.set_data(cur_img)
+            plt.pause(0.00001)
         rate.sleep()
+    plt.show()
     #try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
     #except rospy.ROSInterruptException: pass

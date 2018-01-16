@@ -89,5 +89,5 @@ if __name__ == "__main__":
 
     latestjointstates = LatestJointStates()
 
-    print "joints_states_listener server started, waiting for queries"
+    print "--------------------------------------------------------------------------------joints_states_listener server started, waiting for queries"
     rospy.spin()

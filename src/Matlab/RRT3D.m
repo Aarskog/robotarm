@@ -8,35 +8,36 @@ show(robotShow)
 hold on
 
 originBox = [0.1 0.1 0.3];
-boxsize =[ .04,  .04,  .04];
+boxsize =[ .05,  .05,  .05];
 
-vmax      = originBox +boxsize;        % vertex max
-vmin      = originBox-boxsize;        % vertex min
+vmax      = originBox + boxsize;        % vertex max
+vmin      = originBox - boxsize;        % vertex min
  %box (voxel)
     vertices = [vmax(1) vmin(2) vmin(3); vmax(1) vmax(2) vmin(3); vmin(1) vmax(2) vmin(3); vmin(1) vmax(2) vmax(3); vmin(1) vmin(2) vmax(3); vmax(1) vmin(2) vmax(3); vmin; vmax ];
     faces = [1 2 3 7; 1 2 8 6; 1 6 5 7; 7 5 4 3; 2 8 4 3; 8 6 5 4];
     h= patch('Vertices',vertices,'Faces',faces,'FaceColor','green');
     set(h,'FaceAlpha',1);
 
-
+    
+EPS = 0.07;%0.07; %Step length of tree expansion
+r = 0.3;%0.3; %Radii of green shortcuts
+numNodes = 500; 
 
 clear nodes
 
 rs = norm(pd);
 
+%Searchspace
+x_max = robotlength*1.1;
+y_max = robotlength*1.1;
+z_max = robotlength*1.1;
 
-x_max = robotlength;
-y_max = robotlength;
-z_max = robotlength;
+%obstacle = [0,0,0,0];
 
-obstacle = [0,0,0,0];
 
-EPS = 0.07;
-r = 0.2;
 
-erroracceptance = 0.5;
-
-numNodes = 300;        
+erroracceptance = 0.2;
+       
 
 q_start.coord = p0;
 q_start.cost = 0;
@@ -50,6 +51,8 @@ xlim([-x_max x_max])
 ylim([-y_max y_max])
 zlim([0 robotlength+0.1])
 
+maxtempure=99999;
+flagstaff = 0;
 for i = 1:1:numNodes
     fprintf('RRT running. %2.2f%% done \n',i/numNodes*100)
     q_rand = [(rand(1)-1/2)*2*x_max (rand(1)-1/2)*2*y_max rand(1)*z_max];
@@ -57,11 +60,18 @@ for i = 1:1:numNodes
     
     % Break if goal node is already reached
     for j = 1:1:length(nodes)
-        if ((norm(nodes(j).coord - q_goal.coord))<erroracceptance)
+        tempure = (norm(nodes(j).coord - q_goal.coord));
+        if tempure<maxtempure
+           maxtempure=tempure 
+        end
+        if (tempure<erroracceptance)
+            flagstaff = 1;
             break
         end
     end
-    
+    if flagstaff
+        break
+    end
     % Pick the closest node from existing list to branch out from
     ndist = [];
     for j = 1:1:length(nodes)

@@ -4,7 +4,7 @@
 five_dof_robotarm:
  joint_state_controller:
   type: joint_state_controller/JointStateController
-  publish_rate: 50
+  publish_rate: 100
 
  base_to_turntable_controller:
   type: effort_controllers/JointEffortController

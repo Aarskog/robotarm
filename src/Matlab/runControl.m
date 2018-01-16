@@ -1,4 +1,4 @@
-%% Run everytime Gazebo is (re)started
+%% Run everytime AFTER Gazebo is (re)started
 rosInit
 %% Robot init
 robotInit
@@ -50,9 +50,20 @@ t = 0:steplength:2*pi+steplength;%+2*steplength;
 xpath = 0.035*cos(t)+0.09;%0.09;
 ypath = 0.035*sin(t)+0.09;%0.09;
 zpath = 0.050*sin(t)+0.25;
-od = [pi*0/2; 0; 0];
 
-path = [xpath;ypath;zpath];
+a0 = 2;
+a1 = 20;
+a2 = 10;
+P0 = [xpath(a0),ypath(a0),zpath(a0)]';
+P1 = [xpath(a1),ypath(a1),zpath(a1)]';
+P2 = [xpath(a2),ypath(a2),zpath(a2)]';
+
+%normel = cross(P0-P1,P1-P2);
+
+od = [0; 0 ; -pi];
+%od = -[atan2(1,1);asin(0);0];
+
+path = [0 0.15;0 0.15;0 0.4];
 %% Inverse Kin
 tic
 qarr = calculateJointPaths(path,od,robot,ik);
@@ -60,7 +71,6 @@ toc
 ms_per_point = toc/length(qarr)*1000;
 fprintf('Elapsed time per point: %2.2f ms \n',ms_per_point)
 %% Run
-
 %qdarr = estq;
 qdarr = qarr;
 % pd = [-0.2250;0;0.2250];
@@ -76,10 +86,10 @@ qd = qdarr(:,i);
 
 iterations = 1;
 
-tt = 4;
+tt = 2;
 coa = 0.2;
 
-rossrate = 180;
+rossrate = 100;
 updateRate = robotics.Rate(rossrate); 
 
 dt = tt/(rossrate);
@@ -122,8 +132,8 @@ while toc < 2000
     vkp1 = (qdnext(:,1)-qd)/dt;
     qdotd = 1/2*(vk+vkp1).*(sign(vk)==sign(vkp1));
     
-    qtilde = (qd-q)/1 + (qdnext(:,1)-q)/0.8+(qdnext(:,2)-q)/1;
-
+    qtilde = (qd-q)/1 + (qdnext(:,1)-q)/1+(qdnext(:,2)-q)/1;
+    
     grav = gravityCompensation(q);
     u = Kp*qtilde - Kd*(qdot-qdotd) + grav;
     u = torque_saturation(u,maxtorque);
@@ -253,6 +263,12 @@ pr1 = plot3(path(1,:)*0,path(2,:),path(3,:),'LineWidth',linewdth);
 pr2 = plot3(path(1,:),path(2,:)*0,path(3,:),'LineWidth',linewdth);
 pr3 = plot3(path(1,:),path(2,:),path(3,:)*0,'LineWidth',linewdth);
 pr4 = plot3(path(1,:),path(2,:),path(3,:),'LineWidth',linewdth);
+
+%ods = -od*1000;
+%ods = eul2rotm(ods');
+%hums = path(1,1:10:end)*0+1;
+%quiver3(path(1,1:10:end),path(2,1:10:end),path(3,1:10:end),ods*[1;0;0]*hums,ods(2)*[0;1;0]*hums,ods(3)*[0;0;1]*hums);
+
 hold off
 legs = legend([pr1 pr2 pr3 pr4],{'yz-path','xz-path','xy-path','path'},'Interpreter','latex');
 set(legs,'FontSize',fontsize);
@@ -266,6 +282,8 @@ xlim([-.2 .2])
 ylim([-.2 .2])
 %zlim([0 2*max(max(path(3,:)))])
 grid on
+
+
 %% Plot individual joint paths
 figure(112)
 for i = 1:5

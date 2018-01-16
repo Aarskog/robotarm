@@ -4,7 +4,7 @@ robot = importrobot('/home/magnaars/catkin_ws/src/five_dof_robotarm/urdf/matlabU
 %Make another robot for showcase
 robotShow = importrobot('/home/magnaars/catkin_ws/src/five_dof_robotarm/urdf/matlabURDFShow.urdf');
 
-maxtorque = 7.3;
+maxtorque = 6;
 nJoints = 5;
 
 % ik = robotics.InverseKinematics('RigidBodyTree',robot);
