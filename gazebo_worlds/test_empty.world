@@ -12,6 +12,10 @@
       <uri>model://ground_plane</uri>
     </include>
 
+    <include>
+      <uri>model://checkerboard_plane</uri>
+      <pose>0 0 0.001 0 0 0</pose>
+    </include>
     <!-- Testing the automatic population of objects -->
     <population name="can_population1">
         <model name='unit_box'>
@@ -20,17 +24,30 @@
                <visual name='visual'>
                  <geometry>
                    <box>
-                     <size>0.1 0.1 0.1</size>
+                     <size>0.04 0.04 0.04</size>
                    </box>
                  </geometry>
+                 <material>
+                           <ambient>0 1 0 1</ambient>
+                           <diffuse>0 1 0 1</diffuse>
+                           <specular>0.1 0.1 0.1 1</specular>
+                           <emissive>0 0 0 0</emissive>
+                         </material>
                </visual>
+                 <collision name="collision">
+                   <geometry>
+                     <box>
+                       <size>0.04 0.04 0.04</size>
+                     </box>
+                   </geometry>
+                 </collision>
              </link>
            </model>
       <pose>0 0 0.06 0 0 0</pose>
       <box>
-        <size>2 2 0.01</size>
+        <size>0.5 0.5 0.01</size>
       </box>
-      <model_count>2</model_count>
+      <model_count>0</model_count>
       <distribution>
         <type>random</type>
       </distribution>
@@ -52,10 +69,10 @@
                <save enabled="false">
                  <path>/tmp/camera_save_tutorial</path>
                </save>
-               <horizontal_fov>1.047</horizontal_fov>
+               <horizontal_fov>1.0</horizontal_fov>
                <image>
                  <width>1920</width>
-                 <height>1080</height>
+                 <height>1920</height>
                </image>
                <clip>
                  <near>0.1</near>

@@ -26,10 +26,6 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-z 0.01905 -pause -urdf -model robot -param robot_description" respawn="false" output="screen" />
 
-<!-- Spawn box to be picked up -->
-  <param name="box" command="$(find xacro)/xacro --inorder $(find five_dof_robotarm)/urdf/pickup_box.urdf" />
-  <node name="urdf_spawner2" pkg="gazebo_ros" type="spawn_model"
-              args="-x 0.15 -y 0.15 -z 0.02 -pause -urdf -model robot2 -param box" respawn="false" output="screen" />
 
 <!--
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
