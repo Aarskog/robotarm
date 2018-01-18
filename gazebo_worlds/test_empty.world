@@ -14,7 +14,7 @@
 
     <include>
       <uri>model://checkerboard_plane</uri>
-      <pose>0 0 0.001 0 0 0</pose>
+      <pose>0 0 0.0001 0 0 0</pose>
     </include>
     <!-- Testing the automatic population of objects -->
     <population name="can_population1">
@@ -47,7 +47,7 @@
       <box>
         <size>0.5 0.5 0.01</size>
       </box>
-      <model_count>0</model_count>
+      <model_count>4</model_count>
       <distribution>
         <type>random</type>
       </distribution>
@@ -60,7 +60,7 @@
            <visual name='visual'>
              <geometry>
                <box>
-                 <size>0.1 0.1 0.1</size>
+                 <size>0.0001 0.0001 0.0001</size>
                </box>
              </geometry>
            </visual>

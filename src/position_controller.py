@@ -271,6 +271,7 @@ if __name__ == '__main__':
     ax1 = plt.subplot(111)
     #create image plot
     plt.ion()
+    plt.axis('off')
     while not rospy.is_shutdown():
         cam_sub = rospy.Subscriber('/rrbot/camera1/image_raw', Image,callback)
         if len(cur_img)!=0:
