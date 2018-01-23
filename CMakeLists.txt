@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS message_generation rospy roscpp std_msgs
 #)
 #find_package(catkin REQUIRED COMPONENTS moveit_ros_planning_interface)
 
-#find_package(Eigen3 REQUIRED) 
+#find_package(Eigen3 REQUIRED)
 
 
 #add_service_files(
@@ -49,5 +49,3 @@ install(DIRECTORY launch
 
 install(DIRECTORY images meshes launch rviz urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-
-

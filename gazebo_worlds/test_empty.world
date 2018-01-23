@@ -12,10 +12,10 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <include>
+    <!--include>
       <uri>model://checkerboard_plane</uri>
       <pose>0 0 0.0001 0 0 0</pose>
-    </include>
+    </include-->
     <!-- Testing the automatic population of objects -->
     <population name="can_population1">
         <model name='unit_box'>
@@ -71,8 +71,8 @@
                </save>
                <horizontal_fov>1.0</horizontal_fov>
                <image>
-                 <width>1920</width>
-                 <height>1920</height>
+                 <width>720</width>
+                 <height>720</height>
                </image>
                <clip>
                  <near>0.1</near>

@@ -3,6 +3,19 @@
 # Source
 # https://github.com/JoshMarino/gazebo_and_ros_control/tree/master/rrrbot_files/src
 
+#-----Computer vison------
+#from __future__ import print_function
+import roslib
+import sys
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
+roslib.load_manifest('five_dof_robotarm')
+from std_msgs.msg import String
+import ComputerVison as covi
+#-----------------------
+
+
+
 import rospy
 import math
 import numpy as np
@@ -18,10 +31,7 @@ from sensor_msgs.msg import Image
 
 from math import sin,cos,atan2,sqrt,fabs,pi
 
-
-
 from matplotlib import pyplot as plt
-
 
 debug = False
 
@@ -30,22 +40,37 @@ q = np.matrix([0.0,0.0,0.0,0.0,0.0],dtype=float)
 
  # velocity
 q_dot = np.matrix([0,0,0,0,0],dtype=float)
-
 #Link Masses
 lm = {'m1':0.126+0.05,'m2':0.01+0.03+0.126,'m3':0.126+0.01,'m4':0.126+0.01,'m5':0.126+0.01*2}
-
 #Link Length
 ll = {'l1':0.0506+0.01,'l2':0.0206+0.0635+0.0506,'l3':0.0206+0.0506,'l4':0.0206+0.0506,'l5':0.0506/2+0.01}
-
 #Gravity
 g = -9.81
-
 #Imagefeed
 cur_img = [];
-
 #Timestamp
-
 timestamp = float(0)
+
+
+
+class image_converter:
+  def __init__(self):
+    self.bridge = CvBridge()
+    self.image_sub = rospy.Subscriber("/rrbot/camera1/image_raw",Image,self.callback)
+    self.cv_image = []
+  def callback(self,data):
+    try:
+        cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+    except CvBridgeError as e:
+        print(e)
+    center = [355,355]
+    test = covi.find_box_coords(cv_image,center)
+    cv2.imshow("Image window", test)
+    cv2.waitKey(3)
+
+
+
+
 
 #Position and velocity from Gazebo
 def callback2(data):
@@ -65,11 +90,12 @@ def callback2(data):
 
     timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
 
-def callback(data):
-    global cur_img
-    image=data
-    image = np.fromstring(image.data,dtype=np.uint8).reshape(image.height,image.width,3)[:,:,::-1]
-    cur_img = image
+# def callback(data):
+#     print '------------------wrong--------------------------'
+#     global cur_img
+#     image=data
+#     image = np.fromstring(image.data,dtype=np.uint8).reshape(image.height,image.width,3)[:,:,::-1]
+#     cur_img = image
 
 def create_spline(qd,spline_step):
 
@@ -178,15 +204,15 @@ def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
         pub5.publish(u[4,0])
 
         #Print every second instead of every iteration
-        if (i%update_rate==0 or i==0) and debug:
-            print "\n\n----------------------------------------------------------------"
-            print "iterations = ",iterations
-            print "qd = \n",np.transpose(qd)
-            print "q = \n",np.transpose(q)
-            print "q_tilde = \n",np.transpose(q_tilde)
-            print "u = \n",u
-            print "g = \n",gravity_gain
-            print "t = \n",timestamp
+        # if (i%update_rate==0 or i==0) and debug:
+            # print "\n\n----------------------------------------------------------------"
+            # print "iterations = ",iterations
+            # print "qd = \n",np.transpose(qd)
+            # print "q = \n",np.transpose(q)
+            # print "q_tilde = \n",np.transpose(q_tilde)
+            # print "u = \n",u
+            # print "g = \n",gravity_gain
+            # print "t = \n",timestamp
 
 
         tstamp = np.matrix([timestamp,0,0,0,0])
@@ -206,12 +232,11 @@ def five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa):
 #Main section of code that will continuously run unless rospy receives interuption (ie CTRL+C)
 if __name__ == '__main__':
 
-    spline_step = 0.1
-
-    #Circle of acceptrance
-    coa = 0.03
-
     if 1:    # Kp gain
+        spline_step = 0.1
+
+        #Circle of acceptrance
+        coa = 0.03
         kp1 = 1.4
         kp2 = 6
         kp3 = kp2*1.1
@@ -272,13 +297,24 @@ if __name__ == '__main__':
     #create image plot
     plt.ion()
     plt.axis('off')
-    while not rospy.is_shutdown():
-        cam_sub = rospy.Subscriber('/rrbot/camera1/image_raw', Image,callback)
-        if len(cur_img)!=0:
-            im1 = ax1.imshow(cur_img)
-            im1.set_data(cur_img)
-            plt.pause(0.00001)
-        rate.sleep()
-    plt.show()
-    #try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
-    #except rospy.ROSInterruptException: pass
+
+
+    ic = image_converter()
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        print("Shutting down")
+    cv2.destroyAllWindows()
+    #
+    # while not rospy.is_shutdown():
+    #
+    #     #cam_sub = rospy.Subscriber('/rrbot/camera1/image_raw', Image,callback)
+    #     if len(cur_img)!=0:
+    #         # print 'test'
+    #         im1 = ax1.imshow(cur_img)
+    #         im1.set_data(cur_img)
+    #         plt.pause(0.00001)
+    #     rate.sleep()
+    # plt.show()
+    # #try: five_dof_robotarm_joint_positions_publisher(Kp,Kd,qd,spline_step,coa)
+    # #except rospy.ROSInterruptException: pass

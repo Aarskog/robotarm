@@ -7,6 +7,8 @@
 import numpy as np
 import cv2
 import math
+import matplotlib.pyplot as plt
+
 
 def distance(p1,p2):
      return math.hypot(p2[0] - p1[0], p2[1] - p1[1])
@@ -35,7 +37,6 @@ def find_point_nearest_point(intersectionpoints,point):
             nearest_point = point
             lowest_dist = dist
     return nearest_point
-
 
 def subtractlists(list1,list2):
     endlist = range(len(list1))
@@ -129,7 +130,9 @@ def hough_lines(img):
     intersectionpoints = []
     for line1 in interseclines:
         for line2 in interseclines:
+
             intersecp = find_intersection(line1[0], line1[1], line2[0], line2[1])
+
             if intersecp != None and intersecp not in intersectionpoints:
                 intersectionpoints.append(intersecp)
                 cv2.circle(img,(int(intersecp[0]),int(intersecp[1])), 8, (0,150,0), 4)
@@ -151,14 +154,13 @@ def harris_corner(img):
     #print np.unravel_index(dst.argmax(),img.shape)
     return img,dst
 
+def easy_calib(chessboard,box_length):
+    #Finds the correlation meter to pixel
+    #Assumptions: Chessboard seen directly from above. NOT FROM SIDE
+    #No camera distortions
+    # Center of chessboard as close as center as possible
 
-if __name__ == '__main__':
-    img = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/topview.png',cv2.IMREAD_UNCHANGED)
-    initimg = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/topview_empty.png',cv2.IMREAD_UNCHANGED)
-    chessboard = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/onlychess.png',cv2.IMREAD_UNCHANGED)
-
-    #cornersimg,corners = harris_corner(chessboard)
-    #cirimg = find_corner_coord(corners,chessboard)
+    #Find points where the hough lines intersect
     intersectionpoints = hough_lines(chessboard)
     c_point = find_point_nearest_center(intersectionpoints,img)
     n_point = find_point_nearest_point(intersectionpoints,c_point)
@@ -166,25 +168,99 @@ if __name__ == '__main__':
     #Number of pixels of one square
     n_pixels = distance(c_point,n_point)
 
-    #Length of one square in meter
-    l_square = 0.25
-
     #Length of one pixel in meter
-    one_pixel = l_square/n_pixels
+    one_pixel = box_length/n_pixels
 
     #Length of one meter in pixels
     one_meter = 1/one_pixel
 
+    return one_meter,one_pixel,c_point
+
+def find_boxes(img):
+    #https://docs.opencv.org/3.4.0/dd/d49/tutorial_py_contour_features.html
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    ret,thresh = cv2.threshold(gray,127,255,0)
+
+    im2,contours,hierarchy = cv2.findContours(thresh,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    #edges = cv2.Canny(img,50,150,apertureSize = 3)
+
+
+    #cnt = contours[0]
+    rects = []
+    for cnt in contours:
+
+        #M = cv2.moments(cnt)
+
+        x,y,w,h = cv2.boundingRect(cnt)
+
+        timg = cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
+        rect = cv2.minAreaRect(cnt)
+        rects.append(rect)
+        box = cv2.boxPoints(rect)
+        box = np.int0(box)
+        area = cv2.contourArea(cnt)
+    return timg,rects
+
+def color_filter(img):
+    image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    #https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
+    # define the list of color boundaries
+    #boundaries = [
+	#([17, 15, 100], [50, 56, 200]),
+	#([86, 31, 4], [220, 88, 50]),
+	#([25, 146, 190], [62, 174, 250]),
+	#([103, 86, 65], [145, 133, 128])]
+    boundaries = [
+	([0, 0, 0], [50, 255, 50])]#Find green
+	#([0, 0, 0], [255, 50, 50]),
+	#([0, 0, 0], [50, 50, 255]),
+	#([0, 0, 0], [255, 255, 255])
+
+
+    #    loop over the boundaries
+    for (lower, upper) in boundaries:
+    	# create NumPy arrays from the boundaries
+    	lower = np.array(lower, dtype = "uint8")
+    	upper = np.array(upper, dtype = "uint8")
+    	# find the colors within the specified boundaries and apply
+    	# the mask
+    	mask = cv2.inRange(image, lower, upper)
+    	output = cv2.bitwise_and(image, image, mask = mask)
+        #cv2.imshow("images", np.hstack([image, output]))
+        #cv2.waitKey(1000)
+
+    return output
+
+def find_box_coords(img,center):
+    filt_img = color_filter(img)
+    boxes_img,boxs = find_boxes(filt_img)
+
+    #For printing and debugging
+    for box in boxs:
+        #cv2.circle(img,(int(box[0][0]),int(box[0][1])), 1, (0,150,0), 4)
+        cv2.line(img, (int(center[1]),int(center[0])), (int(box[0][0]),int(box[0][1])), (0, 0, 255), 2, 4)
+    return img
 
 
 
+if __name__ == '__main__':
+    img         = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/topview.png',cv2.IMREAD_UNCHANGED)
+    initimg     = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/topview_empty.png',cv2.IMREAD_UNCHANGED)
+    chessboard  = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/onlychess.png',cv2.IMREAD_UNCHANGED)
+    only_boxes  = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/onlyboxes.png',cv2.IMREAD_UNCHANGED)
+    one_box_arm = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/figure_1.png',cv2.IMREAD_UNCHANGED)
 
+    #cornersimg,corners = harris_corner(chessboard)
+    #cirimg = find_corner_coord(corners,chessboard)
 
-
+    box_length = 0.25 #meter
+    one_meter,one_pixel,center = easy_calib(chessboard,box_length)
+    test = find_box_coords(only_boxes,center)
 
 
     #line_intersection(0,0,2,2,0,2,2,0)
 
-    #cv2.imshow('image',intersectionpoints)
-    #cv2.waitKey(5000) #milliseconds
+    cv2.imshow('image',test)
+    cv2.waitKey(10000) #milliseconds
     cv2.destroyAllWindows()
+    # http://wiki.ros.org/cv_bridge/Tutorials/ConvertingBetweenROSImagesAndOpenCVImagesPython
