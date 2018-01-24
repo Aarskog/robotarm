@@ -31,9 +31,14 @@ def find_point_nearest_point(intersectionpoints,point):
     nearest_point = intersectionpoints[0]
     lowest_dist = distance(nearest_point,point)
 
+    #Fix corner case where neares_point is the same as the point nearest center
+    if lowest_dist == 0:
+        nearest_point = intersectionpoints[1]
+        lowest_dist = distance(nearest_point,point)
+
     for point in intersectionpoints:
         dist = distance(point,point)
-        if dist < lowest_dist:
+        if dist < lowest_dist and dist!=0:
             nearest_point = point
             lowest_dist = dist
     return nearest_point
@@ -47,6 +52,7 @@ def subtractlists(list1,list2):
     return endlist
 
 def find_intersection( p0, p1, p2, p3 ) :
+    #Find the intersection of two line segments. If there is any
     s10_x = p1[0] - p0[0]
     s10_y = p1[1] - p0[1]
     s32_x = p3[0] - p2[0]
@@ -162,7 +168,8 @@ def easy_calib(chessboard,box_length):
 
     #Find points where the hough lines intersect
     intersectionpoints = hough_lines(chessboard)
-    c_point = find_point_nearest_center(intersectionpoints,img)
+    c_point = find_point_nearest_center(intersectionpoints,chessboard)
+    
     n_point = find_point_nearest_point(intersectionpoints,c_point)
 
     #Number of pixels of one square
@@ -186,6 +193,7 @@ def find_boxes(img):
 
 
     #cnt = contours[0]
+    timg = []
     rects = []
     for cnt in contours:
 
@@ -199,6 +207,7 @@ def find_boxes(img):
         box = cv2.boxPoints(rect)
         box = np.int0(box)
         area = cv2.contourArea(cnt)
+
     return timg,rects
 
 def color_filter(img):

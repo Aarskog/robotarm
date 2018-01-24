@@ -14,6 +14,9 @@ from std_msgs.msg import String
 import ComputerVison as covi
 #-----------------------
 
+#Data format of the box_callback subscriber
+#http://docs.ros.org/jade/api/gazebo_msgs/html/msg/ModelState.html
+from gazebo_msgs.msg import ModelStates
 
 
 import rospy
@@ -28,6 +31,8 @@ from numpy.linalg import inv
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
 from sensor_msgs.msg import Image
+
+
 
 from math import sin,cos,atan2,sqrt,fabs,pi
 
@@ -60,20 +65,21 @@ class image_converter:
     self.cv_image = []
   def callback(self,data):
     try:
-        cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+        self.cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
         print(e)
     center = [355,355]
-    test = covi.find_box_coords(cv_image,center)
+    test = covi.find_box_coords(self.cv_image,center)
     cv2.imshow("Image window", test)
     cv2.waitKey(3)
 
-
-
-
+class box:
+    def __init__(self):
+        self.pos = []
+        self.orientation = []
 
 #Position and velocity from Gazebo
-def callback2(data):
+def callback(data):
     global timestamp
 
     q[0,0] = data.position[0]
@@ -89,6 +95,30 @@ def callback2(data):
     q_dot[0,4] = data.velocity[4]
 
     timestamp = data.header.stamp.secs + float(float(data.header.stamp.nsecs)/float(10**9))
+
+def box_callback(data):
+    #Compare calculated position and real position
+    #Assuming that the boxes are the last elements
+
+    global cur_img
+
+    num_boxes = 0
+    for name in data.name:
+        if name[0:8]=='unit_box':
+            num_boxes = num_boxes + 1
+
+    boxes = []
+    i = 0
+    for pose in data.pose:
+        if i>2:
+            b = box()
+            b.pos = [pose.position.x,pose.position.y,pose.position.z]
+            b.orientation = [pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w]
+            boxes.append(b)
+        i = i + 1
+    if  len(cur_img):
+        filt_img = covi.color_filter(cur_img)
+        boxes_img,boxs = covi.find_boxes(filt_img)
 
 # def callback(data):
 #     print '------------------wrong--------------------------'
@@ -300,8 +330,19 @@ if __name__ == '__main__':
 
 
     ic = image_converter()
+
+
+    chess_calib = cv2.imread('/home/magnaars/catkin_ws/src/five_dof_robotarm/img/real_chess.png',cv2.IMREAD_UNCHANGED)
+    #cornersimg,corners = harris_corner(chessboard)
+    #cirimg = find_corner_coord(corners,chessboard)
+
+    box_length = 0.25 #meter
+    one_meter,one_pixel,center = covi.easy_calib(chess_calib,box_length)
     try:
-        rospy.spin()
+        while not rospy.is_shutdown():
+            box_sub = rospy.Subscriber('/gazebo/model_states',ModelStates,box_callback)
+            cur_img = ic.cv_image
+            rate.sleep()
     except KeyboardInterrupt:
         print("Shutting down")
     cv2.destroyAllWindows()
